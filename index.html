@@ -2,77 +2,95 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WAFT | Terminal</title>
-    <style>
-        :root { --main: #ccc; --bg: #000; --waft-blue: #0000FF; }
-        body {
-            background-color: var(--bg); color: var(--main);
-            font-family: "Hiragino Mincho ProN", serif;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100vh; margin: 0; overflow: hidden;
-        }
-        .eye {
-            position: fixed; color: var(--waft-blue); font-size: 2.2rem;
-            opacity: 0; pointer-events: none; z-index: 50;
-            text-shadow: 0 0 15px var(--waft-blue);
-            transition: opacity 0.5s;
-        }
-        h1 { font-weight: normal; font-size: 1.1rem; border-bottom: 1px solid #222; padding-bottom: 20px; text-align: center; letter-spacing: 0.2em; }
-        nav ul { list-style: none; padding: 0; text-align: center; }
-        nav li { margin: 25px 0; }
-        a { color: #555; text-decoration: none; font-size: 0.9rem; transition: 0.4s; }
-        a:hover { color: #fff; letter-spacing: 0.3em; text-shadow: 0 0 8px #fff; }
-        #overlay {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: radial-gradient(circle, transparent, #000 85%);
-            pointer-events: none; opacity: 0; transition: 5s; z-index: 100;
-        }
-        #alert-msg {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: #444; font-size: 0.8rem; opacity: 0; transition: 5s; z-index: 101;
-            pointer-events: none; text-align: center; line-height: 2.5; letter-spacing: 0.2em;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body onmousemove="resetTimer()">
-    <div id="overlay"></div>
-    <div id="alert-msg">[SYSTEM] 観測者の静止を検知。<br>境界深度の固定を開始します。</div>
-    <div id="eye-icon" class="eye">👁</div>
+<body class="terminal">
 
-    <h1>対境界線広域干渉及び<br>超領域的表現開発機構</h1>
+    <canvas id="boundary-canvas" style="position:fixed; top:0; left:0; pointer-events:none; z-index:1;"></canvas>
 
-    <nav>
-        <ul>
-            <li><a href="protocol.html">>> 運営綱領 (Protocol)</a></li>
-            <li><a href="archive.html">>> 干渉記録 (Archive)</a></li>
-            <li><a href="https://waft-interfere.github.io/bollow/" target="_blank">>> 指定拠点 (Access Point)</a></li>
-        </ul>
-    </nav>
+    <main style="position:relative; z-index:10; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh;">
+        
+        <div id="contact-point" style="text-align:center;">
+            <h1 class="waft-text" style="font-weight:normal; font-size:1.2rem; letter-spacing:0.4em; color:#fff; margin-bottom:50px;">
+                対境界線広域干渉及び<br>超領域的表現開発機構
+            </h1>
 
+            <nav>
+                <ul style="list-style:none; padding:0;">
+                    <li style="margin:30px 0;">
+                        <a href="protocol.html" class="waft-link" data-info="[管理プロトコル]">>> 運営綱領 (Protocol)</a>
+                    </li>
+                    <li style="margin:30px 0;">
+                        <a href="archive.html" class="waft-link" data-info="[干渉ログ]">>> 干渉記録 (Archive)</a>
+                    </li>
+                    <li style="margin:30px 0;">
+                        <a href="https://waft-interfere.github.io/bollow/" target="_blank" class="waft-link imaginary-link" data-info="[虚構への接続]">>> 指定拠点 (Access Point)</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div id="status-display" class="physical-label" style="position:fixed; bottom:30px; right:30px; font-size:0.6rem; line-height:1.5;">
+            STATUS: 観測待機中...<br>
+            PHASE: 0.000<br>
+            COORDINATE: <span id="coord">0, 0</span>
+        </div>
+
+    </main>
+
+    <script src="waft-core.js"></script>
     <script>
-        let timer;
-        const eye = document.getElementById('eye-icon');
-        function resetTimer() {
-            document.getElementById('overlay').style.opacity = '0';
-            document.getElementById('alert-msg').style.opacity = '0';
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                document.getElementById('overlay').style.opacity = '1';
-                document.getElementById('alert-msg').style.opacity = '1';
-            }, 8000);
-        }
-        document.addEventListener('visibilitychange', () => {
-            document.title = document.hidden ? "観測の継続を推奨します" : "WAFT | Terminal";
+        // index専用の演出：境界線の描画
+        const canvas = document.getElementById('boundary-canvas');
+        const ctx = canvas.getContext('2d');
+        let mouse = { x: 0, y: 0 };
+
+        window.onresize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+        window.onresize();
+
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            document.getElementById('coord').innerText = `${mouse.x}, ${mouse.y}`;
         });
-        console.log("%c[WAFT SYSTEM] 内部プロトコルへのアクセスを確認。", "color: #888; font-weight: bold;");
-        console.log("%c三条瞳：ここから先は管理領域です。データの整合性を損なわないよう注意してください。", "color: #666;");
-        setInterval(() => {
-            const x = Math.random() * (window.innerWidth - 60);
-            const y = Math.random() * (window.innerHeight - 60);
-            eye.style.left = x + 'px'; eye.style.top = y + 'px';
-            eye.style.opacity = '0.35';
-            setTimeout(() => { eye.style.opacity = '0'; }, 700);
-        }, 6000);
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 画面中央に漂う水平な「境界線」
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+            const wave = Math.sin(Date.now() * 0.002) * 10;
+            ctx.moveTo(0, canvas.height/2 + wave);
+            ctx.lineTo(canvas.width, canvas.height/2 - wave);
+            ctx.stroke();
+
+            // マウス周辺の位相の乱れ
+            ctx.beginPath();
+            ctx.arc(mouse.x, mouse.y, 100, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(0, 0, 255, 0.2)';
+            ctx.stroke();
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // リンクホバー時の「認識的変容」
+        document.querySelectorAll('.waft-link').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                const info = link.getAttribute('data-info');
+                document.querySelector('.physical-label').innerText = `STATUS: 接触を検知\nPHASE: 1.024\nTARGET: ${info}`;
+            });
+            link.addEventListener('mouseleave', () => {
+                document.querySelector('.physical-label').innerText = 'STATUS: 観測待機中...\nPHASE: 0.000\nCOORDINATE: ' + mouse.x + ', ' + mouse.y;
+            });
+        });
     </script>
 </body>
 </html>
