@@ -47,3 +47,53 @@ body {
     75% { transform: translate(-3px, -3px); }
     100% { transform: translate(0); }
 }
+
+/* ウィンドウ・パラノイア */
+.paranoia-window {
+    position: fixed;
+    width: 250px;
+    background: #050505;
+    border: 1px solid #333;
+    box-shadow: 10px 10px 0px #900;
+    z-index: 10000;
+    font-family: monospace;
+}
+.win-header {
+    background: #222;
+    color: #eee;
+    padding: 3px 8px;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    cursor: move;
+}
+.win-body {
+    padding: 15px;
+    font-size: 11px;
+    color: #888;
+}
+.win-close { cursor: pointer; color: var(--accent-red); }
+
+/* 登録ゾーン */
+#registration-zone {
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #111;
+    max-width: 400px;
+}
+#registration-zone input, #registration-zone textarea {
+    width: 100%;
+    background: #000;
+    border: 1px solid #222;
+    color: #777;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+#registration-zone button {
+    background: #111;
+    color: #eee;
+    border: 1px solid #333;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+#registration-zone button:hover { background: var(--accent-red); }

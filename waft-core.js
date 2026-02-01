@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. ノイズ生成
+    // --- 1. 基礎環境：ノイズと瞳 ---
     const canvas = document.createElement('canvas');
     canvas.id = 'grain-canvas';
     Object.assign(canvas.style, {
@@ -20,38 +20,72 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     noise();
 
-    // 2. 瞳の生成
     const eye = document.createElement('div');
     eye.id = 'giant-eye';
     document.body.appendChild(eye);
 
-    let idleTimer;
-    const resetIdle = () => {
-        clearTimeout(idleTimer);
-        eye.style.opacity = '0';
-        document.body.classList.remove('glitch');
-        idleTimer = setTimeout(() => {
-            eye.style.opacity = '0.7'; // 10秒放置で瞳が浮かぶ
-            document.body.classList.add('glitch'); 
-        }, 10000);
+    // --- 2. ウィンドウ・パラノイア (Window Paranoia) ---
+    // 作品リンク（data-waft-id="idx-a"など）を押すと小さな別窓風UIが出る演出
+    const openParanoia = (title, content) => {
+        const win = document.createElement('div');
+        win.className = 'paranoia-window';
+        win.style.top = Math.random() * 50 + 20 + '%';
+        win.style.left = Math.random() * 50 + 20 + '%';
+        win.innerHTML = `<div class="win-header">LOG_FRAGMENT [${title}] <span class="win-close">×</span></div>
+                         <div class="win-body">${content}</div>`;
+        document.body.appendChild(win);
+        win.querySelector('.win-close').onclick = () => win.remove();
     };
-    ['mousemove', 'keydown', 'click', 'touchstart'].forEach(e => document.addEventListener(e, resetIdle));
-    resetIdle();
 
-    // 3. 忘却と再励起
-    document.querySelectorAll('[data-waft-id]').forEach(el => {
-        el.addEventListener('click', () => {
-            el.style.opacity = "0.1";
-            el.style.pointerEvents = "none";
+    // --- 3. 観測者登録（突き放しの能動性） ---
+    // もしサイト内に <div id="register-trigger"></div> があれば起動
+    const regZone = document.getElementById('registration-zone');
+    if (regZone) {
+        regZone.innerHTML = `
+            <p>【共同編纂者登録プロトコル】</p>
+            <input type="text" id="reg-name" placeholder="名称を定義してください">
+            <textarea id="reg-memo" placeholder="あなたの境界線を記述してください"></textarea>
+            <button id="reg-btn">EXISTENCE SUBMIT</button>
+            <div id="reg-msg"></div>
+        `;
+        document.getElementById('reg-btn').onclick = () => {
+            const msg = document.getElementById('reg-msg');
+            msg.innerText = "エラー：入力された存在は既に「忘却」のプロセスに含まれています。";
+            msg.style.color = "var(--accent-red)";
             setTimeout(() => {
-                el.style.opacity = "0.4";
-                el.style.pointerEvents = "auto";
-            }, 5000);
-        });
+                msg.innerText = "青ya、跨：君のことは、僕がもう知っているよ。書かなくていい。";
+            }, 2000);
+        };
+    }
+
+    // --- 4. 隠しコマンド (waft) ---
+    let cmd = "";
+    document.addEventListener('keydown', (e) => {
+        cmd += e.key;
+        if (cmd.endsWith("waft")) {
+            document.body.style.filter = "invert(1) hue-rotate(180deg)";
+            console.log("%c[ADMIN] 管理者権限が励起されました。三条瞳：誰がここを開けた？", "background:red; color:white;");
+            cmd = "";
+        }
     });
 
-    console.clear();
-    console.log("%c[SYSTEM] 対境界線広域干渉及び超領域的表現開発機構", "font-weight:bold; color:#555;");
-    console.log("%c三条瞳：観測ログの増大を確認。これらは全て「記録」されます。", "color:#900;");
-    console.log("%c青ya、跨：そんなにじっと見つめないでよ。恥ずかしいじゃないか。", "color:#00f;");
+    // --- 5. リアルタイム・ポルターガイスト ---
+    setTimeout(() => {
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                window.scrollBy(0, (Math.random() - 0.5) * 100);
+                document.body.classList.add('glitch');
+                setTimeout(() => document.body.classList.remove('glitch'), 150);
+            }
+        }, 2000);
+    }, 60000); // 1分後に開始
+
+    // 既存のクリック演出
+    document.querySelectorAll('[data-waft-id]').forEach(el => {
+        el.addEventListener('click', (e) => {
+            if (el.getAttribute('href') === 'archive.html') {
+                console.log("青ya、跨：過去を覗きに行くんだね。");
+            }
+        });
+    });
 });
