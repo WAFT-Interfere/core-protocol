@@ -8,46 +8,42 @@
 body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-family: sans-serif;
     margin: 0;
-    overflow-x: hidden;
 }
 
-/* 巨大な目のコンテナ */
+/* 巨大な瞳：デバイスに依存しないCSS描画 */
 #giant-eye {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 100vw;
-    height: 100vh;
-    background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+    width: 300px; height: 300px; /* スマホ・PC両対応 */
+    border-radius: 50%;
+    background: radial-gradient(circle, #000 20%, var(--accent-blue) 30%, transparent 70%);
+    box-shadow: 0 0 100px var(--accent-blue);
     opacity: 0;
     z-index: 9998;
     pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: opacity 3s;
 }
 
+/* 瞳孔の縦長演出 */
 #giant-eye::after {
-    content: "👁";
-    font-size: 50vh;
-    color: #000;
-    text-shadow: 0 0 50px var(--accent-blue);
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px; height: 180px;
+    background: #000;
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--accent-blue);
 }
 
-/* 画面が壊れる演出（グリッチ） */
-.glitch {
-    animation: glitch-anim 0.2s infinite;
-}
-
+.glitch { animation: glitch-anim 0.2s infinite; }
 @keyframes glitch-anim {
     0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
+    25% { transform: translate(-3px, 3px); }
+    50% { transform: translate(3px, -3px); }
+    75% { transform: translate(-3px, -3px); }
     100% { transform: translate(0); }
 }
