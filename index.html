@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>WAFT | 対境界線広域干渉及び超領域的表現開発機構</title>
+    <style>
+        body {
+            background-color: #050505;
+            color: #d1d1d1;
+            font-family: "Courier New", Courier, "Hiragino Mincho ProN", serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.8;
+            letter-spacing: 0.1em;
+        }
+
+        /* 揺らぎのノイズアニメーション */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-1px, 1px); }
+            40% { transform: translate(-1px, -1px); opacity: 0.8; }
+            60% { transform: translate(1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch-text:hover {
+            display: inline-block;
+            animation: glitch 0.3s infinite;
+            color: #ffffff;
+        }
+
+        header {
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: normal;
+            color: #888;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav li {
+            margin: 25px 0;
+        }
+
+        a {
+            color: #aaa;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+
+        a:hover {
+            color: #fff;
+            padding-left: 10px;
+        }
+
+        .status-panel {
+            margin-top: 100px;
+            font-size: 0.8rem;
+            color: #444;
+            border: 1px solid #222;
+            padding: 20px;
+            max-width: 400px;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.7rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="glitch-text">対境界線広域干渉及び超領域的表現開発機構 (WAFT)</h1>
+</header>
+
+<main>
+    <nav>
+        <ul>
+            <li><a href="waft.html">>> 運営綱領及び業務執行細則 (Protocol)</a></li>
+            <li><a href="#">>> 干渉記録：文章・映像 (Interference Log)</a> ※準備中</li>
+            <li><a href="#">>> 物質的投射：頒布物 (Projected Objects)</a> ※準備中</li>
+            <li><a href="https://(ボロウのURL)/index.html" target="_blank">>> 指定拠点：虚構喫茶ボロウ (Access Point)</a></li>
+        </ul>
+    </nav>
+
+    <div class="status-panel">
+        [SYSTEM STATUS]<br>
+        境界深度：正常<br>
+        [cite_start]観測子[青ya、跨]：励起状態を確認 [cite: 83]<br>
+        [cite_start]物理的個体[三条瞳]：稼働中 [cite: 71]<br>
+        <br>
+        [cite_start]<span style="font-size: 0.7rem;">※本機構は解答を与えず、救済を約束しない [cite: 86]</span>
+    </div>
+</main>
+
+<footer>
+    &copy; WAFT. All rights reserved. 2026.01.22 Execution.
+</footer>
+
+</body>
+</html>
