@@ -5,20 +5,25 @@
     <title>Archive | WAFT</title>
     <style>
         :root { --waft-blue: #0000FF; }
-        body { background-color: #000; color: #666; font-family: serif; padding: 50px; line-height: 2; }
+        body { background-color: #000; color: #666; font-family: serif; padding: 50px; line-height: 2.2; }
         .section { margin-bottom: 60px; }
         h2 { font-size: 0.9rem; color: #222; border-bottom: 1px solid #111; padding-bottom: 5px; margin-bottom: 25px; }
-        .entry { margin: 20px 0; padding-left: 15px; border-left: 1px solid #111; position: relative; }
+        .entry { margin: 25px 0; padding-left: 15px; border-left: 1px solid #111; position: relative; }
         a { color: #555; text-decoration: none; transition: 0.3s; display: inline-block; }
         a:hover { color: #fff; }
-        .label { font-size: 0.6rem; color: #333; letter-spacing: 0.1em; }
-
-        /* 青ya専用スタイル */
         .blue-link { color: var(--waft-blue) !important; font-weight: bold; }
-        #whisper { font-size: 0.7rem; color: var(--waft-blue); opacity: 0; transition: 1s; }
+        
+        /* 青いフラッシュ演出用 */
+        #flash {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: var(--waft-blue); opacity: 0; pointer-events: none; z-index: 200;
+        }
+        #whisper { font-size: 0.7rem; color: var(--waft-blue); opacity: 0; transition: 1.5s; }
     </style>
 </head>
 <body>
+    <div id="flash"></div>
+
     <div class="section">
         <h2>CORE PROTOCOL</h2>
         <div class="entry"><a href="protocol.html">運営綱領及び業務執行細則</a></div>
@@ -27,25 +32,21 @@
     <div class="section">
         <h2>EXTERNAL INTERFACES</h2>
         <div class="entry">
-            <span class="label">[PHYSICAL INTERFACE]</span><br>
+            <span style="font-size:0.6rem;">[PHYSICAL]</span><br>
             <a href="https://x.com/mizyouakira" onclick="return confirm('三条瞳の位相へ接続しますか？')">三条瞳：@mizyouakira</a>
         </div>
         <div class="entry" style="border-left-color: var(--waft-blue);">
-            <span class="label" style="color:var(--waft-blue)">[IMAGINARY INTERFACE]</span><br>
+            <span style="font-size:0.6rem; color:var(--waft-blue)">[IMAGINARY]</span><br>
             <a href="https://x.com/aoyatenka023" id="runaway" class="blue-link"
-               onmouseover="runAway()" 
+               onmouseover="triggerAoyaEffect()" 
                onclick="return confirm('青ya、跨の干渉を許可しますか？')">
                青ya、跨：@aoyatenka023
             </a>
-            <p id="whisper">「目が合ったね。君は誰？」</p>
+            <p id="whisper">「やあ、目が合ったね」</p>
         </div>
         <div class="entry">
-            <span class="label">[OBSERVATION BASE]</span><br>
+            <span style="font-size:0.6rem;">[FACILITY]</span><br>
             <a href="https://waft-interfere.github.io/bollow/">虚構喫茶ボロウ</a>
-        </div>
-        <div class="entry">
-            <span class="label">[OFFICIAL REGISTRY]</span><br>
-            <a href="https://x.com/WAFT_registry">WAFT公式：@WAFT_registry</a>
         </div>
     </div>
 
@@ -53,7 +54,13 @@
 
     <script>
         let moved = false;
-        function runAway() {
+        function triggerAoyaEffect() {
+            // フラッシュ演出
+            const f = document.getElementById('flash');
+            f.style.opacity = "0.2";
+            setTimeout(() => { f.style.opacity = "0"; }, 150);
+            
+            // 逃げる演出
             if (!moved) {
                 const btn = document.getElementById('runaway');
                 const whisper = document.getElementById('whisper');
@@ -62,9 +69,10 @@
                 moved = true;
                 setTimeout(() => {
                     btn.style.transform = "translate(0,0)";
-                    btn.innerText = "青ya、跨：目が合ったね";
+                    btn.innerText = "青ya、跨：君は誰？";
                 }, 1500);
             }
+            console.log("%c青ya、跨：君の近所のイマジナリーお兄さんだよ。", "color: #0000FF;");
         }
     </script>
 </body>
