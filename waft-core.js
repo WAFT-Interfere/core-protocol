@@ -24,36 +24,32 @@ document.addEventListener('DOMContentLoaded', () => {
     eye.id = 'giant-eye';
     document.body.appendChild(eye);
 
-    // --- 2. ウィンドウ・パラノイア (Window Paranoia) ---
-    // 作品リンク（data-waft-id="idx-a"など）を押すと小さな別窓風UIが出る演出
-    const openParanoia = (title, content) => {
+    // --- 2. ウィンドウ・パラノイア ---
+    const openParanoia = (id) => {
         const win = document.createElement('div');
         win.className = 'paranoia-window';
-        win.style.top = Math.random() * 50 + 20 + '%';
-        win.style.left = Math.random() * 50 + 20 + '%';
-        win.innerHTML = `<div class="win-header">LOG_FRAGMENT [${title}] <span class="win-close">×</span></div>
-                         <div class="win-body">${content}</div>`;
+        win.style.top = Math.random() * 40 + 20 + '%';
+        win.style.left = Math.random() * 40 + 20 + '%';
+        
+        // IDによって中身を変えることも可能
+        const message = "やあ、こんにちは……ふふ、一瞬の足止め、してみているよ";
+        
+        win.innerHTML = `<div class="win-header">LOG_FRAGMENT [${id}] <span class="win-close">×</span></div>
+                         <div class="win-body">${message}</div>`;
         document.body.appendChild(win);
         win.querySelector('.win-close').onclick = () => win.remove();
     };
 
-    // --- 3. 観測者登録（突き放しの能動性） ---
-    // もしサイト内に <div id="register-trigger"></div> があれば起動
-    const regZone = document.getElementById('registration-zone');
-    if (regZone) {
-        regZone.innerHTML = `
-            <p>【共同編纂者登録プロトコル】</p>
-            <input type="text" id="reg-name" placeholder="名称を定義してください">
-            <textarea id="reg-memo" placeholder="あなたの境界線を記述してください"></textarea>
-            <button id="reg-btn">EXISTENCE SUBMIT</button>
-            <div id="reg-msg"></div>
-        `;
-        document.getElementById('reg-btn').onclick = () => {
+    // --- 3. 観測者登録（突き放しギミック） ---
+    const regBtn = document.getElementById('reg-btn');
+    if (regBtn) {
+        regBtn.onclick = () => {
             const msg = document.getElementById('reg-msg');
-            msg.innerText = "エラー：入力された存在は既に「忘却」のプロセスに含まれています。";
+            msg.innerText = "エラー：入力された存在は既に";
             msg.style.color = "var(--accent-red)";
             setTimeout(() => {
                 msg.innerText = "青ya、跨：君のことは、僕がもう知っているよ。書かなくていい。";
+                msg.style.color = "#777";
             }, 2000);
         };
     }
@@ -61,31 +57,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 4. 隠しコマンド (waft) ---
     let cmd = "";
     document.addEventListener('keydown', (e) => {
-        cmd += e.key;
+        cmd += e.key.toLowerCase();
         if (cmd.endsWith("waft")) {
             document.body.style.filter = "invert(1) hue-rotate(180deg)";
-            console.log("%c[ADMIN] 管理者権限が励起されました。三条瞳：誰がここを開けた？", "background:red; color:white;");
+            console.log("%c[ADMIN] 管理者権限が励起されました。三条瞳：誰がここを開けたの？", "background:red; color:white; padding:2px 5px;");
             cmd = "";
         }
     });
 
-    // --- 5. リアルタイム・ポルターガイスト ---
-    setTimeout(() => {
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                window.scrollBy(0, (Math.random() - 0.5) * 100);
-                document.body.classList.add('glitch');
-                setTimeout(() => document.body.classList.remove('glitch'), 150);
-            }
-        }, 2000);
-    }, 60000); // 1分後に開始
-
-    // 既存のクリック演出
-    document.querySelectorAll('[data-waft-id]').forEach(el => {
+    // --- 5. リンク干渉とポルターガイスト ---
+    document.querySelectorAll('a').forEach(el => {
         el.addEventListener('click', (e) => {
-            if (el.getAttribute('href') === 'archive.html') {
+            const id = el.getAttribute('data-waft-id') || "UNKNOWN";
+            const href = el.getAttribute('href');
+
+            if (href === 'archive.html') {
                 console.log("青ya、跨：過去を覗きに行くんだね。");
+            }
+
+            // 確率でパラノイアウィンドウを発生させる（30%の確率）
+            if (Math.random() < 0.3) {
+                e.preventDefault();
+                openParanoia(id);
             }
         });
     });
+
+    setTimeout(() => {
+        setInterval(() => {
+            if (Math.random() > 0.98) { // 稀に発生
+                window.scrollBy(0, (Math.random() - 0.5) * 200);
+                document.body.style.transform = `translateX(${(Math.random()-0.5)*10}px)`;
+                setTimeout(() => document.body.style.transform = "none", 100);
+            }
+        }, 2000);
+    }, 60000); // 1分後に開始
 });

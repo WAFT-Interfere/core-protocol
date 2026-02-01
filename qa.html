@@ -4,27 +4,47 @@
     <meta charset="UTF-8">
     <title>Q&A | WAFT</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .container { max-width: 600px; margin: 100px auto; padding: 0 40px; }
+        .label { font-size: 10px; color: #333; letter-spacing: 2px; }
+        h1 { font-size: 14px; color: #eee; font-weight: normal; margin-bottom: 50px; }
+        .article { margin-bottom: 40px; }
+        .q { color: #eee; font-size: 13px; margin-bottom: 10px; display: block; }
+        .q::before { content: "Q: "; color: var(--accent-red); }
+        .a { color: #555; font-size: 12px; line-height: 1.8; display: block; margin-left: 1em; }
+        .a::before { content: "A: "; margin-left: -1em; }
+    </style>
 </head>
 <body>
-    <div class="container" style="max-width:600px; margin: 100px auto; padding: 0 20px;">
+    <div class="container">
         <span class="label">照会プロトコル</span>
-        <h1 style="font-size:14px; margin-bottom:50px;">認識の齟齬に関するQ&A</h1>
+        <h1>認識の齟齬に関するQ&A</h1>
         
         <div class="article">
-            <p style="color:#eee;">Q: 覚えのない記憶が混入しています。</p>
-            [cite_start]<p style="color:#444; margin-bottom:30px;">A: それは「想起される対象は、想起に先んじて概念的実在性を有する」という逆因果論の結果です [cite: 8]。あなたの過去が今、書き換えられました。</p>
-            
-            <p style="color:#eee;">Q: 青ya、跨はどこにいますか？</p>
-            [cite_start]<p style="color:#444; margin-bottom:30px;">A: 「君の近所のイマジナリーお兄さん」として [cite: 17][cite_start]、あなたの認識が励起された瞬間に隣に現れます [cite: 48]。</p>
-
-            <p style="color:#eee;">Q: 救済を求めたいのですが。</p>
-            [cite_start]<p style="color:#444; margin-bottom:30px;">A: 本機構は解答を与えず、救済を約束しません [cite: 38]。</p>
+            <span class="q">覚えのない記憶が混入しています。</span>
+            <span class="a">それは「想起される対象は、想起に先んじて概念的実在性を有する」という逆因果論の結果です。あなたの過去が今、書き換えられました。記憶が混入した時点で、次第に覚えのあるものへ変化します。安心して。</span>
         </div>
 
-        <div id="registration-zone"></div>
+        <div class="article">
+            <span class="q">青ya、跨はどこにいますか？</span>
+            <span class="a">「君の近所のイマジナリーお兄さん」として、あなたの認識が励起された瞬間に隣に現れます。目が合ったね。じゃあ、ご近所だ……。</span>
+        </div>
 
-        <div style="text-align:center; margin-top:50px;">
-            <a href="index.html" style="font-size:10px; color:#222;">[ RETURN ]</a>
+        <div class="article">
+            <span class="q">救済を求めたいのですが。</span>
+            <span class="a">本機構は解答を与えず、救済を約束しません。</span>
+        </div>
+
+        <div id="registration-zone">
+            <p style="font-size:11px; color:#444; margin-bottom:15px;">【共同編纂者登録プロトコル】</p>
+            <input type="text" id="reg-name" placeholder="名称を定義してください">
+            <textarea id="reg-memo" placeholder="あなたの境界線を記述してください" rows="3"></textarea>
+            <button id="reg-btn">EXISTENCE SUBMIT</button>
+            <div id="reg-msg" style="font-size:11px; margin-top:15px; min-height:1.5em;"></div>
+        </div>
+
+        <div style="text-align:center; margin-top:80px;">
+            <a href="index.html" style="font-size:10px; color:#222; text-decoration:none;">[ RETURN ]</a>
         </div>
     </div>
     <script src="waft-core.js"></script>
