@@ -10,92 +10,65 @@ body {
     font-family: sans-serif;
     margin: 0;
     overflow-x: hidden;
+    line-height: 1.6;
 }
 
-/* スマホでも押しやすいリンク設定 */
-.nav-link {
+/* スマホ対応：コンテナの共通設定 */
+.container {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 60px 25px;
+    box-sizing: border-box;
+}
+
+/* リンクボタンのスマホ最適化 */
+a, .nav-link, .link-item {
     display: inline-block;
     color: #888;
     text-decoration: none;
-    font-size: 18px; /* スマホで見やすいサイズ */
-    padding: 10px 20px;
+    font-size: 18px; 
+    padding: 12px 0;
     transition: 0.3s;
+    touch-action: manipulation; /* スマホのタップ遅延解消 */
 }
 
 @media (min-width: 768px) {
-    .nav-link { font-size: 14px; }
+    a, .nav-link, .link-item { font-size: 14px; }
+    .container { padding: 100px 40px; }
 }
 
-.nav-link:hover { color: var(--accent-blue); }
-
-.label { font-size: 10px; color: #333; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-
-/* 巨大な瞳 */
-#giant-eye {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(300px, 80vw); height: min(300px, 80vw);
-    border-radius: 50%;
-    background: radial-gradient(circle, #000 20%, var(--accent-blue) 30%, transparent 70%);
-    box-shadow: 0 0 100px var(--accent-blue);
-    opacity: 0;
-    z-index: 9998;
-    pointer-events: none;
-    transition: opacity 3s;
-}
+h1 { font-size: clamp(16px, 5vw, 20px); color: #eee; font-weight: normal; margin-bottom: 40px; letter-spacing: 2px; }
+h2 { font-size: 13px; color: #444; border-bottom: 1px solid #111; margin: 40px 0 20px; padding-bottom: 8px; }
 
 /* ウィンドウ・パラノイア */
 .paranoia-window {
     position: fixed;
-    width: min(280px, 90vw);
+    width: min(280px, 85vw);
     background: #000;
     border: 1px solid #333;
     z-index: 10001;
     font-family: monospace;
-    box-shadow: 0 0 20px rgba(0, 0, 255, 0.3);
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.4);
+    pointer-events: auto;
 }
-.win-header {
-    background: #111;
-    color: #555;
-    padding: 8px 12px;
-    font-size: 10px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #222;
-}
-.win-body {
-    padding: 20px;
-    font-size: 13px;
-    color: #aaa;
-    line-height: 1.6;
-}
-.win-close { cursor: pointer; color: var(--accent-blue); font-weight: bold; padding: 0 5px; }
+.win-header { background: #111; color: #555; padding: 8px; font-size: 10px; display: flex; justify-content: space-between; }
+.win-body { padding: 15px; font-size: 14px; color: #aaa; }
+.win-close { cursor: pointer; color: var(--accent-blue); padding: 0 5px; }
 
 /* 登録フォーム */
-#registration-zone {
-    margin: 60px 0;
-    padding: 20px;
-    border: 1px solid #111;
-    text-align: left;
-}
 #registration-zone input, #registration-zone textarea {
-    width: 100%;
-    background: #050505;
-    border: 1px solid #222;
-    color: #eee;
-    margin-bottom: 15px;
-    padding: 12px;
-    font-size: 14px; /* 入力時にズームされないサイズ */
-    box-sizing: border-box;
+    width: 100%; background: #050505; border: 1px solid #222; color: #eee;
+    margin-bottom: 15px; padding: 15px; font-size: 16px; box-sizing: border-box;
 }
 #registration-zone button {
-    background: #000;
-    color: #666;
-    border: 1px solid #333;
-    padding: 12px 20px;
-    font-size: 12px;
-    cursor: pointer;
-    width: 100%;
-    letter-spacing: 2px;
+    background: #000; color: #eee; border: 1px solid var(--accent-blue);
+    padding: 15px; width: 100%; cursor: pointer; font-size: 14px;
+}
+
+/* 瞳 */
+#giant-eye {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: min(300px, 80vw); height: min(300px, 80vw); border-radius: 50%;
+    background: radial-gradient(circle, #000 20%, var(--accent-blue) 30%, transparent 70%);
+    opacity: 0; z-index: 9998; pointer-events: none; transition: opacity 3s;
 }
