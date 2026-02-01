@@ -5,21 +5,19 @@
     <title>WAFT | 対境界線広域干渉及び超領域的表現開発機構</title>
     <style>
         :root { --bg-color: #000; --main-color: #ccc; --glitch-color: #f00; }
-        body {
-            background-color: var(--bg-color);
-            color: var(--main-color);
-            font-family: "Hiragino Mincho ProN", serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            cursor: crosshair;
-        }
-
-        /* 範囲選択した時だけ見える隠しテキスト */
+           body {
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    font-family: "Hiragino Mincho ProN", serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    cursor: auto; 
+}        /* 範囲選択した時だけ見える隠しテキスト */
         ::selection { background: #fff; color: #000; }
 
         /* 文字が揺れるアニメーション */
