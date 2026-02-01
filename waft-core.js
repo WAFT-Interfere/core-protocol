@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const showWindow = (msg) => {
         const win = document.createElement('div');
         win.className = 'paranoia-window';
-        win.style.top = (20 + Math.random() * 40) + '%';
-        win.style.left = (10 + Math.random() * 20) + '%';
+        win.style.top = (20 + Math.random() * 35) + '%';
+        win.style.left = (Math.random() * 15) + '%';
         win.innerHTML = `<div class="win-header">LOG_FRAGMENT [${targetId || 'LOG'}] <span class="win-close">×</span></div>
                          <div class="win-body">${msg}</div>`;
         document.body.appendChild(win);
@@ -45,53 +45,48 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const finalSequence = () => {
-        setTimeout(() => showWindow("鬱陶しい？"), 300);
-        setTimeout(() => showWindow("……ごめんね"), 600);
-        setTimeout(() => showWindow("解放してあげる"), 900);
+        // 読めるように1.2秒（1200ms）間隔に設定
+        setTimeout(() => showWindow("鬱陶しい？"), 1200);
+        setTimeout(() => showWindow("……ごめんね"), 2400);
+        setTimeout(() => showWindow("解放してあげる"), 3600);
         setTimeout(() => {
             if (targetHref) window.location.href = targetHref;
-        }, 1500);
+        }, 5500);
     };
 
-    // 画面全体へのクリック検知（連鎖中のみ有効）
     document.addEventListener('click', (e) => {
         if (!isChaining) return;
-
-        // リンク自体のデフォルト動作を無効化し続ける
         if (e.target.tagName === 'A') e.preventDefault();
-
         if (chainStep < paranoiaMessages.length) {
             showWindow(paranoiaMessages[chainStep]);
             chainStep++;
             if (chainStep === paranoiaMessages.length) {
-                isChaining = false; // 最終シーケンスへ
+                isChaining = false;
                 finalSequence();
             }
         }
     }, true);
 
-    // 4. リンク干渉の開始
+    // 4. リンク干渉
     document.querySelectorAll('a').forEach(el => {
         el.addEventListener('click', (e) => {
             const href = el.getAttribute('href');
-            if (!href || href.startsWith('http')) return; // 外部リンクは除外
+            if (!href || href.startsWith('http') || href.startsWith('#')) return;
 
-            // 低確率(20%)で連鎖開始。それ以外は即遷移
-            if (!isChaining && Math.random() < 0.2) {
+            // 確率を5%(0.05)に設定
+            if (!isChaining && Math.random() < 0.05) {
                 e.preventDefault();
                 isChaining = true;
                 chainStep = 0;
                 targetHref = href;
                 targetId = el.getAttribute('data-waft-id') || "LOG";
-                
-                // 最初の「やあ」を表示
                 showWindow(paranoiaMessages[0]);
                 chainStep = 1;
             }
         });
     });
 
-    // 5. 登録ボタンギミック（青yaヽ跨のメッセージのみ表示）
+    // 5. 登録ボタン（青yaヽ跨のみ）
     const regBtn = document.getElementById('reg-btn');
     if (regBtn) {
         regBtn.onclick = () => {
