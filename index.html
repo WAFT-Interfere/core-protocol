@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WAFT | 対境界線広域干渉及び超領域的表現開発機構</title>
     <style>
         body {
@@ -12,22 +13,26 @@
             padding: 40px;
             line-height: 1.8;
             letter-spacing: 0.1em;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* 揺らぎのノイズアニメーション */
+        /* 揺らぎのアニメーション */
         @keyframes glitch {
             0% { transform: translate(0); }
-            20% { transform: translate(-1px, 1px); }
-            40% { transform: translate(-1px, -1px); opacity: 0.8; }
-            60% { transform: translate(1px, 1px); }
-            80% { transform: translate(1px, -1px); }
+            20% { transform: translate(-1.5px, 1.5px); }
+            40% { transform: translate(-1.5px, -1.5px); opacity: 0.8; }
+            60% { transform: translate(1.5px, 1.5px); }
+            80% { transform: translate(1.5px, -1.5px); }
             100% { transform: translate(0); }
         }
 
         .glitch-text:hover {
             display: inline-block;
-            animation: glitch 0.3s infinite;
+            animation: glitch 0.2s infinite;
             color: #ffffff;
+            cursor: default;
         }
 
         header {
@@ -37,9 +42,10 @@
         }
 
         h1 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: normal;
             color: #888;
+            margin: 0;
         }
 
         nav ul {
@@ -48,34 +54,39 @@
         }
 
         nav li {
-            margin: 25px 0;
+            margin: 30px 0;
         }
 
+        /* リンクのデザイン */
         a {
             color: #aaa;
             text-decoration: none;
-            transition: 0.3s;
+            transition: all 0.4s ease;
             font-size: 0.95rem;
+            display: inline-block;
         }
 
         a:hover {
             color: #fff;
-            padding-left: 10px;
+            padding-left: 15px;
+            text-shadow: 0 0 8px rgba(255,255,255,0.5);
         }
 
         .status-panel {
-            margin-top: 100px;
-            font-size: 0.8rem;
+            margin-top: auto;
+            margin-bottom: 40px;
+            font-size: 0.75rem;
             color: #444;
             border: 1px solid #222;
             padding: 20px;
-            max-width: 400px;
+            max-width: 450px;
+            background: rgba(10, 10, 10, 0.5);
         }
 
         footer {
-            margin-top: 50px;
             font-size: 0.7rem;
-            color: #333;
+            color: #222;
+            text-align: right;
         }
     </style>
 </head>
@@ -89,19 +100,18 @@
     <nav>
         <ul>
             <li><a href="waft.html">>> 運営綱領及び業務執行細則 (Protocol)</a></li>
-            <li><a href="#">>> 干渉記録：文章・映像 (Interference Log)</a> ※準備中</li>
-            <li><a href="#">>> 物質的投射：頒布物 (Projected Objects)</a> ※準備中</li>
-            <li><a href="https://(ボロウのURL)/index.html" target="_blank">>> 指定拠点：虚構喫茶ボロウ (Access Point)</a></li>
+            <li><a href="#">>> 干渉記録：文章・映像 (Interference Log)</a> <span style="font-size:0.7rem; color:#333;">[OFFLINE]</span></li>
+            <li><a href="#">>> 物質的投射：頒布物 (Projected Objects)</a> <span style="font-size:0.7rem; color:#333;">[OFFLINE]</span></li>
+            <li><a href="https://waft-interface.github.io/bollow/" target="_blank">>> 指定拠点：虚構喫茶ボロウ (Access Point)</a></li>
         </ul>
     </nav>
 
     <div class="status-panel">
         [SYSTEM STATUS]<br>
-        境界深度：正常<br>
-        [cite_start]観測子[青ya、跨]：励起状態を確認 [cite: 83]<br>
-        [cite_start]物理的個体[三条瞳]：稼働中 [cite: 71]<br>
+        境界深度：正常 / 観測子[青ya、跨]：励起状態を確認<br>
+        物理的個体[三条瞳]：稼働中 / 接続元：認可済みの観測者<br>
         <br>
-        [cite_start]<span style="font-size: 0.7rem;">※本機構は解答を与えず、救済を約束しない [cite: 86]</span>
+        <span style="font-size: 0.7rem; color: #555;">※本機構は解答を与えず、救済を約束しない。観測の終了は「忘却」によってのみ完遂される。</span>
     </div>
 </main>
 
