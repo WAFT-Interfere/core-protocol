@@ -5,53 +5,44 @@
     <title>Archive | WAFT</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .container { max-width: 600px; margin: 0 auto; padding: 80px 40px; }
-        h2 { font-size: 10px; color: #333; border-bottom: 1px solid #111; margin: 50px 0 20px; padding-bottom: 5px; letter-spacing: 2px; }
-        .entry { margin-bottom: 30px; }
-        .entry-label { font-size: 9px; color: #222; display: block; margin-bottom: 8px; }
-        .empty-msg { font-size: 11px; color: #222; font-style: italic; }
-        .archive-item { font-size: 13px; color: #666; transition: 0.3s; }
-        .archive-item:hover { color: #fff; }
+        .container { max-width: 650px; margin: 0 auto; padding: 100px 40px; }
+        .label { font-size: 10px; color: #333; letter-spacing: 2px; }
+        h1 { font-size: 14px; color: #eee; font-weight: normal; margin-bottom: 50px; }
+        h2 { font-size: 11px; color: #444; border-bottom: 1px solid #222; margin: 40px 0 20px; padding-bottom: 8px; }
+        .log-section { margin-bottom: 40px; }
+        .empty-slot { border: 1px dashed #111; padding: 20px; font-size: 11px; color: #222; text-align: center; }
+        .link-item { display: block; margin: 10px 0; color: #666; font-size: 13px; text-decoration: none; }
+        .link-item:hover { color: #fff; }
     </style>
 </head>
 <body>
-    <div class="waft-nav" style="position: fixed; top: 30px; left: 30px; font-size: 10px;">
-        <a href="index.html" data-waft-id="nav-back">[ RETURN ]</a>
-    </div>
-
     <div class="container">
-        <span class="label">Database / Log</span>
-        <h1 style="font-size: 14px; color: #eee; font-weight: normal; margin-bottom: 60px;">干渉記録及び活動ログ</h1>
+        <span class="label">ACTIVITY LOGS</span>
+        <h1>対境界線広域干渉及び<br>超領域的表現開発機構</h1>
 
-        <h2>CORE DATA</h2>
-        <div class="entry">
-            <span class="entry-label">SYSTEM_PROTOCOL</span>
-            <a href="protocol.html" class="archive-item" data-waft-id="log-p">運営綱領及び業務執行細則</a>
-        </div>
+        <section class="log-section">
+            <h2>LITERATURE (小説・執筆)</h2>
+            <div class="empty-slot">励起待ち：現在、公開可能なテキストログはありません。</div>
+        </section>
 
-        <h2>LITERATURE / NOVELS</h2>
-        <div class="entry">
-            <span class="empty-msg">現在、励起されているテキストデータはありません。</span>
-        </div>
+        <section class="log-section">
+            <h2>VISUAL (動画・YouTube)</h2>
+            <div class="empty-slot">未観測：映像干渉プロトコルは待機中です。</div>
+        </section>
 
-        <h2>VISUAL / YOUTUBE</h2>
-        <div class="entry">
-            <span class="empty-msg">境界の可視化記録は未登録です。</span>
-        </div>
+        <section class="log-section">
+            <h2>SHOP / OBJECTS (販売・投射)</h2>
+            <div class="empty-slot">準備中：物質的投射の目処は立っていません。</div>
+        </section>
 
-        <h2>EXCHANGE / SHOP</h2>
-        <div class="entry">
-            <span class="empty-msg">物質的投射（物品販売）の準備は整っていません。</span>
-        </div>
+        <section class="log-section">
+            <h2>EXTERNAL CONTACT</h2>
+            <a href="https://x.com/mizyouakira" target="_blank" class="link-item" data-waft-id="ex-s">>> 三条瞳 / 管理者</a>
+            <a href="https://x.com/aoyatenka023" target="_blank" class="link-item" style="color:var(--accent-blue);" data-waft-id="ex-a">>> 青ya、跨 / 虚構</a>
+        </section>
 
-        <h2>EXTERNAL INTERFACES</h2>
-        <div class="entry">
-            <span class="entry-label">PHYSICAL: 三条瞳</span>
-            <a href="https://x.com/mizyouakira" target="_blank" class="archive-item" data-waft-id="log-s">@mizyouakira</a>
-        </div>
-        <div class="entry">
-            <span class="entry-label">IMAGINARY: 青ya、跨</span>
-            <a href="https://x.com/aoyatenka023" target="_blank" class="archive-item" style="color:var(--accent-blue);" data-waft-id="log-a">@aoyatenka023</a>
+        <div style="margin-top: 100px; text-align: center;">
+            <a href="index.html" style="font-size: 10px; color: #222;">[ DISCONNECT ]</a>
         </div>
     </div>
     <script src="waft-core.js"></script>

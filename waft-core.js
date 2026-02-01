@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.id = 'grain-canvas';
     Object.assign(canvas.style, {
         position: 'fixed', top: '0', left: '0', width: '100%', height: '100%',
-        pointerEvents: 'none', zIndex: '9999', opacity: '0.05'
+        pointerEvents: 'none', zIndex: '9999', opacity: '0.06'
     });
     document.body.appendChild(canvas);
     const ctx = canvas.getContext('2d');
@@ -20,44 +20,39 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     noise();
 
-    // 2. 追加演出：放置すると「青い目」が浮かび上がる (第8条)
-    const eye = document.createElement('div');
-    eye.innerHTML = "👁";
-    Object.assign(eye.style, {
-        position: 'fixed', color: '#0000FF', fontSize: '3rem', opacity: '0',
-        pointerEvents: 'none', zIndex: '9998', transition: 'opacity 2s',
-        textShadow: '0 0 15px #0000FF', left: '50%', top: '50%', transform: 'translate(-50%, -50%)'
-    });
-    document.body.appendChild(eye);
+    // 2. 巨大な目の生成
+    const eyeContainer = document.createElement('div');
+    eyeContainer.id = 'giant-eye';
+    document.body.appendChild(eyeContainer);
 
     let idleTimer;
     const resetIdle = () => {
         clearTimeout(idleTimer);
-        eye.style.opacity = '0';
-        document.body.style.opacity = '1';
+        eyeContainer.style.opacity = '0';
+        document.body.classList.remove('glitch');
         idleTimer = setTimeout(() => {
-            eye.style.opacity = '0.4'; // 10秒放置で目が浮かぶ
-            document.body.style.opacity = '0.2'; // 画面が沈む
-        }, 10000);
+            eyeContainer.style.opacity = '0.8'; // 画面一杯に目が浮かぶ
+            document.body.classList.add('glitch'); // 画面が小刻みに震え始める
+        }, 10000); // 10秒放置
     };
     ['mousemove', 'keydown', 'click'].forEach(e => document.addEventListener(e, resetIdle));
     resetIdle();
 
-    // 3. 忘却と再励起システム (5秒で復帰)
+    // 3. 忘却と再励起 (クリックで薄くなり、5秒で復帰)
     document.querySelectorAll('[data-waft-id]').forEach(el => {
         el.addEventListener('click', () => {
-            el.style.transition = "opacity 0.5s";
             el.style.opacity = "0.1";
             el.style.pointerEvents = "none";
             setTimeout(() => {
-                el.style.opacity = "0.4";
+                el.style.opacity = "0.5";
                 el.style.pointerEvents = "auto";
             }, 5000);
         });
     });
 
-    // 4. コンソールログ
+    // 4. コンソール：三条瞳と青ya、跨の対話
     console.clear();
     console.log("%c[SYSTEM] 対境界線広域干渉及び超領域的表現開発機構", "font-weight:bold; color:#555;");
-    console.log("%c三条瞳：観測を継続してください。逃げても無駄です。", "color:#900;");
+    console.log("%c三条瞳：観測ログの増大を確認。これらは全て「記録」されます。", "color:#900;");
+    console.log("%c青ya、跨：そんなにじっと見つめないでよ。恥ずかしいじゃないか。", "color:#00f;");
 });
