@@ -76,4 +76,19 @@
             document.title = document.hidden ? "観測の継続を推奨します" : "WAFT | Terminal";
         });
 
-        // 第四の壁：開発者ツールへの三
+        // 第四の壁：開発者ツールへの三条瞳のログ
+        console.log("%c[WAFT SYSTEM] 内部プロトコルへのアクセスを確認。", "color: #888; font-family:serif;");
+        console.log("%c三条瞳：観測データの整合性を維持してください。過度な干渉は推奨されません。", "color: #ccc; font-family:serif; font-style:italic;");
+
+        // 青い目の出現
+        setInterval(() => {
+            const x = Math.random() * (window.innerWidth - 50);
+            const y = Math.random() * (window.innerHeight - 50);
+            eye.style.left = x + 'px';
+            eye.style.top = y + 'px';
+            eye.style.opacity = '0.35';
+            setTimeout(() => { eye.style.opacity = '0'; }, 700);
+        }, 6000);
+    </script>
+</body>
+</html>
