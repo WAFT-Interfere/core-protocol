@@ -4,6 +4,44 @@
     --accent-blue: #0000FF;
 }
 
+/* --- スマホ・PC共通の基本設定 --- */
+:root {
+    --bg: #000;
+    --text: #777;
+    --accent-blue: #0000FF;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: sans-serif;
+    margin: 0;
+    line-height: 1.8;
+    /* スマホで文字が勝手に小さくなるのを防ぐ */
+    -webkit-text-size-adjust: 100%;
+}
+
+/* コンテナ：スマホでは左右の余白を少し狭くして、読みやすくする */
+.container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 60px 20px; /* 上下の余白を少し詰めました */
+    box-sizing: border-box; /* はみ出し防止 */
+}
+
+/* スマホ用の文字サイズ調整：画面幅に合わせて柔軟に変わるようにします */
+h1 { font-size: clamp(20px, 6vw, 24px); }
+h2 { font-size: 16px; }
+p, .nav-link { font-size: 15px; }
+
+/* スマホで見るときだけ適用される設定 */
+@media (max-width: 480px) {
+    .container {
+        padding: 40px 15px;
+    }
+    h1 { margin-bottom: 30px; }
+}
 /* 基本設定 */
 body {
     background-color: var(--bg);
@@ -79,3 +117,70 @@ a:hover { color: var(--accent-blue); }
     .nav-link { font-size: 15px; }
     p, .article { font-size: 14px; }
 }
+
+/* --- 追加ギミック用 --- */
+
+/* 画面がドロドロに染まる演出 */
+.melt-effect {
+    animation: melt 10s forwards;
+    filter: blur(2px) contrast(200%);
+}
+@keyframes melt {
+    0% { background: #000; }
+    100% { background: radial-gradient(circle, #0000FF 0%, #000 70%); }
+}
+
+/* 画面が逆さまになる（ブラクラ演出用） */
+.flip-screen {
+    transform: rotate(180deg);
+    transition: transform 1s ease-in-out;
+}
+
+/* 文字が重力で落ちるための準備 */
+.falling-char {
+    display: inline-block;
+    transition: transform 2s cubic-bezier(0.47, 0, 0.745, 0.715);
+    pointer-events: none;
+}
+
+/* ブラクラ演出時のノイズ画面 */
+#noise-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('https://media.giphy.com/media/oEI9uWUznW3pS/giphy.gif'); /* ノイズのgif等 */
+    opacity: 0.3;
+    z-index: 10002;
+    pointer-events: none;
+    display: none;
+}
+
+/* --- 青yaヽ跨の侵食エフェクト --- */
+
+/* 画面を青くドロドロにする */
+.melt-effect {
+    transition: background 3s ease;
+    background: radial-gradient(circle, #0000FF 0%, #000 80%) !important;
+    overflow: hidden;
+}
+
+/* 画面を上下反転させる */
+.flip-screen {
+    transform: rotate(180deg);
+    transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* 文字崩壊のコンテナ制御 */
+.falling-char {
+    display: inline-block;
+    will-change: transform;
+}
+
+#aoya-chat {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 280px; height: 350px;
+    background: #000; border: 1px solid #0000FF;
+    z-index: 10000; display: flex; flex-direction: column;
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.3);
+}
+.melt-effect { transition: background 3s ease; background: radial-gradient(circle, #0000FF 0%, #000 85%) !important; overflow: hidden; }
+.flip-screen { transform: rotate(180deg); transition: transform 1.5s ease-in-out; }

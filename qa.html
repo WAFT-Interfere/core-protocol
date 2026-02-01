@@ -3,39 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ページ名 | WAFT</title>
+    <title>Q&A | WAFT</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .qa-card { margin-bottom: 40px; border-bottom: 1px solid #111; padding-bottom: 30px; }
+        .question { color: #eee; font-size: 16px; font-weight: bold; margin-bottom: 15px; display: block; position: relative; padding-left: 30px; }
+        .question::before { content: "Q."; position: absolute; left: 0; color: var(--accent-blue); }
+        .answer { color: #777; font-size: 14px; line-height: 1.8; display: block; padding-left: 30px; position: relative; }
+        .answer::before { content: "A."; position: absolute; left: 0; color: #444; }
+    </style>
 </head>
 <body>
     <div class="container">
         <span class="label">照会プロトコル</span>
-        <h1 style="font-size:16px; color:#eee; font-weight:normal; margin-bottom:60px;">認識の齟齬に関するQ&A</h1>
+        <h1>認識の齟齬に関するQ&A</h1>
         
-        <div class="article">
-            <span class="q">覚えのない記憶が混入しています。</span>
-            <span class="a">それは「想起される対象は、想起に先んじて概念的実在性を有する」という逆因果論の結果です。あなたの過去が今、書き換えられました。記憶が混入した時点で、次第に覚えのあるものへ変化します。安心して。</span>
+        <div class="qa-card">
+            <span class="question">覚えのない記憶が混入しています。</span>
+            <span class="answer">それは「想起される対象は、想起に先んじて概念的実在性を有する」という逆因果論の結果です。あなたの過去が今、書き換えられました。記憶が混入した時点で、次第に覚えのあるものへ変化します。安心して。</span>
         </div>
 
-        <div class="article">
-            <span class="q">青yaヽ跨はどこにいますか？</span>
-            <span class="a">「君の近所のイマジナリーお兄さん」として、あなたの認識が励起された瞬間に隣に現れます。目が合ったね。じゃあ、ご近所だ……。</span>
-        </div>
-
-        <div class="article">
-            <span class="q">救済を求めたいのですが。</span>
-            <span class="a">本機構は解答を与えず、救済を約束しません。</span>
+        <div class="qa-card">
+            <span class="question">青yaヽ跨はどこにいますか？</span>
+            <span class="answer">「君の近所のイマジナリーお兄さん」として、あなたの認識が励起された瞬間に隣に現れます。目が合ったね。じゃあ、ご近所だ……。</span>
         </div>
 
         <div id="registration-zone">
-            <p style="font-size:11px; color:#444; margin-bottom:15px;">【共同編纂者登録プロトコル】</p>
-            <input type="text" id="reg-name" placeholder="名称を定義してください">
-            <textarea id="reg-memo" placeholder="あなたの境界線を記述してください" rows="3"></textarea>
+            <p style="font-size:11px; color:#444; margin-bottom:20px; letter-spacing: 1px;">【共同編纂者登録プロトコル】</p>
+            <div style="font-size:13px; color:#666; line-height:1.8; margin-bottom:25px;">
+                本機構は、あなたの実存を定義しません。このフォームは、あなたが「私」という境界線をこちら側の記録に一時的に浸食させるためのものです。送信された名称と記述は、本機構のデータベース、あるいは「青yaヽ跨」の記憶の隅にノイズとして蓄積されます。
+                <br><br>
+                <span style="font-size:11px; color:#444;">※これは返信を目的とした問い合わせ窓口ではありません。あなたの存在を、ただそこに置くための行為です。</span>
+            </div>
+            <input type="text" id="reg-name" placeholder="名称（あなたが呼ばれたい名前）">
+            <textarea id="reg-memo" placeholder="記述（今のあなたの状態、または境界線の形）" rows="3"></textarea>
             <button id="reg-btn">EXISTENCE SUBMIT</button>
-            <div id="reg-msg" style="font-size:12px; margin-top:15px; min-height:1.5em; line-height:1.6;"></div>
+            <div id="reg-msg" style="font-size:14px; margin-top:15px; min-height:1.5em; line-height:1.6;"></div>
         </div>
 
-        <div style="text-align:center; margin-top:80px; padding-bottom: 40px;">
-            <a href="index.html" style="font-size:12px; color:#333; text-decoration:none;">[ RETURN ]</a>
+        <div style="text-align:center; margin-top:80px; padding-bottom: 50px;">
+            <a href="index.html" class="nav-link">[ RETURN TO GATE ]</a>
         </div>
     </div>
     <script src="waft-core.js"></script>
