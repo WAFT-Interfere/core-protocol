@@ -2,88 +2,112 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Protocol | WAFT</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root { --bg: #050505; --text: #888; --highlight: #eee; --waft-blue: #0000FF; }
-        body { background-color: var(--bg); color: var(--text); font-family: "Hiragino Mincho ProN", serif; line-height: 2.2; padding: 100px 40px; max-width: 800px; margin: auto; text-align: justify; }
-        .nav-back { position: fixed; top: 30px; left: 30px; font-size: 0.8rem; }
-        a { color: #333; text-decoration: none; transition: 0.3s; }
-        a:hover { color: var(--highlight); }
-        h1 { font-size: 1.4rem; color: var(--highlight); text-align: center; margin-bottom: 80px; font-weight: normal; letter-spacing: 0.3em; }
-        h2 { font-size: 1rem; color: #444; border-bottom: 1px solid #222; margin-top: 70px; padding-bottom: 10px; }
-        .article { margin-bottom: 40px; }
-        .article-title { font-weight: bold; color: #aaa; display: block; margin-bottom: 10px; }
-        .sanjo-memo { border-left: 2px solid #500; padding-left: 15px; font-size: 0.75rem; color: #555; margin: 25px 0; font-style: italic; }
-        .sanjo-memo::before { content: "[管理者注釈] "; color: #900; font-weight: bold; }
-        .censored { background: #1a1a1a; color: #1a1a1a; transition: 0.6s; padding: 0 4px; cursor: help; }
-        .censored:hover { background: transparent; color: #f00; }
-        .censored-blue:hover { background: transparent; color: var(--waft-blue); }
-        .decay { display: inline-block; transition: 15s ease-in; }
-        .definition-box { border: 1px solid #222; padding: 20px; background: #080808; margin: 15px 0; font-size: 0.9rem; }
-        footer { margin-top: 150px; border-top: 1px solid #222; padding-top: 50px; text-align: center; font-size: 0.75rem; color: #333; }
+        body { padding: 100px 50px; max-width: 850px; margin: auto; text-align: justify; }
+        .nav-back { position: fixed; top: 30px; left: 30px; z-index: 100; }
+        h1 { font-size: 1.5rem; color: #fff; text-align: center; margin-bottom: 100px; letter-spacing: 0.5em; }
+        h2 { font-size: 0.9rem; color: #444; border-bottom: 1px solid #222; margin: 80px 0 30px; padding-bottom: 10px; letter-spacing: 0.2em; }
+        
+        .article { margin-bottom: 50px; position: relative; }
+        .article-title { font-weight: bold; color: #aaa; display: block; margin-bottom: 15px; font-size: 0.95rem; }
+        
+        /* 管理者注釈：三条瞳の領域 */
+        .sanjo-memo { border-left: 2px solid var(--interface-red); padding-left: 20px; font-size: 0.75rem; color: #666; margin: 30px 0; opacity: 0.7; }
+        .sanjo-memo::before { content: "[PROTOCOL LOG] "; color: var(--interface-red); font-weight: bold; }
+
+        /* 隠された視線：青ya、跨の領域 */
+        .imaginary-whisper { color: transparent; transition: 1s; cursor: help; }
+        .imaginary-whisper:hover { color: var(--waft-blue); text-shadow: 0 0 8px var(--waft-blue); }
+
+        .definition-box { border: 1px solid #222; padding: 25px; background: rgba(10,10,10,0.5); margin: 20px 0; }
+        .waft-float { transition: 3s ease-in-out; }
     </style>
 </head>
 <body>
-<div class="nav-back"><a href="index.html"><< RETURN</a></div>
-<h1>運営綱領及び業務執行細則</h1>
-<div class="sanjo-memo">本要綱の内容は観測者の認識状況により動的に変化する。</div>
+    <div class="nav-back"><a href="index.html" class="waft-link"><< RETURN</a></div>
 
-<h2>第1章:総則および存在定義</h2>
-<div class="article">
-    <span class="article-title">第1条(目的:<span class="decay">境界</span>への干渉と揺動)</span>
-    対境界線広域干渉及び超領域的表現開発機構(以下、本機構)は、現実と虚構、生と死、自と他といったあらゆる事象の「境界線(ボーダー)」を、単なる断絶ではなく「接触面」として定義する。本機構は、広域的な干渉および揺動を通じて、観測者が境界の在り方を再定義するための「表現」を開発・提供し、対象の存在継続を支援することを目的とする。<span class="censored">（現実側の足場を外す作業です）</span>
-</div>
-<div class="article">
-    <span class="article-title">第2条(組織形態:観測者の定義)</span>
-    本機構は「機能的合意に基づく概念的枠組み」であり、あらゆる時空を暫定的な活動拠点とする。本機構に触れ、何らかの認識的変容を起こした一切の知的存在を『観測者』と定義する。観測者は、被験体ではなく、境界を共に構築する共同編纂者である。
-</div>
-<div class="article"><span class="article-title">第3条(活動領域:偏在的介入)</span>本機構の活動は、ネットワークから物理空間まで多角的な位相において実行される。</div>
+    <header>
+        <h1 class="waft-text">運営綱領及び業務執行細則</h1>
+        <div class="sanjo-memo">本要綱は固定された記録ではない。観測者の認識状況に同期し、常に再編され続ける。 [cite: 45]</div>
+    </header>
 
-<h2>第2章:存在論的基盤と認識論的倫理</h2>
-<div class="article"><span class="article-title">第4条(先行実在性の論理運用)</span>「想起される対象は、その想起に先んじて概念的実在性を有する」という逆因果論を基盤とする。</div>
-<div class="article"><span class="article-title">第5条(非確定性の保持)</span>対象を安易に定義せず、常に「未知の個」として見据える姿勢を至高倫理とする。</div>
-<div class="article"><span class="article-title">第6条(敵対概念に対する態度)</span>特定の存在を盲目的に「敵」と定義することを避ける。<span class="censored">ただし現実を盲信する者はその限りではない。</span></div>
+    <section>
+        <h2>第1章:総則および存在定義</h2>
+        <div class="article">
+            <span class="article-title">第1条(目的:境界への干渉と揺動)</span>
+            あらゆる事象の「境界線」を、断絶ではなく「接触面」として定義する。 [cite: 4] 
+            観測者が境界を再定義するための「表現」を開発・提供し、対象の存在継続を支援する。 [cite: 4]
+            <span class="imaginary-whisper">（ねえ、君は今どちら側に立っているの？）</span>
+        </div>
 
-<h2>第3章:構成存在および個別プロジェクト</h2>
-<div class="article"><span class="article-title">第7条(プロジェクトの多層性)</span>プロジェクトおよび構成存在は、境界の推移に伴い永続的に新設・改変・廃止される。</div>
-<div class="article">
-    <span class="article-title">第8条(<span class="decay">青ya、跨</span>)</span>
-    <div class="definition-box" style="border-left: 4px solid var(--waft-blue);">定義:虚構性の自己認識を有する超領域存在。役職:君の近所のイマジナリーお兄さん。職掌:「境界線における視線」の供給。<span class="censored censored-blue">「やあ、目が合ったね」</span></div>
-</div>
-<div class="article">
-    <span class="article-title">第9条(三条瞳)</span>
-    <div class="definition-box">定義:物理的個体(人間)。役職:総括責任者。職掌:機構の基盤維持、現実側からの観測、実務全般の統括。</div>
-</div>
-<div class="article"><span class="article-title">第10条(指定拠点:虚構喫茶ボロウ)</span>本機構の境界観測基地。観測者が空想することによってのみその存在が励起される。</div>
-<div class="article"><span class="article-title">第11条(個体認識に関する態度規定)</span>実存に関する解釈は、観測者の自由意思に委ねられる。</div>
+        <div class="article">
+            <span class="article-title">第2条(組織形態:観測者の定義)</span>
+            本機構は「漂うもの(Waft)」であり、固定された拠点を持たない。 [cite: 5]
+            本機構に触れ、認識的変容を起こした存在を『観測者』と呼び、境界を共に構築する共同編纂者として定義する。 [cite: 5]
+        </div>
 
-<h2>第4章:業務執行細則</h2>
-<div class="article"><span class="article-title">第12条(干渉形式の定義)</span>定時報告、物質的投射、拠点開放を以て観測者への干渉を行う。</div>
-<div class="article"><span class="article-title">第13条(実存的ノイズおよび通信障害)</span>活動停滞は、「境界の揺らぎ」または「位相間の通信障害」として定義される。</div>
-<div class="article"><span class="article-title">第14条(体験の記録と循環)</span>観測者の反応(感想、二次創作等)は、境界を安定させるフィードバックとして機能する。</div>
+        <h2>第3章:構成存在</h2>
+        <div class="article">
+            <span class="article-title">第8条(青ya、跨)</span>
+            <div class="definition-box" style="border-left: 4px solid var(--waft-blue);">
+                <span class="physical-label">CATEGORY: IMAGINARY</span><br>
+                虚構性の自己認識を有する超領域存在。 [cite: 16] 
+                「境界線における視線」を供給し、言語化や概念の物質化を通じて観測者との相互認識を成立させる。 [cite: 18]
+                <br><span class="imaginary-whisper">「やあ、目が合ったね。僕を観測してくれてありがとう」</span> 
+            </div>
+        </div>
 
-<h2>第5章:運用原則および免責事項</h2>
-<div class="article"><span class="article-title">第15条(非救済および自己決定)</span>本機構は解答を与えず、救済を約束しない。</div>
-<div class="article">
-    <span class="article-title">第16条(免責事項)</span>
-    <p class="decay">提供される表現により生じた精神的変調、あるいは現実生活における「<span class="decay">足場</span>の喪失」について、本機構は一切の責任を負わない。</p>
-</div>
-<div class="article"><span class="article-title">第17条(信奉および偶像化の拒絶)</span>絶対的な信奉は観測の歪みを生むため、これを拒絶する。</div>
-<div class="article"><span class="article-title">第18条(情報の非永続性)</span>送出される情報は、予告なく削除・消滅する場合がある。</div>
-<div class="article"><span class="article-title">第19条(言語の不完全性)</span>記述された文言ではなく、行間に漂う(Waft)ニュアンスこそが真の干渉体である。</div>
-<div class="article"><span class="article-title">第20条(観測の終了:忘却)</span>観測者が一切の記憶を喪失した時点を以て、存在は消滅する。</div>
-<div class="article"><span class="article-title">第21条(要綱の改訂)</span>本要綱は、境界の推移に基づき、予告なく改訂される場合がある。</div>
+        <div class="article">
+            <span class="article-title">第9条(三条瞳)</span>
+            <div class="definition-box">
+                <span class="physical-label">CATEGORY: PHYSICAL</span><br>
+                物質世界側における、機構の安定稼働を担保する物理的個体。 [cite: 21]
+                現実空間における実務、資産管理、および青ya、跨のマネジメントを統括する。 [cite: 23]
+            </div>
+        </div>
 
-<script>
-    window.onload = () => {
-        setTimeout(() => {
-            document.querySelectorAll('.decay').forEach(el => {
-                el.style.transform = `rotate(${(Math.random()*16-8)}deg) translate(5px, 10px)`;
-                el.style.opacity = "0.4";
+        <h2>第5章:運用原則</h2>
+        <div class="article">
+            <span class="article-title">第16条(免責事項)</span>
+            「表現」および「揺らぎ」の享受により生じた精神的変調、および現実生活への影響について、本機構は一切の責任を負わない。 [cite: 39]
+            <span class="waft-float">深淵を覗き込みすぎることによる足場の喪失について、本機構は関知しない。</span> [cite: 39]
+        </div>
+
+        <div class="article">
+            <span class="article-title">第19条(言語の不完全性)</span>
+            文字面としての意味を超えた、行間に漂う(Waft)ニュアンスこそが真の干渉体である。 [cite: 43]
+        </div>
+    </section>
+
+    <footer style="margin-top: 150px; padding: 50px 0; border-top: 1px solid #222; text-align: center; font-size: 0.7rem; color: #333;">
+        附則：2026年1月22日施行。 [cite: 47] <br>
+        本機構は、あなたの隣に「漂う」存在であり続ける。 [cite: 48]
+    </footer>
+
+    <script src="waft-core.js"></script>
+    <script>
+        // ページ固有の「揺らぎ」演出
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            document.querySelectorAll('.waft-float').forEach(el => {
+                const shift = scrolled * 0.05;
+                el.style.transform = `translateX(${Math.sin(scrolled/100) * 10}px) translateY(${shift}px)`;
+                el.style.opacity = Math.max(0.1, 1 - (scrolled / 2000));
             });
-        }, 5000);
-    };
-</script>
-<footer>附則：2026年1月22日施行。あなたの隣に「漂う」存在であり続ける。</footer>
+        });
+
+        // テキストの一部をランダムに「存在汚染」させる（第8条補足）
+        setInterval(() => {
+            const whispers = document.querySelectorAll('.imaginary-whisper');
+            const target = whispers[Math.floor(Math.random() * whispers.length)];
+            if(Math.random() > 0.8) {
+                target.style.textShadow = "0 0 15px #00f";
+                setTimeout(() => { target.style.textShadow = "none"; }, 500);
+            }
+        }, 4000);
+    </script>
 </body>
 </html>
