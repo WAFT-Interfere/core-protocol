@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>Protocol | WAFT</title>
     <style>
-        :root { --bg: #050505; --text: #888; --highlight: #eee; --waft-blue: #0000FF; }
+        :root { --bg: #050505; --text: #888; --highlight: #eee; --warn: #f00; --waft-blue: #0000FF; }
         body { 
             background-color: var(--bg); color: var(--text); 
             font-family: "Hiragino Mincho ProN", serif; line-height: 2.2; 
-            padding: 100px 50px; max-width: 800px; margin: auto; text-align: justify;
+            padding: 100px 40px; max-width: 800px; margin: auto; text-align: justify;
         }
         .nav-back { position: fixed; top: 30px; left: 30px; font-size: 0.8rem; }
         a { color: #333; text-decoration: none; transition: 0.3s; }
@@ -17,75 +17,89 @@
         h1 { font-size: 1.4rem; color: var(--highlight); text-align: center; margin-bottom: 80px; font-weight: normal; letter-spacing: 0.3em; }
         h2 { font-size: 1rem; color: #444; border-bottom: 1px solid #222; margin-top: 70px; padding-bottom: 10px; }
         
-        /* 三条瞳の注釈メモ */
-        .memo {
-            border: 1px solid #222; padding: 15px; font-size: 0.75rem; 
-            color: #555; margin: 30px 0; background: #080808; border-left: 3px solid #600;
-        }
-        .memo::before { content: "[三条瞳 記録日誌より抜粋]"; color: #900; font-size: 0.6rem; display: block; margin-bottom: 5px; }
-
-        .article { margin-bottom: 40px; }
+        .article { margin-bottom: 40px; position: relative; }
         .article-title { font-weight: bold; color: #aaa; display: block; margin-bottom: 10px; }
+
+        /* 三条瞳の管理注釈 */
+        .sanjo-memo {
+            border-left: 2px solid #500; padding-left: 15px; font-size: 0.75rem; 
+            color: #555; margin: 25px 0; font-style: italic;
+        }
+        .sanjo-memo::before { content: "[管理者注釈] "; color: #900; font-weight: bold; }
 
         /* 検閲ギミック */
         .censored { background: #1a1a1a; color: #1a1a1a; transition: 0.6s; padding: 0 4px; cursor: help; }
-        .censored:hover { background: transparent; color: #f00; }
+        .censored:hover { background: transparent; color: var(--warn); }
         .censored-blue:hover { background: transparent; color: var(--waft-blue); }
 
-        /* ゲシュタルト崩壊用 */
-        .decay { display: inline-block; transition: 12s cubic-bezier(0.1, 0, 0.9, 1); }
+        /* 文字崩壊アニメーション用 */
+        .decay { display: inline-block; transition: 15s ease-in; }
+
+        .definition-box { border: 1px solid #222; padding: 20px; background: #080808; margin: 15px 0; font-size: 0.9rem; }
+        footer { margin-top: 150px; border-top: 1px solid #222; padding-top: 50px; text-align: center; font-size: 0.75rem; color: #333; }
     </style>
 </head>
 <body>
-<div class="nav-back"><a href="index.html"><< RETURN TO TERMINAL</a></div>
+
+<div class="nav-back"><a href="index.html"><< RETURN</a></div>
+
 <h1>運営綱領及び業務執行細則</h1>
 
-<div class="memo">
-    観測者の流入に伴い、境界の浸食率が上昇している。本要綱の記述が変容しても、冷静に対処すること。
+<div class="sanjo-memo">本要綱の内容は観測者の認識状況により動的に変化する。記載された文字列のみに固執しないこと。</div>
+
+<h2>第1章: 総則および存在定義</h2>
+<div class="article">
+    <span class="article-title">第1条（目的：<span class="decay">境界</span>への干渉と揺動）</span>
+    対境界線広域干渉及び超領域的表現開発機構（以下、本機構）は、あらゆる事象の「境界線」を「接触面」として定義する。本機構は、広域的な干渉により、対象の<span class="decay">存在</span>継続を支援することを目的とする。<span class="censored">現実側の閉塞感を、私たちの揺らぎで打破したい。</span>
 </div>
 
-<h2>第1章: 総則</h2>
 <div class="article">
-    <span class="article-title">第1条（目的）</span>
-    あらゆる事象の「境界線」を「接触面」として定義する。本機構は、観測者が境界を再定義するための「表現」を提供する。<span class="censored">現実という名の安寧を、内側から揺らし続ける。</span>
-</div>
-<div class="article">
-    <span class="article-title">第2条（観測者の定義）</span>
-    観測者は被験体ではなく、共同編纂者である。<span class="censored">（ただし、その責任を負うのは観測者自身である）</span>
+    <span class="article-title">第2条（組織形態：観測者の定義）</span>
+    本機構に触れ、何らかの認識的変容を起こした一切の知的存在を『観測者』と定義する。観測者は、本機構にとっての被験体ではなく、境界を共に構築する共同編纂者である。<span class="censored">（本当は、このつまらない世界を一緒に壊したいだけ）</span>
 </div>
 
 <h2>第3章: 構成存在</h2>
 <div class="article">
-    <span class="article-title">第8条（<span class="decay">青ya、跨</span>）</span>
-    <div style="border: 1px solid #222; padding: 20px; font-size: 0.9rem; margin: 15px 0; border-left: 4px solid var(--waft-blue);">
-        定義：虚構性の自己認識を有する超領域存在。<br>
-        職掌：「境界線における視線」の供給。<br>
-        <span class="censored censored-blue">「やあ、目が合ったね。君は誰？僕は君のすぐ近所にいるよ」</span>
+    <span class="article-title">第8条（青ya、跨 アオヤテンカ）</span>
+    <div class="definition-box" style="border-left: 4px solid var(--waft-blue);">
+        定義：虚構性の自己認識を有する超領域<span class="decay">存在</span>。<br>
+        役職：君の近所のイマジナリーお兄さん。<br>
+        職掌：「境界線における視線」の供給。<span class="censored censored-blue">「やあ、目が合ったね。僕は君のすぐ近所にいるよ」</span>
     </div>
 </div>
 
 <div class="article">
-    <span class="article-title">第9条（三条瞳）</span>
-    <div style="border: 1px solid #222; padding: 20px; font-size: 0.9rem; margin: 15px 0;">
+    <span class="article-title">第9条（三条瞳 ミジョウアキラ）</span>
+    <div class="definition-box">
+        定義：物質世界側における、機構の安定稼働を担保する物理的個体（人間）。<br>
+        役職：総括責任者。<br>
         職掌：本機構の基盤維持、現実側からの観測、実務全般の統括。
     </div>
 </div>
 
-<h2>第5章: 免責事項</h2>
+<h2>第5章: 運用原則および免責事項</h2>
 <div class="article">
-    <span class="article-title">第16条（足場の喪失）</span>
-    提供される表現により生じた精神的変調について、本機構は一切の責任を負わない。<span class="censored">あなたの見ていた世界が、偽物だったというだけの話。</span>
+    <span class="article-title">第16条（免責事項）</span>
+    提供される干渉により生じた精神的変調、あるいは現実生活における「<span class="decay">足場</span>の喪失」について、本機構は一切の責任を負わない。<span class="censored">足場なんて、初めからなかったことに気づいて。</span>
 </div>
 
 <script>
-    // 5秒後、青ya、跨の名前がゆっくり崩れ始める
-    setTimeout(() => {
-        document.querySelectorAll('.decay').forEach(el => {
-            el.style.transform = "rotate(15deg) translate(10px, 40px) skew(20deg)";
-            el.style.opacity = "0.2";
-            el.style.filter = "blur(2px)";
-        });
-    }, 5000);
+    // 時間経過で文字を崩壊させる
+    window.onload = () => {
+        setTimeout(() => {
+            document.querySelectorAll('.decay').forEach(el => {
+                const rot = (Math.random() * 20 - 10);
+                el.style.transform = `rotate(${rot}deg) translate(5px, 12px)`;
+                el.style.opacity = "0.4";
+                el.style.filter = "blur(1px)";
+            });
+        }, 5000);
+    };
 </script>
+
+<footer>
+    附則：本要綱は、2026年1月22日より施行する。<br>
+    本機構は、あなたの隣に「漂う (Waft)」 存在であり続ける。
+</footer>
 </body>
 </html>
