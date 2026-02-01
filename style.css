@@ -1,22 +1,21 @@
 :root {
-    --waft-blue: #0000FF;
-    --bg-black: #050505;
-    --text-gray: #888;
-    --interface-red: #900;
+    --bg: #000;
+    --text: #999;
+    --accent: #00f;
+    --dim: #222;
 }
 
 body {
-    background-color: var(--bg-black);
-    color: var(--text-gray);
-    font-family: "Hiragino Mincho ProN", "MS Mincho", serif;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
     margin: 0;
     overflow-x: hidden;
-    line-height: 1.8;
-    cursor: crosshair; /* 観測の照準としてのカーソル */
+    line-height: 1.6;
 }
 
-/* 画面全体を覆うノイズ（境界の揺らぎ） */
-#waft-overlay {
+/* 確実に表示される粒状ノイズ */
+#grain-canvas {
     position: fixed;
     top: 0;
     left: 0;
@@ -24,55 +23,36 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.03;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAElBMVEUAAAD8/Pz09PT4+PjMzMz////8isYRAAAABnRSTlMAAAAAAABupgeRAAAANElEQVQ4y2NgwAaYmJgYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmBhsAAnEAnvS8ptVAAAAAElFTkSuQmCC');
-    animation: grain 0.5s steps(10) infinite;
+    opacity: 0.05;
 }
 
-@keyframes grain {
-    0%, 100% { transform: translate(0, 0); }
-    10% { transform: translate(-1%, -1%); }
-    30% { transform: translate(1%, 1%); }
-    50% { transform: translate(-0.5%, 0.5%); }
-    70% { transform: translate(0.5%, -0.5%); }
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-/* 漂うテキストの基本設定 */
-.waft-text {
-    display: inline-block;
-    transition: transform 2s ease-in-out, opacity 2s ease-in-out;
+a:hover {
+    color: #fff;
 }
 
-/* 青ya、跨の干渉領域 */
-.imaginary-link {
-    color: var(--waft-blue) !important;
-    text-shadow: 0 0 0px var(--waft-blue);
-    transition: 0.5s;
-    position: relative;
+.waft-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 100px 20px;
 }
 
-.imaginary-link:hover {
-    text-shadow: 0 0 10px var(--waft-blue);
-    letter-spacing: 0.1em;
+/* 忘却：一度クリックされた要素に付与される */
+.forgotten {
+    display: none !important;
 }
 
-/* 三条瞳の管理領域 */
-.physical-label {
-    border-left: 1px solid var(--interface-red);
-    padding-left: 10px;
-    font-size: 0.7rem;
-    color: var(--interface-red);
-}
-
-/* 画面の足場が喪失するアニメーション */
-.decay-step {
-    animation: fall 20s forwards;
-}
-
-@keyframes fall {
-    to {
-        transform: translateY(20px) rotate(2deg);
-        opacity: 0;
-        filter: blur(5px);
-    }
+/* スタイリッシュな無機質ラベル */
+.label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
 }

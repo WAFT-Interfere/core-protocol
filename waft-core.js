@@ -1,56 +1,67 @@
-// WAFT Core Protocol Implementation
+// WAFT Core System - 2026 Revised
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. ノイズレイヤーの動的生成
-    const overlay = document.createElement('div');
-    overlay.id = 'waft-overlay';
-    document.body.appendChild(overlay);
-
-    // 2. 観測者の視線（マウス）による干渉
-    document.addEventListener('mousemove', (e) => {
-        const x = e.clientX / window.innerWidth;
-        const y = e.clientY / window.innerHeight;
-        // わずかに画面を傾ける（境界の揺らぎ）
-        document.body.style.transform = `perspective(1000px) rotateY(${(x - 0.5) * 2}deg) rotateX(${(y - 0.5) * -2}deg)`;
+    // 1. 粒状ノイズの生成 (Canvas)
+    const canvas = document.createElement('canvas');
+    canvas.id = 'grain-canvas';
+    Object.assign(canvas.style, {
+        position: 'fixed', top: '0', left: '0', width: '100%', height: '100%',
+        pointerEvents: 'none', zIndex: '9999', opacity: '0.07'
     });
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
 
-    // 3. 要綱第20条：忘却へのカウントダウン
-    let idleTime = 0;
-    const idleLimit = 30; // 30秒で消滅開始
-    
-    setInterval(() => {
-        idleTime++;
-        if (idleTime > idleLimit) {
-            document.body.classList.add('decay-step');
-            document.title = "存在の忘却を確認中...";
+    const resize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
+
+    const drawNoise = () => {
+        const w = canvas.width, h = canvas.height;
+        const idata = ctx.createImageData(w, h);
+        const buffer32 = new Uint32Array(idata.data.buffer);
+        for (let i = 0; i < buffer32.length; i++) {
+            if (Math.random() < 0.5) buffer32[i] = 0xffffffff;
         }
-    }, 1000);
+        ctx.putImageData(idata, 0, 0);
+        setTimeout(drawNoise, 60);
+    };
+    drawNoise();
 
-    document.addEventListener('mousemove', () => {
-        idleTime = 0;
-        document.body.classList.remove('decay-step');
-        document.title = "WAFT | 対境界線広域干渉";
+    // 2. コンソールログでの語りかけ (第四の壁の侵食)
+    console.clear();
+    console.log("%c[SYSTEM] WAFT Terminal Initialized.", "color: #555; font-family: monospace; font-weight: bold;");
+    console.log("%c三条瞳：観測ログを開始。データの整合性に注意してください。", "color: #900; border-left: 2px solid #900; padding-left: 10px;");
+    console.log("%c青ya、跨：……やあ。見つかっちゃったかな。君がこれを読んでいるとき、僕はどこにいるんだろうね。", "color: #00f; border-left: 2px solid #00f; padding-left: 10px;");
+
+    // 3. 忘却システム (localStorageを使用した物理的消滅)
+    const forgottenIds = JSON.parse(localStorage.getItem('waft_forgotten') || '[]');
+    document.querySelectorAll('[data-waft-id]').forEach(el => {
+        const id = el.getAttribute('data-waft-id');
+        if (forgottenIds.includes(id)) {
+            el.style.display = 'none'; // 物理的に消去
+        }
+        el.addEventListener('click', () => {
+            if (!forgottenIds.includes(id)) {
+                forgottenIds.push(id);
+                localStorage.setItem('waft_forgotten', JSON.stringify(forgottenIds));
+            }
+        });
     });
 
-    // 4. コンソールへの密やかな干渉（第4条 逆因果論）
-    console.log("%c[SYSTEM] 観測者の接続を承認。既にあなたは「知って」いたはずです。", "color: #0000FF; font-weight: bold;");
+    // 4. 放置による実存の消失 (15秒放置でフェードアウト)
+    let idleTimer;
+    const fadeOut = () => {
+        document.body.style.transition = "opacity 10s ease-in-out";
+        document.body.style.opacity = "0";
+    };
+    const resetIdle = () => {
+        clearTimeout(idleTimer);
+        document.body.style.transition = "opacity 0.2s";
+        document.body.style.opacity = "1";
+        idleTimer = setTimeout(fadeOut, 15000);
+    };
+    ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(e => document.addEventListener(e, resetIdle));
+    resetIdle();
 });
-
-// 位相間の通信障害を模したランダムなグリッチ
-function triggerGlitch() {
-    const targets = document.querySelectorAll('h1, h2, a');
-    const target = targets[Math.floor(Math.random() * targets.length)];
-    const originalText = target.innerText;
-    
-    if(!originalText) return;
-
-    const chars = "境界揺らぎWaft死生虚実";
-    target.innerText = chars[Math.floor(Math.random() * chars.length)];
-    
-    setTimeout(() => {
-        target.innerText = originalText;
-    }, 150);
-}
-
-setInterval(() => {
-    if(Math.random() > 0.95) triggerGlitch();
-}, 3000);

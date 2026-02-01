@@ -2,95 +2,23 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAFT | Terminal</title>
+    <title>WAFT</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="terminal">
-
-    <canvas id="boundary-canvas" style="position:fixed; top:0; left:0; pointer-events:none; z-index:1;"></canvas>
-
-    <main style="position:relative; z-index:10; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh;">
+<body>
+    <div class="waft-container">
+        <span class="label">Organization</span>
+        <h1 style="font-size: 1.2rem; font-weight: normal; color: #fff; margin-bottom: 80px;">WAFT</h1>
         
-        <div id="contact-point" style="text-align:center;">
-            <h1 class="waft-text" style="font-weight:normal; font-size:1.2rem; letter-spacing:0.4em; color:#fff; margin-bottom:50px;">
-                対境界線広域干渉及び<br>超領域的表現開発機構
-            </h1>
-
-            <nav>
-                <ul style="list-style:none; padding:0;">
-                    <li style="margin:30px 0;">
-                        <a href="protocol.html" class="waft-link" data-info="[管理プロトコル]">>> 運営綱領 (Protocol)</a>
-                    </li>
-                    <li style="margin:30px 0;">
-                        <a href="archive.html" class="waft-link" data-info="[干渉ログ]">>> 干渉記録 (Archive)</a>
-                    </li>
-                    <li style="margin:30px 0;">
-                        <a href="https://waft-interfere.github.io/bollow/" target="_blank" class="waft-link imaginary-link" data-info="[虚構への接続]">>> 指定拠点 (Access Point)</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-
-        <div id="status-display" class="physical-label" style="position:fixed; bottom:30px; right:30px; font-size:0.6rem; line-height:1.5;">
-            STATUS: 観測待機中...<br>
-            PHASE: 0.000<br>
-            COORDINATE: <span id="coord">0, 0</span>
-        </div>
-
-    </main>
-
+        <nav>
+            <div style="margin-bottom: 20px;">
+                <a href="protocol.html" data-waft-id="link-protocol">> Protocol</a>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <a href="archive.html" data-waft-id="link-archive">> Archive</a>
+            </div>
+        </nav>
+    </div>
     <script src="waft-core.js"></script>
-    <script>
-        // index専用の演出：境界線の描画
-        const canvas = document.getElementById('boundary-canvas');
-        const ctx = canvas.getContext('2d');
-        let mouse = { x: 0, y: 0 };
-
-        window.onresize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
-        window.onresize();
-
-        document.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            document.getElementById('coord').innerText = `${mouse.x}, ${mouse.y}`;
-        });
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // 画面中央に漂う水平な「境界線」
-            ctx.beginPath();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-            ctx.lineWidth = 1;
-            const wave = Math.sin(Date.now() * 0.002) * 10;
-            ctx.moveTo(0, canvas.height/2 + wave);
-            ctx.lineTo(canvas.width, canvas.height/2 - wave);
-            ctx.stroke();
-
-            // マウス周辺の位相の乱れ
-            ctx.beginPath();
-            ctx.arc(mouse.x, mouse.y, 100, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(0, 0, 255, 0.2)';
-            ctx.stroke();
-
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // リンクホバー時の「認識的変容」
-        document.querySelectorAll('.waft-link').forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                const info = link.getAttribute('data-info');
-                document.querySelector('.physical-label').innerText = `STATUS: 接触を検知\nPHASE: 1.024\nTARGET: ${info}`;
-            });
-            link.addEventListener('mouseleave', () => {
-                document.querySelector('.physical-label').innerText = 'STATUS: 観測待機中...\nPHASE: 0.000\nCOORDINATE: ' + mouse.x + ', ' + mouse.y;
-            });
-        });
-    </script>
 </body>
 </html>
