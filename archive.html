@@ -2,105 +2,93 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive | WAFT</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { padding: 80px 50px; line-height: 2.2; }
-        h2 { font-size: 0.8rem; color: #333; border-bottom: 1px solid #111; padding-bottom: 10px; margin: 50px 0 30px; letter-spacing: 0.3em; }
+        .container { max-width: 600px; margin: 0 auto; padding: 100px 40px; }
+        h1 { font-size: 14px; color: #eee; font-weight: normal; margin-bottom: 60px; letter-spacing: 4px; }
+        h2 { font-size: 10px; color: #333; border-bottom: 1px solid #111; margin: 40px 0 20px; padding-bottom: 5px; letter-spacing: 2px; }
         
-        .entry { margin: 30px 0; padding-left: 20px; border-left: 1px solid #111; position: relative; transition: 0.5s; }
-        .entry:hover { border-left-color: var(--waft-blue); background: rgba(0, 0, 255, 0.02); }
+        .entry { margin-bottom: 30px; position: relative; }
+        .entry-label { font-size: 9px; color: #222; display: block; margin-bottom: 5px; letter-spacing: 1px; }
         
-        .entry-label { font-size: 0.6rem; color: #444; display: block; margin-bottom: 5px; }
-        .archive-link { color: #666; text-decoration: none; font-size: 0.95rem; transition: 0.3s; }
-        .archive-link:hover { color: #eee; text-shadow: 0 0 8px #fff; }
+        .archive-item {
+            display: inline-block;
+            font-size: 13px;
+            color: #666;
+            transition: color 0.3s, opacity 0.5s, transform 0.5s;
+        }
+        .archive-item:hover { color: #fff; }
 
-        #glitch-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--waft-blue); opacity: 0; pointer-events: none; z-index: 10000;
+        /* 青ya、跨 専用：虚構の青 */
+        .imaginary { color: var(--accent-blue) !important; font-weight: bold; }
+        
+        #whisper-log {
+            position: fixed; bottom: 40px; left: 40px;
+            font-size: 10px; color: var(--accent-blue);
+            opacity: 0; transition: 1s;
         }
     </style>
 </head>
 <body>
-    <div id="glitch-screen"></div>
-    <div class="nav-back"><a href="index.html" class="waft-link"><< RETURN</a></div>
+    <div class="waft-nav" style="position: fixed; top: 30px; left: 30px; font-size: 10px;">
+        <a href="index.html" data-waft-id="archive-exit">[ RETURN ]</a>
+    </div>
 
-    <header>
-        <h2 style="color: #666;">CORE PROTOCOL</h2>
+    <div class="container">
+        <span class="label">Database</span>
+        <h1>干渉記録 / Archive</h1>
+
+        <h2>INTERNAL</h2>
         <div class="entry">
-            <span class="entry-label">[INTERNAL DATA]</span>
-            <a href="protocol.html" class="archive-link">運営綱領及び業務執行細則</a>
+            <span class="entry-label">PROTOCOL</span>
+            <a href="protocol.html" class="archive-item" data-waft-id="arch-protocol">運営綱領及び業務執行細則</a>
         </div>
-    </header>
 
-    <main id="archive-list">
         <h2>EXTERNAL INTERFACES</h2>
-        
         <div class="entry">
-            <span class="entry-label">[PHYSICAL INDIVIDUAL]</span>
-            <a href="https://x.com/mizyouakira" target="_blank" class="archive-link" onclick="recordInterference(this)">三条瞳：@mizyouakira</a>
-        </div>
-
-        <div class="entry" style="border-left-color: var(--waft-blue);">
-            <span class="entry-label" style="color: var(--waft-blue);">[IMAGINARY INDIVIDUAL]</span>
-            <a href="https://x.com/aoyatenka023" target="_blank" class="archive-link imaginary-link" id="aoya-link" onmouseover="whisper(this)" onclick="recordInterference(this)">青ya、跨：@aoyatenka023</a>
+            <span class="entry-label">PHYSICAL_INDIVIDUAL</span>
+            <a href="https://x.com/mizyouakira" target="_blank" class="archive-item" data-waft-id="arch-sanjo">三条瞳：@mizyouakira</a>
         </div>
 
         <div class="entry">
-            <span class="entry-label">[ESTABLISHED FACILITY]</span>
-            <a href="https://waft-interfere.github.io/bollow/" target="_blank" class="archive-link" onclick="recordInterference(this)">虚構喫茶ボロウ</a>
+            <span class="entry-label">IMAGINARY_INDIVIDUAL</span>
+            <a href="https://x.com/aoyatenka023" target="_blank" 
+               class="archive-item imaginary" 
+               id="aoya-link"
+               data-waft-id="arch-aoya"
+               onmouseover="interfereAoya()">青ya、跨：@aoyatenka023</a>
         </div>
 
         <div class="entry">
-            <span class="entry-label">[OFFICIAL LOG]</span>
-            <a href="https://x.com/WAFT_registry" target="_blank" class="archive-link" onclick="recordInterference(this)">WAFT公式：@WAFT_registry</a>
+            <span class="entry-label">ESTABLISHED_FACILITY</span>
+            <a href="https://waft-interfere.github.io/bollow/" target="_blank" class="archive-item" data-waft-id="arch-bollow">虚構喫茶ボロウ</a>
         </div>
-    </main>
 
-    <footer style="margin-top:150px;">
-        <a href="index.html" class="waft-link" style="font-size:0.7rem; color:#222;">[ DISCONNECT ]</a>
-    </footer>
+        <div class="entry">
+            <span class="entry-label">OFFICIAL_REGISTRY</span>
+            <a href="https://x.com/WAFT_registry" target="_blank" class="archive-item" data-waft-id="arch-official">WAFT公式：@WAFT_registry</a>
+        </div>
+    </div>
+
+    <div id="whisper-log">「……みつけた」</div>
 
     <script src="waft-core.js"></script>
     <script>
-        // 青ya、跨の囁き演出（第8条・第18条）
-        const originalAoyaText = "青ya、跨：@aoyatenka023";
-        const whispers = ["目が合ったね", "君、だれ？", "こっちにおいでよ", "忘れないでね"];
-        
-        function whisper(el) {
-            if(Math.random() > 0.7) {
-                el.innerText = whispers[Math.floor(Math.random() * whispers.length)];
-                setTimeout(() => { el.innerText = originalAoyaText; }, 1000);
-            }
+        // 青ya、跨 専用の干渉演出
+        function interfereAoya() {
+            const link = document.getElementById('aoya-link');
+            const log = document.getElementById('whisper-log');
+            
+            // わずかに位置をずらす（逃げる）
+            const rX = Math.random() * 10 - 5;
+            const rY = Math.random() * 10 - 5;
+            link.style.transform = `translate(${rX}px, ${rY}px)`;
+
+            // 囁きを表示
+            log.style.opacity = "0.5";
+            setTimeout(() => { log.style.opacity = "0"; }, 2000);
         }
-
-        // 干渉の記録と「忘却」の演出（第20条）
-        function recordInterference(el) {
-            const screen = document.getElementById('glitch-screen');
-            // クリック時に青いフラッシュ（位相の乱れ）
-            screen.style.opacity = "0.6";
-            setTimeout(() => { screen.style.opacity = "0"; }, 150);
-
-            // セッションストレージにクリックしたことを保存
-            const clickedLinks = JSON.parse(sessionStorage.getItem('waft_interference') || '[]');
-            clickedLinks.push(el.innerText);
-            sessionStorage.setItem('waft_interference', JSON.stringify(clickedLinks));
-        }
-
-        // ページ読み込み時に、過去に触れたリンクを「改変」または「消去」する
-        window.onload = () => {
-            const clickedLinks = JSON.parse(sessionStorage.getItem('waft_interference') || '[]');
-            document.querySelectorAll('.archive-link').forEach(link => {
-                if(clickedLinks.includes(link.innerText) && Math.random() > 0.5) {
-                    link.style.opacity = "0.2";
-                    link.style.textDecoration = "line-through";
-                    link.innerText = "存在の忘却を検知";
-                    link.href = "#";
-                    link.onclick = (e) => { e.preventDefault(); alert("その記憶は既に多層性の中に保存されました。"); };
-                }
-            });
-        };
     </script>
 </body>
 </html>

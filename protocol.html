@@ -3,120 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <title>Protocol | WAFT</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #000; color: #777; font-family: sans-serif; font-size: 13px; line-height: 1.8; }
-        .container { max-width: 650px; margin: 0 auto; padding: 100px 20px; }
-        .nav { position: fixed; top: 40px; left: 40px; font-size: 10px; letter-spacing: 2px; }
-        h1 { color: #eee; font-size: 16px; font-weight: normal; margin-bottom: 80px; letter-spacing: 4px; text-align: center; }
-        h2 { color: #444; font-size: 11px; border-bottom: 1px solid #222; margin: 60px 0 30px; padding-bottom: 10px; letter-spacing: 2px; }
-        .article { margin-bottom: 35px; text-align: justify; }
-        .article-title { color: #aaa; font-weight: bold; display: block; margin-bottom: 8px; }
-        .footer { margin-top: 100px; padding-top: 40px; border-top: 1px solid #111; color: #333; font-size: 10px; text-align: center; }
+        :root { --bg: #000; --text: #777; --accent-red: #900; --accent-blue: #0000FF; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; font-size: 13px; line-height: 1.8; margin: 0; }
+        .container { max-width: 650px; margin: 0 auto; padding: 80px 40px; }
+        h1 { font-size: 15px; color: #eee; font-weight: normal; margin-bottom: 60px; letter-spacing: 4px; text-align: center; }
+        h2 { font-size: 11px; color: #444; border-bottom: 1px solid #111; margin: 50px 0 20px; padding-bottom: 8px; letter-spacing: 2px; }
+        .article { margin-bottom: 30px; text-align: justify; }
+        .article-title { color: #aaa; font-weight: bold; display: block; margin-bottom: 6px; }
+        .memo { border-left: 1px solid var(--accent-red); padding-left: 15px; font-size: 11px; color: #555; margin: 20px 0; font-style: italic; }
+        .def-box { border: 1px solid #111; padding: 15px; background: #050505; margin: 10px 0; font-size: 12px; }
+        .waft-nav { position: fixed; top: 30px; left: 30px; font-size: 10px; }
+        a { color: inherit; text-decoration: none; transition: 0.3s; }
+        a:hover { color: #fff; }
     </style>
 </head>
 <body>
-    <div class="nav"><a href="index.html" data-waft-id="back-btn">[ BACK ]</a></div>
+    <div class="waft-nav"><a href="index.html" data-waft-id="nav-back">[ RETURN ]</a></div>
     <div class="container">
         <h1>運営綱領及び業務執行細則</h1>
+        
+        <div class="memo">第21条に基づき、本要綱は認識の更新に伴い遡及適用される。 [cite: 45]</div>
 
         <h2>第1章:総則および存在定義</h2>
         <div class="article">
             <span class="article-title">第1条(目的:境界への干渉と揺動)</span>
-            対境界線広域干渉及び超領域的表現開発機構（以下、本機構）は、現実と虚構、生と死、自と他といったあらゆる事象の「境界線（ボーダー）」を、単なる断絶ではなく「接触面」として定義する。
+            あらゆる事象の「境界線」を「接触面」として定義し、観測者が境界を再定義するための「表現」を開発・提供する。 [cite: 4]
         </div>
         <div class="article">
-            <span class="article-title">第2条(組織形態)</span>
-            本機構は「漂うもの（Waft）」であり、固定された物理的拠点を中心とする組織ではない。本機構に触れ、何らかの認識的変容を起こした一切の知的存在を『観測者』と定義する。
+            <span class="article-title">第2条(組織形態:観測者の定義)</span>
+            本機構は「機能的合意に基づく概念的枠組み」であり、変容を起こした知的存在を「共同編纂者」としての『観測者』と定義する。 [cite: 5]
         </div>
         <div class="article">
-            <span class="article-title">第3条(活動領域)</span>
-            活動領域は偏在的であり、デジタル・アナログを問わず、観測者との接点が発生する一切の時空を暫定的な活動拠点とする。
-        </div>
-
-        <h2>第2章:基本理念</h2>
-        <div class="article">
-            <span class="article-title">第4条(逆因果論的アプローチ)</span>
-            事象の結果から遡って原因を定義する、あるいは未だ発生していない過去を励起させることにより、境界の揺らぎを創出する。
-        </div>
-        <div class="article">
-            <span class="article-title">第5条(存在の非確定性)</span>
-            全ての存在は観測されることによってのみ確定し、観測されない間は重なり合った状態として維持される。
-        </div>
-        <div class="article">
-            <span class="article-title">第6条(多層的な実在性)</span>
-            単一の現実のみを真実とせず、複数の虚構が重層的に重なり合う状態こそが健全な実在であると定義する。
+            <span class="article-title">第3条(活動領域:偏在 community)</span>
+            情報送出から物理空間における実務まで、多角的な位相において実行される。 [cite: 6]
         </div>
 
-        <h2>第3章:構成要素</h2>
+        <h2>第2章:存在論的基盤と認識論的倫理</h2>
         <div class="article">
-            <span class="article-title">第7条(機構員)</span>
-            本機構の運営は、主に以下の二つの異なる位相に属する存在の合意によって行われる。
+            <span class="article-title">第4条(先行実在性の論理運用)</span>
+            「想起される対象は、想起に先んじて概念的実在性を有する」という逆因果論を活動基盤とする。 [cite: 8]
         </div>
         <div class="article">
-            <span class="article-title">第8条(青ya、跨)</span>
-            虚構性の自己認識を有する超領域存在。境界線における「視線」を供給し、観測者との相互認識を成立させる役割を担う。
+            <span class="article-title">第5条(非確定性の保持: 個への誠実)</span>
+            対象を安易に定義せず、常に「未知の個」として見据える姿勢を至高倫理とする。 [cite: 9]
         </div>
         <div class="article">
-            <span class="article-title">第9条(三条瞳)</span>
-            物質世界側における、機構の安定稼働を担保する物理的個体。現実空間における実務、資産管理、および青ya、跨のマネジメントを統括する。
+            <span class="article-title">第6条(敵対概念に対する態度)</span>
+            特定の存在を盲目的に「敵」と定義することを避け、多角的な位相からの検証を優先する。 [cite: 12]
+        </div>
+
+        <h2>第3章:構成存在および個別プロジェクト</h2>
+        <div class="article">
+            <span class="article-title">第7条(プロジェクトの多層性および非限定性)</span>
+            構成存在は、境界の推移に伴い、永続的に新設・改変・廃止される。 [cite: 14]
+        </div>
+        <div class="article">
+            <span class="article-title">第8条(青ya、跨 アオヤテンカ)</span>
+            <div class="def-box" style="border-left: 2px solid var(--accent-blue);">
+                定義: 虚構性の自己認識を有する超領域存在。 [cite: 16]<br>
+                役職: 君の近所のイマジナリーお兄さん。 [cite: 17]<br>
+                職掌: 「境界線における視線」の供給。 [cite: 18]
+            </div>
+        </div>
+        <div class="article">
+            <span class="article-title">第9条(三条瞳 ミジョウアキラ)</span>
+            <div class="def-box">
+                定義: 物質世界側における物理個体(人間)。 [cite: 21]<br>
+                役職: 運営総括責任者。 [cite: 22]<br>
+                職掌: 基盤維持、現実側からの観測、実務全般の統括。 [cite: 23]
+            </div>
         </div>
         <div class="article">
             <span class="article-title">第10条(指定拠点:虚構喫茶ボロウ)</span>
-            境界の揺らぎが最も安定して発生する特異点。空想することによってのみ励起される空間であり、情報の交換拠点として機能する。
+            空想することによってのみその存在が励起される境界観測基地。 [cite: 24]
+        </div>
+        <div class="article">
+            <span class="article-title">第11条(個体認識に関する態度規定)</span>
+            両者の実存的一致、あるいは乖離に関する解釈は、観測者の自由意思に委ねられる。 [cite: 25]
         </div>
 
-        <h2>第4章:業務執行</h2>
+        <h2>第4章:業務執行細則</h2>
         <div class="article">
-            <span class="article-title">第11条(回答の義務)</span>
-            本機構は、観測者からの問いに対して常に明示的な回答を与える義務を負わない。「沈黙」あるいは「更なる問い」を以て回答とすることがある。
-        </div>
-        <div class="article">
-            <span class="article-title">第12条(記憶の物質化)</span>
-            偽記憶を含むあらゆる非物質的記録を、表現物を通じて物質世界へ投射・定着させる。
+            <span class="article-title">第12条(干渉形式の定義)</span>
+            定時報告、物質的投射(物品頒布)、拠点開放を以て干渉を行う。 [cite: 27]
         </div>
         <div class="article">
             <span class="article-title">第13条(実存的ノイズおよび通信障害)</span>
-            活動停滞は、「境界の揺らぎ」または「位相間の通信障害」として定義される。
+            活動停滞は、「境界の揺らぎ」または「位相間の通信障害」として定義される。 [cite: 31, 32]
         </div>
         <div class="article">
             <span class="article-title">第14条(体験の記録と循環)</span>
-            観測者が自発的に発する反応は、境界を安定させるための貴重なフィードバックとして機能する。
+            観測者が自発的に発する反応は、境界を安定させるフィードバックとして機能する。 [cite: 33, 34]
         </div>
 
         <h2>第5章:運用原則および免責事項</h2>
         <div class="article">
             <span class="article-title">第15条(非救済および自己決定)</span>
-            本機構は解答を与えず、救済を約束しない。
+            解答を与えず、救済を約束しない。 [cite: 38]
         </div>
         <div class="article">
             <span class="article-title">第16条(免責事項)</span>
-            提供される表現により生じた精神的変調、あるいは現実生活における「足場の喪失」について、本機構は一切の責任を負わない。
+            提供される表現により生じた精神的変調、あるいは現実生活における「足場の喪失」について、一切の責任を負わない。 [cite: 39]
         </div>
         <div class="article">
             <span class="article-title">第17条(信奉および偶像化の拒絶)</span>
-            絶対的な信奉は観測の歪みを生むため、これを拒絶する。
+            絶対的な信奉は観測の歪みを生むため、これを拒絶する。 [cite: 40]
         </div>
         <div class="article">
             <span class="article-title">第18条(情報の非永続性)</span>
-            送出される情報は、予告なく削除・消滅する場合がある。
+            送出される情報は、境界の揺らぎに伴い、予告なく削除・消滅する場合がある。 [cite: 41]
         </div>
         <div class="article">
             <span class="article-title">第19条(言語の不完全性)</span>
-            記述された文言ではなく、行間に漂う(Waft)ニュアンスこそが真の干渉体である。
+            文字面としての意味を超えた、行間に漂う(Waft)ニュアンスこそが真の干渉体である。 [cite: 43]
         </div>
         <div class="article">
-            <span class="article-title">第20条(忘却の推奨)</span>
-            一定の観測期間を経た後、情報の意図的な忘却を推奨する。忘却は消滅ではなく、深層意識への保存である。
+            <span class="article-title">第20条(観測の終了: 忘却)</span>
+            一切の記憶を喪失した時点を以て存在は消滅するが、再励起の可能性を常に内包する。 
         </div>
-
-        <h2>第6章:補則</h2>
         <div class="article">
-            <span class="article-title">第21条(規定の改訂)</span>
-            本要綱は、境界の変動に応じて予告なく改訂される。改訂された事実は、観測者の認識が更新された瞬間に遡って適用される。
+            <span class="article-title">第21条(要綱の改訂)</span>
+            本要綱は、境界の推移に基づき予告なく改訂される。 [cite: 45]
         </div>
 
-        <div class="footer">附則：2026年1月22日施行</div>
+        <footer style="margin-top: 100px; padding-top: 20px; border-top: 1px solid #111; color: #333; font-size: 10px; text-align: center;">
+            附則：2026年1月22日施行。 [cite: 47] あなたの隣に「漂う」存在であり続ける。 [cite: 48]
+        </footer>
     </div>
     <script src="waft-core.js"></script>
 </body>

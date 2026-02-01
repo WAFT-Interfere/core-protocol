@@ -1,7 +1,8 @@
 :root {
     --bg: #000;
-    --text: #999;
-    --accent: #00f;
+    --text: #777;
+    --accent-blue: #0000FF;
+    --accent-red: #900;
     --dim: #222;
 }
 
@@ -10,49 +11,43 @@ body {
     color: var(--text);
     font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
     margin: 0;
-    overflow-x: hidden;
-    line-height: 1.6;
-}
-
-/* 確実に表示される粒状ノイズ */
-#grain-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.05;
+    line-height: 1.8;
 }
 
 a {
     color: inherit;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: 0.3s;
 }
 
 a:hover {
     color: #fff;
+    text-shadow: 0 0 8px #fff;
 }
 
-.waft-container {
+.container {
     max-width: 700px;
     margin: 0 auto;
     padding: 100px 20px;
 }
 
-/* 忘却：一度クリックされた要素に付与される */
-.forgotten {
-    display: none !important;
-}
-
-/* スタイリッシュな無機質ラベル */
 .label {
     font-size: 10px;
     letter-spacing: 2px;
     color: var(--dim);
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     display: block;
+}
+
+/* 検閲演出 */
+.censored { background: #1a1a1a; color: #1a1a1a; transition: 0.6s; padding: 0 4px; cursor: help; }
+.censored:hover { background: transparent; color: var(--accent-red); }
+.censored-blue:hover { background: transparent; color: var(--accent-blue); }
+
+/* 暗転演出用 */
+#overlay {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background: radial-gradient(circle, transparent, #000 90%);
+    pointer-events: none; opacity: 0; transition: 5s; z-index: 100;
 }
