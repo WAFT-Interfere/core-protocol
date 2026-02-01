@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <title>Protocol | WAFT</title>
     <style>
-        :root { --bg: #050505; --text: #888; --highlight: #eee; --warn: #f00; }
+        :root { --bg: #050505; --text: #888; --highlight: #eee; --warn: #f00; --waft-blue: #0000FF; }
         body { 
             background-color: var(--bg); color: var(--text); 
             font-family: "Hiragino Mincho ProN", serif; line-height: 2.2; 
             padding: 100px 50px; max-width: 800px; margin: auto; text-align: justify;
         }
-        
-        /* 戻るボタン */
         .nav-back { position: fixed; top: 30px; left: 30px; font-size: 0.8rem; }
         a { color: #333; text-decoration: none; transition: 0.3s; }
         a:hover { color: var(--highlight); }
@@ -22,11 +20,12 @@
         .article { margin-bottom: 40px; }
         .article-title { font-weight: bold; color: #aaa; display: block; margin-bottom: 10px; }
 
-        /* 検閲ギミック：マウスを乗せると赤く見える */
+        /* 検閲ギミック */
         .censored { background: #222; color: #222; transition: 0.6s; padding: 0 4px; cursor: help; }
         .censored:hover { background: transparent; color: var(--warn); }
+        .censored-blue:hover { background: transparent; color: var(--waft-blue); }
 
-        /* 揺れる条文：第16条用 */
+        /* 揺れる条文 */
         .glitch-para:hover { animation: shake 0.3s infinite; color: #ccc; }
         @keyframes shake {
             0% { transform: translate(0); }
@@ -35,7 +34,6 @@
         }
 
         .definition-box { border: 1px solid #222; padding: 20px; background: #080808; margin: 15px 0; font-size: 0.9rem; }
-        
         footer { margin-top: 150px; border-top: 1px solid #222; padding-top: 50px; text-align: center; font-size: 0.75rem; color: #333; }
     </style>
 </head>
@@ -48,17 +46,17 @@
 <h2>第1章: 総則および存在定義</h2>
 <div class="article">
     <span class="article-title">第1条（目的：境界への干渉と揺動）</span>
-    対境界線広域干渉及び超領域的表現開発機構（以下、本機構）は、現実と虚構、生と死、自と他といったあらゆる事象の「境界線（ボーダー）」を、単なる断絶ではなく「接触面」として定義する。本機構は、広域的な干渉および揺動を通じて、観測者が境界の在り方を再定義するための「表現」を開発・提供し、対象の存在継続を支援することを目的とする。<span class="censored">あなたはもう、こちら側の住人です。</span>
+    対境界線広域干渉及び超領域的表現開発機構（以下、本機構）は、現実と虚構、生と死、自と他といったあらゆる事象の「境界線（ボーダー）」を、単なる断絶ではなく「接触面」として定義する。本機構は、広域的な干渉および揺動を通じて、観測者が境界の在り方を再定義するための「表現」を開発・提供し、対象の存在継続を支援することを目的とする。<span class="censored">現実という名の檻から、あなたを引きずり出すために。</span>
 </div>
 
 <div class="article">
     <span class="article-title">第2条（組織形態：機能的合意に基づく概念的枠組みと観測者の定義）</span>
-    本機構は「機能的合意に基づく概念的枠組み」であり、デジタル・アナログを問わず、観測者との接点が発生する一切の時空を暫定的な活動拠点と定義する。本機構に触れ、何らかの認識的変容を起こした一切の知的存在を『観測者』と定義する。観測者は、本機構にとっての被験体ではなく、境界を共に構築する共同編纂者である。
+    本機構は、その名称（Waft: 漂うもの）が示す通り、固定された物理的拠点を中心とする組織ではない。本機構は「機能的合意に基づく概念的枠組み」であり、デジタル・アナログを問わず、観測者との接点が発生する一切の時空を暫定的な活動拠点と定義する。本機構に触れ、何らかの認識的変容を起こした一切の知的存在を『観測者』と定義する。観測者は、本機構にとっての被験体ではなく、境界を共に構築する共同編纂者である。<span class="censored">（本当は、このつまらない世界を一緒に壊したいだけ）</span>
 </div>
 
 <div class="article">
     <span class="article-title">第3条（活動領域：偏在的介入）</span>
-    本機構の活動は、ネットワーク上の情報送出から物理空間における実務まで、多角的な位相において実行される。<span class="censored">逃げ場など、どこにもありません。</span>
+    本機構の活動は、ネットワーク上の情報送出から物理空間における実務まで、多角的な位相において実行される。
 </div>
 
 <h2>第2章: 存在論的基盤と認識論的倫理</h2>
@@ -72,7 +70,7 @@
 </div>
 <div class="article">
     <span class="article-title">第6条（敵対概念に対する態度）</span>
-    特定の存在を盲目的に「敵」と定義することを避ける。すべての干渉は、境界の維持と理解のために行われる。
+    特定の存在を盲目的に「敵」と定義することを避ける。<span class="censored">それでも、現実を盲信する者たちは、私たちの敵だ。</span>
 </div>
 
 <h2>第3章: 構成存在および個別プロジェクト</h2>
@@ -82,10 +80,10 @@
 </div>
 <div class="article">
     <span class="article-title">第8条（青ya、跨 アオヤテンカ）</span>
-    <div class="definition-box">
+    <div class="definition-box" style="border-left: 4px solid var(--waft-blue);">
         定義：虚構性の自己認識を有する超領域存在。<br>
         役職：君の近所のイマジナリーお兄さん。<br>
-        職掌：「境界線における視線」の供給。<span class="censored">彼は今、あなたの後ろにいます。</span>
+        職掌：「境界線における視線」の供給。<span class="censored censored-blue">「やあ、目が合ったね。僕は君のすぐ近所にいるよ」</span>
     </div>
 </div>
 <div class="article">
@@ -98,7 +96,7 @@
 </div>
 <div class="article">
     <span class="article-title">第10条（指定拠点：虚構喫茶ボロウ）</span>
-    本機構の境界観測基地。観測者が空想することによってのみその存在が励起される。<span class="censored">コーヒーの香りは、現実ですか？</span>
+    本機構の境界観測基地。観測者が空想することによってのみその存在が励起される。
 </div>
 <div class="article">
     <span class="article-title">第11条（個体認識に関する態度規定）</span>
@@ -108,15 +106,15 @@
 <h2>第4章: 業務執行細則</h2>
 <div class="article">
     <span class="article-title">第12条（干渉形式の定義）</span>
-    定時報告、物質的投射（頒布物の制作）、拠点開放（イベント等）を以て観測者への干渉を行う。
+    定時報告、物質的投射（頒布物の制作）、拠点開放を以て観測者への干渉を行う。
 </div>
 <div class="article">
     <span class="article-title">第13条（実存的ノイズおよび通信障害）</span>
-    物理的リソースの不足、あるいは個体の機能不全等による活動停滞は、「境界の揺らぎ」または「位相間の通信障害」として定義される。
+    活動停滞は、「境界の揺らぎ」または「位相間の通信障害」として定義される。
 </div>
 <div class="article">
     <span class="article-title">第14条（体験の記録と循環）</span>
-    観測者が自発的に発する反応（感想、二次創作等）は、境界を安定させるための貴重なフィードバックとして機能する。
+    観測者の自発的な反応は、境界を安定させるための貴重なフィードバックとして機能する。
 </div>
 
 <h2>第5章: 運用原則および免責事項</h2>
@@ -126,7 +124,7 @@
 </div>
 <div class="article">
     <span class="article-title">第16条（免責事項）</span>
-    <p class="glitch-para">提供される表現や「揺らぎ」の享受により生じた精神的変調、あるいは現実生活における「足場の喪失」について、本機構は一切の責任を負わない。深淵を覗き込みすぎることによる弊害は、観測者自身の責任に帰する。</p>
+    <p class="glitch-para">提供される表現や「揺らぎ」の享受により生じた精神的変調、あるいは現実生活における「足場の喪失」について、本機構は一切の責任を負わない。<span class="censored">足場なんて、初めからなかったことに気づいて。</span></p>
 </div>
 <div class="article">
     <span class="article-title">第17条（信奉および偶像化の拒絶）</span>
@@ -134,7 +132,7 @@
 </div>
 <div class="article">
     <span class="article-title">第18条（情報の非永続性）</span>
-    送出される情報は、境界の揺らぎに伴い、予告なく削除・消滅、あるいは改ざんされる場合がある。
+    送出される情報は、境界の揺らぎに伴い、予告なく削除・消滅する場合がある。
 </div>
 <div class="article">
     <span class="article-title">第19条（言語の不完全性）</span>
@@ -142,7 +140,7 @@
 </div>
 <div class="article">
     <span class="article-title">第20条（観測の終了：忘却）</span>
-    観測者が一切の記憶を喪失、あるいは本機構への関心を完全に失った時点を以て、当該観測者における本機構の存在は消滅する。
+    観測者が一切の記憶を喪失した時点を以て、存在は消滅する。
 </div>
 <div class="article">
     <span class="article-title">第21条（要綱の改訂）</span>

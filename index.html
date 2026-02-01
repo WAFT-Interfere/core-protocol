@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>WAFT | Terminal</title>
     <style>
-        :root { --main: #ccc; --bg: #000; --warn: #f00; }
+        :root { --main: #ccc; --bg: #000; --waft-blue: #0000FF; }
         body {
             background-color: var(--bg); color: var(--main);
             font-family: "Hiragino Mincho ProN", serif;
@@ -12,71 +12,79 @@
             height: 100vh; margin: 0; overflow: hidden;
         }
 
-        /* 隠しテキスト：ドラッグで見える */
-        ::selection { background: var(--main); color: var(--bg); }
-        .hidden { position: absolute; font-size: 0.7rem; color: var(--bg); user-select: all; }
+        /* 浮かび上がる青い目 */
+        .eye {
+            position: fixed; color: var(--waft-blue); font-size: 2.5rem;
+            opacity: 0; pointer-events: none; z-index: 50;
+            text-shadow: 0 0 20px var(--waft-blue);
+            transition: opacity 0.5s;
+        }
 
-        h1 { font-weight: normal; font-size: 1.1rem; border-bottom: 1px solid #222; padding-bottom: 20px; text-align: center; }
+        h1 { font-weight: normal; font-size: 1.1rem; border-bottom: 1px solid #222; padding-bottom: 20px; text-align: center; letter-spacing: 0.2em; }
         nav ul { list-style: none; padding: 0; text-align: center; }
         nav li { margin: 25px 0; }
         a { color: #555; text-decoration: none; font-size: 0.9rem; transition: 0.4s; }
-        a:hover { color: #fff; letter-spacing: 0.3em; text-shadow: 0 0 5px #fff; }
+        a:hover { color: #fff; letter-spacing: 0.3em; text-shadow: 0 0 8px #fff; }
 
-        /* 画面が暗くなる演出 */
+        /* 放置した時の暗転とメッセージ */
         #overlay {
             position: fixed; top:0; left:0; width:100%; height:100%;
-            background: radial-gradient(circle, transparent, #000 70%);
+            background: radial-gradient(circle, transparent, #000 85%);
             pointer-events: none; opacity: 0; transition: 5s; z-index: 100;
         }
         #alert-msg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: var(--warn); font-size: 0.8rem; opacity: 0; transition: 5s; z-index: 101;
-            pointer-events: none; text-align: center;
+            color: var(--waft-blue); font-size: 1.1rem; opacity: 0; transition: 5s; z-index: 101;
+            pointer-events: none; text-align: center; line-height: 2.5; letter-spacing: 0.1em;
         }
+
+        /* 隠しテキスト */
+        .hidden { position: absolute; font-size: 0.7rem; color: #000; user-select: all; }
+        ::selection { background: var(--waft-blue); color: #fff; }
     </style>
 </head>
 <body onmousemove="resetTimer()">
     <div id="overlay"></div>
-    <div id="alert-msg">観測の停滞を検知。<br>境界深度が限界を超えています。</div>
+    <div id="alert-msg">「やあ、目が合ったね。<br>君は誰？」</div>
 
-    <div class="hidden" style="top:15%; left:20%;">「見てるんでしょう？」</div>
-    <div class="hidden" style="bottom:10%; right:25%;">ここは、あなたの想像の出口です。</div>
+    <div id="eye-icon" class="eye">👁</div>
+
+    <div class="hidden" style="top:10%; left:10%;">君の近所のイマジナリー</div>
+    <div class="hidden" style="bottom:10%; right:10%;">逃げ場なんて、最初からなかった。</div>
 
     <h1>対境界線広域干渉及び<br>超領域的表現開発機構</h1>
 
     <nav>
         <ul>
-            <li><a href="protocol.html" id="link1">>> 運営綱領 (Protocol)</a></li>
-            <li><a href="archive.html" id="link2">>> 干渉記録 (Archive)</a></li>
+            <li><a href="protocol.html">>> 運営綱領 (Protocol)</a></li>
+            <li><a href="archive.html">>> 干渉記録 (Archive)</a></li>
             <li><a href="https://waft-interfere.github.io/bollow/" target="_blank">>> 指定拠点 (Access Point)</a></li>
         </ul>
     </nav>
 
     <script>
         let timer;
+        const eye = document.getElementById('eye-icon');
+
         function resetTimer() {
             document.getElementById('overlay').style.opacity = '0';
             document.getElementById('alert-msg').style.opacity = '0';
             clearTimeout(timer);
             timer = setTimeout(() => {
                 document.getElementById('overlay').style.opacity = '1';
-                document.getElementById('alert-msg').style.opacity = '0.6';
+                document.getElementById('alert-msg').style.opacity = '1';
             }, 7000);
         }
 
-        // 文字の書き換えグリッチ
-        const link1 = document.getElementById('link1');
-        const originalText = link1.innerText;
+        // 青い目がランダムに出現
         setInterval(() => {
-            if(Math.random() > 0.9) {
-                link1.innerText = ">> 逃げられません";
-                link1.style.color = "#f00";
-                setTimeout(() => { 
-                    link1.innerText = originalText; 
-                    link1.style.color = "";
-                }, 150);
-            }
-        }, 3000);
+            const x = Math.random() * (window.innerWidth - 50);
+            const y = Math.random() * (window.innerHeight - 50);
+            eye.style.left = x + 'px';
+            eye.style.top = y + 'px';
+            eye.style.opacity = '0.5';
+            setTimeout(() => { eye.style.opacity = '0'; }, 800);
+        }, 4500);
     </script>
 </body>
 </html>

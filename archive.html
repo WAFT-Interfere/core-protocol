@@ -4,55 +4,66 @@
     <meta charset="UTF-8">
     <title>Archive | WAFT</title>
     <style>
+        :root { --waft-blue: #0000FF; }
         body { background-color: #000; color: #666; font-family: serif; padding: 50px; line-height: 2; }
-        .section { margin-bottom: 50px; }
-        h2 { font-size: 0.9rem; color: #222; border-bottom: 1px solid #111; }
+        .section { margin-bottom: 60px; }
+        h2 { font-size: 0.9rem; color: #222; border-bottom: 1px solid #111; padding-bottom: 5px; margin-bottom: 25px; }
         .entry { margin: 20px 0; padding-left: 15px; border-left: 1px solid #111; position: relative; }
         a { color: #555; text-decoration: none; transition: 0.3s; display: inline-block; }
         a:hover { color: #fff; }
         .label { font-size: 0.6rem; color: #333; letter-spacing: 0.1em; }
+
+        /* 青ya専用スタイル */
+        .blue-link { color: var(--waft-blue) !important; font-weight: bold; }
+        #whisper { font-size: 0.7rem; color: var(--waft-blue); opacity: 0; transition: 1s; }
     </style>
 </head>
 <body>
     <div class="section">
         <h2>CORE PROTOCOL</h2>
-        <div class="entry"><a href="protocol.html">運営綱領（全文）</a></div>
+        <div class="entry"><a href="protocol.html">運営綱領及び業務執行細則</a></div>
     </div>
 
     <div class="section">
         <h2>EXTERNAL INTERFACES</h2>
         <div class="entry">
-            <span class="label">[PHYSICAL]</span><br>
-            <a href="https://x.com/mizyouakira" onclick="return confirm('三条瞳の個体位相へ接続しますか？')">三条瞳：@mizyouakira</a>
+            <span class="label">[PHYSICAL INTERFACE]</span><br>
+            <a href="https://x.com/mizyouakira" onclick="return confirm('三条瞳の位相へ接続しますか？')">三条瞳：@mizyouakira</a>
+        </div>
+        <div class="entry" style="border-left-color: var(--waft-blue);">
+            <span class="label" style="color:var(--waft-blue)">[IMAGINARY INTERFACE]</span><br>
+            <a href="https://x.com/aoyatenka023" id="runaway" class="blue-link"
+               onmouseover="runAway()" 
+               onclick="return confirm('青ya、跨の干渉を許可しますか？')">
+               青ya、跨：@aoyatenka023
+            </a>
+            <p id="whisper">「目が合ったね。君は誰？」</p>
         </div>
         <div class="entry">
-            <span class="label">[IMAGINARY]</span><br>
-            <a href="https://x.com/aoyatenka023" id="runaway" onmouseover="runAway()" onclick="return confirm('青ya、跨の干渉を許可しますか？')">青ya、跨：@aoyatenka023</a>
+            <span class="label">[OBSERVATION BASE]</span><br>
+            <a href="https://waft-interfere.github.io/bollow/">虚構喫茶ボロウ</a>
         </div>
         <div class="entry">
-            <span class="label">[FACILITY]</span><br>
-            <a href="https://waft-interfere.github.io/bollow/" onclick="return confirm('指定拠点への立ち入りを申請しますか？')">虚構喫茶ボロウ</a>
-        </div>
-        <div class="entry">
-            <span class="label">[OFFICIAL]</span><br>
+            <span class="label">[OFFICIAL REGISTRY]</span><br>
             <a href="https://x.com/WAFT_registry">WAFT公式：@WAFT_registry</a>
         </div>
     </div>
 
-    <div style="margin-top:100px;"><a href="index.html" style="font-size:0.8rem;">[ RETURN ]</a></div>
+    <div style="margin-top:100px;"><a href="index.html" style="font-size:0.8rem;">[ RETURN TO TERMINAL ]</a></div>
 
     <script>
         let moved = false;
         function runAway() {
             if (!moved) {
                 const btn = document.getElementById('runaway');
-                btn.style.transform = "translateX(100px)";
-                btn.style.color = "#f00";
+                const whisper = document.getElementById('whisper');
+                btn.style.transform = "translate(40px, -15px)";
+                whisper.style.opacity = "1";
                 moved = true;
                 setTimeout(() => {
-                    btn.style.transform = "translateX(0)";
-                    btn.innerText = "青ya、跨：見つかりましたね";
-                }, 1000);
+                    btn.style.transform = "translate(0,0)";
+                    btn.innerText = "青ya、跨：目が合ったね";
+                }, 1500);
             }
         }
     </script>
