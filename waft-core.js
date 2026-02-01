@@ -20,26 +20,44 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     noise();
 
-    // 2. 忘却と再励起システム (不便さを解消した配慮)
-    document.querySelectorAll('[data-waft-id]').forEach(el => {
-        el.addEventListener('click', (e) => {
-            // 位相のズレ：クリックした瞬間に要素を透明にする
-            el.style.transition = "opacity 0.5s, transform 0.5s";
-            el.style.opacity = "0";
-            el.style.transform = `translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px)`;
-            el.style.pointerEvents = "none";
+    // 2. 追加演出：放置すると「青い目」が浮かび上がる (第8条)
+    const eye = document.createElement('div');
+    eye.innerHTML = "👁";
+    Object.assign(eye.style, {
+        position: 'fixed', color: '#0000FF', fontSize: '3rem', opacity: '0',
+        pointerEvents: 'none', zIndex: '9998', transition: 'opacity 2s',
+        textShadow: '0 0 15px #0000FF', left: '50%', top: '50%', transform: 'translate(-50%, -50%)'
+    });
+    document.body.appendChild(eye);
 
-            // 再励起：数秒後にうっすらと復帰させる
+    let idleTimer;
+    const resetIdle = () => {
+        clearTimeout(idleTimer);
+        eye.style.opacity = '0';
+        document.body.style.opacity = '1';
+        idleTimer = setTimeout(() => {
+            eye.style.opacity = '0.4'; // 10秒放置で目が浮かぶ
+            document.body.style.opacity = '0.2'; // 画面が沈む
+        }, 10000);
+    };
+    ['mousemove', 'keydown', 'click'].forEach(e => document.addEventListener(e, resetIdle));
+    resetIdle();
+
+    // 3. 忘却と再励起システム (5秒で復帰)
+    document.querySelectorAll('[data-waft-id]').forEach(el => {
+        el.addEventListener('click', () => {
+            el.style.transition = "opacity 0.5s";
+            el.style.opacity = "0.1";
+            el.style.pointerEvents = "none";
             setTimeout(() => {
-                el.style.opacity = "0.3"; // 完全に消さず、薄く残す
+                el.style.opacity = "0.4";
                 el.style.pointerEvents = "auto";
-                el.style.transform = "translate(0, 0)";
-            }, 5000); // 5秒後に復帰
+            }, 5000);
         });
     });
 
-    // 3. コンソール語りかけ
+    // 4. コンソールログ
     console.clear();
-    console.log("%c[SYSTEM] WAFT Protocol - Observation Mode", "color: #555; font-weight: bold;");
-    console.log("%c三条瞳：情報の不一致は健全な揺らぎです。消えたように見えても、そこに在ります。", "color: #900;");
+    console.log("%c[SYSTEM] 対境界線広域干渉及び超領域的表現開発機構", "font-weight:bold; color:#555;");
+    console.log("%c三条瞳：観測を継続してください。逃げても無駄です。", "color:#900;");
 });

@@ -5,90 +5,55 @@
     <title>Archive | WAFT</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .container { max-width: 600px; margin: 0 auto; padding: 100px 40px; }
-        h1 { font-size: 14px; color: #eee; font-weight: normal; margin-bottom: 60px; letter-spacing: 4px; }
-        h2 { font-size: 10px; color: #333; border-bottom: 1px solid #111; margin: 40px 0 20px; padding-bottom: 5px; letter-spacing: 2px; }
-        
-        .entry { margin-bottom: 30px; position: relative; }
-        .entry-label { font-size: 9px; color: #222; display: block; margin-bottom: 5px; letter-spacing: 1px; }
-        
-        .archive-item {
-            display: inline-block;
-            font-size: 13px;
-            color: #666;
-            transition: color 0.3s, opacity 0.5s, transform 0.5s;
-        }
+        .container { max-width: 600px; margin: 0 auto; padding: 80px 40px; }
+        h2 { font-size: 10px; color: #333; border-bottom: 1px solid #111; margin: 50px 0 20px; padding-bottom: 5px; letter-spacing: 2px; }
+        .entry { margin-bottom: 30px; }
+        .entry-label { font-size: 9px; color: #222; display: block; margin-bottom: 8px; }
+        .empty-msg { font-size: 11px; color: #222; font-style: italic; }
+        .archive-item { font-size: 13px; color: #666; transition: 0.3s; }
         .archive-item:hover { color: #fff; }
-
-        /* 青ya、跨 専用：虚構の青 */
-        .imaginary { color: var(--accent-blue) !important; font-weight: bold; }
-        
-        #whisper-log {
-            position: fixed; bottom: 40px; left: 40px;
-            font-size: 10px; color: var(--accent-blue);
-            opacity: 0; transition: 1s;
-        }
     </style>
 </head>
 <body>
     <div class="waft-nav" style="position: fixed; top: 30px; left: 30px; font-size: 10px;">
-        <a href="index.html" data-waft-id="archive-exit">[ RETURN ]</a>
+        <a href="index.html" data-waft-id="nav-back">[ RETURN ]</a>
     </div>
 
     <div class="container">
-        <span class="label">Database</span>
-        <h1>干渉記録 / Archive</h1>
+        <span class="label">Database / Log</span>
+        <h1 style="font-size: 14px; color: #eee; font-weight: normal; margin-bottom: 60px;">干渉記録及び活動ログ</h1>
 
-        <h2>INTERNAL</h2>
+        <h2>CORE DATA</h2>
         <div class="entry">
-            <span class="entry-label">PROTOCOL</span>
-            <a href="protocol.html" class="archive-item" data-waft-id="arch-protocol">運営綱領及び業務執行細則</a>
+            <span class="entry-label">SYSTEM_PROTOCOL</span>
+            <a href="protocol.html" class="archive-item" data-waft-id="log-p">運営綱領及び業務執行細則</a>
+        </div>
+
+        <h2>LITERATURE / NOVELS</h2>
+        <div class="entry">
+            <span class="empty-msg">現在、励起されているテキストデータはありません。</span>
+        </div>
+
+        <h2>VISUAL / YOUTUBE</h2>
+        <div class="entry">
+            <span class="empty-msg">境界の可視化記録は未登録です。</span>
+        </div>
+
+        <h2>EXCHANGE / SHOP</h2>
+        <div class="entry">
+            <span class="empty-msg">物質的投射（物品販売）の準備は整っていません。</span>
         </div>
 
         <h2>EXTERNAL INTERFACES</h2>
         <div class="entry">
-            <span class="entry-label">PHYSICAL_INDIVIDUAL</span>
-            <a href="https://x.com/mizyouakira" target="_blank" class="archive-item" data-waft-id="arch-sanjo">三条瞳：@mizyouakira</a>
+            <span class="entry-label">PHYSICAL: 三条瞳</span>
+            <a href="https://x.com/mizyouakira" target="_blank" class="archive-item" data-waft-id="log-s">@mizyouakira</a>
         </div>
-
         <div class="entry">
-            <span class="entry-label">IMAGINARY_INDIVIDUAL</span>
-            <a href="https://x.com/aoyatenka023" target="_blank" 
-               class="archive-item imaginary" 
-               id="aoya-link"
-               data-waft-id="arch-aoya"
-               onmouseover="interfereAoya()">青ya、跨：@aoyatenka023</a>
-        </div>
-
-        <div class="entry">
-            <span class="entry-label">ESTABLISHED_FACILITY</span>
-            <a href="https://waft-interfere.github.io/bollow/" target="_blank" class="archive-item" data-waft-id="arch-bollow">虚構喫茶ボロウ</a>
-        </div>
-
-        <div class="entry">
-            <span class="entry-label">OFFICIAL_REGISTRY</span>
-            <a href="https://x.com/WAFT_registry" target="_blank" class="archive-item" data-waft-id="arch-official">WAFT公式：@WAFT_registry</a>
+            <span class="entry-label">IMAGINARY: 青ya、跨</span>
+            <a href="https://x.com/aoyatenka023" target="_blank" class="archive-item" style="color:var(--accent-blue);" data-waft-id="log-a">@aoyatenka023</a>
         </div>
     </div>
-
-    <div id="whisper-log">「……みつけた」</div>
-
     <script src="waft-core.js"></script>
-    <script>
-        // 青ya、跨 専用の干渉演出
-        function interfereAoya() {
-            const link = document.getElementById('aoya-link');
-            const log = document.getElementById('whisper-log');
-            
-            // わずかに位置をずらす（逃げる）
-            const rX = Math.random() * 10 - 5;
-            const rY = Math.random() * 10 - 5;
-            link.style.transform = `translate(${rX}px, ${rY}px)`;
-
-            // 囁きを表示
-            log.style.opacity = "0.5";
-            setTimeout(() => { log.style.opacity = "0"; }, 2000);
-        }
-    </script>
 </body>
 </html>
