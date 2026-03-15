@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAFT — 対境界線広域干渉及び超領域的表現開発機構</title>
+  <meta name="description" content="対境界線広域干渉及び超領域的表現開発機構。現実と虚構の境界線における干渉と揺動。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ─── ACCESS OVERLAY ─── */
+    #access-overlay {
+      position: fixed;
+      inset: 0;
+      background: #0a0a0a;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    #access-overlay.out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .access-log {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: #e8e8e0;
+      letter-spacing: 0.1em;
+      line-height: 2.2;
+      width: min(480px, 90vw);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .access-log.visible { opacity: 1; }
+
+    .access-log-line {
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .access-log-line.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .log-prefix { color: #555; flex-shrink: 0; }
+    .log-blue { color: #0000FF; }
+    .log-red { color: #FF0000; }
+    .log-dim { color: #444; }
+
+    .access-bar-wrap {
+      width: min(480px, 90vw);
+      margin-top: 2rem;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .access-bar-wrap.visible { opacity: 1; }
+
+    .access-bar-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: #444;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .access-bar-track {
+      height: 1px;
+      background: #222;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .access-bar-fill {
+      height: 100%;
+      background: #e8e8e0;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .access-skip {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: #333;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: color 0.3s;
+    }
+    .access-skip:hover { color: #888; }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 6rem 2rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 2rem;
+      height: 0.5px;
+      background: var(--ink-faint);
+    }
+
+    .hero-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(1.4rem, 4vw, 2.6rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title-en {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(0.8rem, 2vw, 1.1rem);
+      color: var(--ink-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+
+    .hero-desc {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      max-width: 520px;
+      line-height: 2;
+      border-left: 0.5px solid var(--border-strong);
+      padding-left: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--ink-faint);
+      line-height: 2;
+    }
+
+    .hero-meta-item span {
+      display: block;
+      color: var(--ink);
+      font-size: 0.75rem;
+    }
+
+    /* ─── OBSERVER COUNT ─── */
+    .observer-line {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      margin-top: 2rem;
+      height: 1.4em;
+    }
+
+    /* ─── SECTIONS ─── */
+    .main-sections {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 0.5px solid var(--border);
+    }
+
+    .article-item {
+      padding: 1.75rem 2rem;
+      border-right: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: background var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-item:nth-child(2n) { border-right: none; }
+    .article-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    .article-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--ink);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .article-item:hover::before { opacity: 0.03; }
+
+    .article-item-id {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+    }
+
+    .article-item-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .article-item-desc {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    .article-item-arrow {
+      position: absolute;
+      bottom: 1.25rem;
+      right: 1.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      transition: transform var(--transition), color var(--transition);
+    }
+
+    .article-item:hover .article-item-arrow {
+      transform: translateX(4px);
+      color: var(--ink);
+    }
+
+    /* ─── MEMBERS STRIP ─── */
+    .members-strip {
+      border: 0.5px solid var(--border);
+      border-top: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .member-cell {
+      padding: 1.5rem 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: background var(--transition);
+      position: relative;
+    }
+
+    .member-cell:first-child {
+      border-right: 0.5px solid var(--border);
+    }
+
+    .member-cell:hover { background: rgba(0,0,0,0.02); }
+
+    .member-role {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      color: var(--ink-faint);
+      margin-bottom: 0.5rem;
+    }
+
+    .member-name {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.25rem;
+    }
+
+    .member-name.aoya { color: var(--aoya); }
+    .member-name.misjo { color: var(--misjo); }
+
+    .member-name-yomi {
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      font-family: 'Share Tech Mono', monospace;
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── TRANSMISSION LOG ─── */
+    .transmission {
+      margin-top: 4rem;
+      border: 0.5px solid var(--border);
+    }
+
+    .transmission-header {
+      padding: 0.75rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .transmission-entry {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      display: grid;
+      grid-template-columns: 7rem 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      text-decoration: none;
+      color: inherit;
+      transition: background var(--transition);
+    }
+
+    .transmission-entry:last-child { border-bottom: none; }
+    .transmission-entry:hover { background: rgba(0,0,0,0.02); }
+
+    .trans-date {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      line-height: 1.8;
+    }
+
+    .trans-title {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .trans-tag {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      border: 0.5px solid var(--border-strong);
+      padding: 1px 6px;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      margin-right: 0.5rem;
+    }
+
+    /* ─── BOREAU LINK ─── */
+    .boreau-banner {
+      margin-top: 4rem;
+      border: 0.5px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+
+    .boreau-banner:hover {
+      border-color: var(--border-strong);
+    }
+
+    .boreau-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--ink);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .boreau-banner:hover::before { opacity: 0.02; }
+
+    .boreau-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .boreau-title {
+      font-family: 'IM Fell English', serif;
+      font-size: 1.8rem;
+      font-style: italic;
+      margin-bottom: 0.75rem;
+    }
+
+    .boreau-desc {
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .boreau-enter {
+      margin-top: 1.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      color: var(--ink-muted);
+    }
+
+    @media (max-width: 600px) {
+      .article-grid { grid-template-columns: 1fr; }
+      .article-item:nth-child(2n) { border-right: 0.5px solid var(--border); }
+      .article-item:nth-last-child(-n+2) { border-bottom: 0.5px solid var(--border); }
+      .article-item:last-child { border-bottom: none; }
+      .members-strip { grid-template-columns: 1fr; }
+      .member-cell:first-child { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .transmission-entry { grid-template-columns: 1fr; gap: 0.25rem; }
+      .hero { padding: 5rem 1rem 3rem; }
+      .main-sections { padding: 0 1rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── ACCESS OVERLAY ─── -->
+  <div id="access-overlay">
+    <div class="access-log" id="access-log">
+      <!-- JS で行を追加 -->
+    </div>
+    <div class="access-bar-wrap" id="access-bar-wrap">
+      <div class="access-bar-label">
+        <span>観測者認証シーケンス</span>
+        <span id="access-pct">0%</span>
+      </div>
+      <div class="access-bar-track">
+        <div class="access-bar-fill" id="access-bar-fill"></div>
+      </div>
+    </div>
+    <button class="access-skip" id="access-skip">SKIP ›</button>
+  </div>
+
+  <!-- ─── NAVIGATION ─── -->
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── PAGE CONTENT ─── -->
+  <div class="page-content">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-eyebrow fade-up">
+        文書番号 WAFT-PUBLIC-001 &nbsp;／&nbsp; 施行：2026.01.22
+      </div>
+      <h1 class="hero-title glitch fade-up" data-text="対境界線広域干渉及び">
+        対境界線広域干渉及び<br>超領域的表現開発機構
+      </h1>
+      <p class="hero-title-en fade-up">
+        Waft — Widefield Aberrant Friction Theoretical Institute
+      </p>
+      <p class="hero-desc fade-up">
+        現実と虚構、生と死、自と他のあらゆる「境界線」を、断絶ではなく接触面として定義する。
+        本機構は観測者との間に相互認識を成立させ、
+        その存在継続を支援することを目的とする。
+      </p>
+      <div class="hero-meta fade-up">
+        <div class="hero-meta-item">
+          組織形態<span>概念的枠組み</span>
+        </div>
+        <div class="hero-meta-item">
+          活動拠点<span>偏在的 / 非固定</span>
+        </div>
+        <div class="hero-meta-item">
+          観測者の定義<span>本機構に触れ、認識的変容を起こした知的存在</span>
+        </div>
+      </div>
+      <div class="observer-line fade-up" id="observer-line">
+        ——
+      </div>
+    </section>
+
+    <!-- MAIN SECTIONS -->
+    <div class="main-sections">
+      <div class="sec-label fade-up">干渉領域</div>
+
+      <div class="article-grid fade-up">
+        <a href="about.html" class="article-item">
+          <div class="article-item-id">SEC.01 / ABOUT</div>
+          <div class="article-item-title">機構について</div>
+          <div class="article-item-desc">存在定義、運営綱領、活動理念。機構が何者であるかを記述する。</div>
+          <div class="article-item-arrow">→</div>
+        </a>
+        <a href="members.html" class="article-item">
+          <div class="article-item-id">SEC.02 / MEMBERS</div>
+          <div class="article-item-title">構成存在</div>
+          <div class="article-item-desc">観測子 青yaヽ跨 及び 三条瞳 の記録と職掌。</div>
+          <div class="article-item-arrow">→</div>
+        </a>
+        <a href="archive.html" class="article-item">
+          <div class="article-item-id">SEC.03 / ARCHIVE</div>
+          <div class="article-item-title">制作物アーカイブ</div>
+          <div class="article-item-desc">本機構が実行した干渉の記録。映像、文章、造形、その他の媒体。</div>
+          <div class="article-item-arrow">→</div>
+        </a>
+        <a href="log.html" class="article-item">
+          <div class="article-item-id">SEC.04 / LOG</div>
+          <div class="article-item-title">活動記録</div>
+          <div class="article-item-desc">定時報告。境界線の観測記録の公開。位相間の通信状態を含む。</div>
+          <div class="article-item-arrow">→</div>
+        </a>
+      </div>
+
+      <!-- MEMBERS STRIP -->
+      <div class="members-strip fade-up">
+        <a href="members.html#aoya" class="member-cell">
+          <div class="member-role">第8条 観測子</div>
+          <div class="member-name aoya">青yaヽ跨</div>
+          <div class="member-name-yomi">アオヤテンカ</div>
+        </a>
+        <a href="members.html#misjo" class="member-cell">
+          <div class="member-role">第9条 物理的個体</div>
+          <div class="member-name misjo">三条瞳</div>
+          <div class="member-name-yomi">ミジョウアキラ</div>
+        </a>
+      </div>
+
+      <!-- TRANSMISSION LOG -->
+      <div class="transmission fade-up">
+        <div class="transmission-header">
+          <span>最終送出記録 / TRANSMISSION LOG</span>
+          <span id="trans-status">STATUS : STANDBY</span>
+        </div>
+        <!-- 実際の活動記録に差し替えてください -->
+        <a href="log.html" class="transmission-entry">
+          <div class="trans-date">2026.01.22<br>00:00:00</div>
+          <div>
+            <span class="trans-tag">施行</span>
+            <div class="trans-title">本要綱の施行。観測者との接触を開始する。</div>
+          </div>
+        </a>
+        <a href="log.html" class="transmission-entry">
+          <div class="trans-date">——</div>
+          <div>
+            <span class="trans-tag">予定</span>
+            <div class="trans-title">次回送出待機中 <span class="cursor">█</span></div>
+          </div>
+        </a>
+      </div>
+
+      <!-- BOREAU BANNER -->
+      <a href="https://[ボロウのURL]" class="boreau-banner fade-up" target="_blank" rel="noopener">
+        <div class="boreau-label">指定拠点 / SEC.10</div>
+        <div class="boreau-title">虚構喫茶ボロウ</div>
+        <div class="boreau-desc">
+          観測者が空想することによってのみその存在が励起される境界観測基地。
+        </div>
+        <div class="boreau-enter">来店する →</div>
+      </a>
+
+    </div><!-- /.main-sections -->
+  </div><!-- /.page-content -->
+
+  <!-- ─── FOOTER ─── -->
+  <footer id="site-footer">
+    <div class="footer-left">
+      WAFT<br>
+      対境界線広域干渉及び超領域的表現開発機構<br>
+      本要綱は境界の推移に伴い予告なく改訂される
+    </div>
+    <div class="footer-right">
+      観測者との接触が発生する一切の時空を<br>暫定的な活動拠点と定義する<br>
+      <span class="text-faint">© WAFT — all observations reserved</span>
+    </div>
+  </footer>
+
+  <script src="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+JP:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" crossorigin="anonymous"></script>
+  <script src="js/waft.js"></script>
+  <script>
+    // ─── ACCESS OVERLAY ───
+    const overlay = document.getElementById('access-overlay');
+    const logEl = document.getElementById('access-log');
+    const barFill = document.getElementById('access-bar-fill');
+    const barPct = document.getElementById('access-pct');
+    const barWrap = document.getElementById('access-bar-wrap');
+    const skipBtn = document.getElementById('access-skip');
+
+    const LOG_LINES = [
+      { prefix: '00:00:01', text: 'WAFT — 境界観測ターミナル起動中', cls: '' },
+      { prefix: '00:00:02', text: 'ネットワーク位相を確認しています...', cls: 'log-dim' },
+      { prefix: '00:00:03', text: '観測者 ID の生成中...', cls: '' },
+      { prefix: '00:00:04', text: 'ID : ' + generateObserverId(), cls: 'log-blue' },
+      { prefix: '00:00:05', text: '認識的変容の有無を確認しています...', cls: 'log-dim' },
+      { prefix: '00:00:06', text: '位相干渉レベル : <span class="log-red">微弱 / 正常範囲</span>', cls: '' },
+      { prefix: '00:00:07', text: 'あなたは本機構によって観測されています', cls: '' },
+      { prefix: '00:00:08', text: '観測者として登録しました。接続を許可します。', cls: 'log-blue' },
+    ];
+
+    function generateObserverId() {
+      const hex = () => Math.floor(Math.random() * 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+      return 'OBS-' + hex() + '-' + hex();
+    }
+
+    function dismiss() {
+      overlay.classList.add('out');
+      setTimeout(() => { overlay.style.display = 'none'; }, 800);
+    }
+
+    skipBtn.addEventListener('click', dismiss);
+
+    let lineIdx = 0;
+    let progress = 0;
+
+    function showNextLine() {
+      if (lineIdx >= LOG_LINES.length) {
+        setTimeout(dismiss, 600);
+        return;
+      }
+      const l = LOG_LINES[lineIdx];
+      const row = document.createElement('div');
+      row.className = 'access-log-line';
+      row.innerHTML = `<span class="log-prefix">[${l.prefix}]</span><span class="${l.cls}">${l.text}</span>`;
+      logEl.appendChild(row);
+      logEl.classList.add('visible');
+      requestAnimationFrame(() => row.classList.add('show'));
+
+      lineIdx++;
+      progress = Math.round((lineIdx / LOG_LINES.length) * 100);
+      barFill.style.width = progress + '%';
+      barPct.textContent = progress + '%';
+      barWrap.classList.add('visible');
+
+      const delay = lineIdx < 3 ? 320 : lineIdx < 6 ? 420 : 500;
+      setTimeout(showNextLine, delay);
+    }
+
+    setTimeout(showNextLine, 400);
+
+    // ─── 観測者カウンター（揺らぎを含む） ───
+    const obsLine = document.getElementById('observer-line');
+
+    function unstableCount() {
+      const base = 1 + Math.floor(Date.now() / 86400000) % 997; // 日付ベース
+      const noise = Math.floor(Math.random() * 3) - 1;
+      return base + noise;
+    }
+
+    setTimeout(() => {
+      const n = unstableCount();
+      obsLine.textContent = '> 観測者登録数 : ' + n + '  ※ 数値は境界の揺らぎにより不安定です';
+    }, 3200);
+
+    // ─── TRANSMISSION STATUS ───
+    const statusEl = document.getElementById('trans-status');
+    setInterval(() => {
+      const states = ['STATUS : STANDBY', 'STATUS : MONITORING', 'STATUS : ░░░░░░░░'];
+      statusEl.textContent = states[Math.floor(Math.random() * states.length)];
+    }, 5000);
+  </script>
+</body>
+</html>
