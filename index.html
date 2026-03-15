@@ -371,7 +371,7 @@
     }
 
     /* ─── BOREAU LINK ─── */
-    .boreau-banner {
+    .borrow-banner {
       margin-top: 4rem;
       border: 0.5px solid var(--border);
       padding: 2.5rem 2rem;
@@ -384,11 +384,11 @@
       transition: border-color var(--transition);
     }
 
-    .boreau-banner:hover {
+    .borrow-banner:hover {
       border-color: var(--border-strong);
     }
 
-    .boreau-banner::before {
+    .borrow-banner::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -397,9 +397,9 @@
       transition: opacity var(--transition);
     }
 
-    .boreau-banner:hover::before { opacity: 0.02; }
+    .borrow-banner:hover::before { opacity: 0.02; }
 
-    .boreau-label {
+    .borrow-label {
       font-family: 'Share Tech Mono', monospace;
       font-size: 0.6rem;
       letter-spacing: 0.2em;
@@ -407,14 +407,14 @@
       margin-bottom: 0.75rem;
     }
 
-    .boreau-title {
+    .borrow-title {
       font-family: 'IM Fell English', serif;
       font-size: 1.8rem;
       font-style: italic;
       margin-bottom: 0.75rem;
     }
 
-    .boreau-desc {
+    .borrow-desc {
       font-size: 0.78rem;
       color: var(--ink-muted);
       max-width: 400px;
@@ -422,7 +422,7 @@
       line-height: 1.8;
     }
 
-    .boreau-enter {
+    .borrow-enter {
       margin-top: 1.5rem;
       font-family: 'Share Tech Mono', monospace;
       font-size: 0.65rem;
@@ -465,7 +465,10 @@
   <!-- ─── NAVIGATION ─── -->
   <nav id="site-nav">
     <a href="index.html" class="nav-wordmark">WAFT</a>
-    <ul class="nav-links">
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
       <li><a href="about.html">About</a></li>
       <li><a href="members.html">Members</a></li>
       <li><a href="archive.html">Archive</a></li>
@@ -482,7 +485,7 @@
       <div class="hero-eyebrow fade-up">
         文書番号 WAFT-PUBLIC-001 &nbsp;／&nbsp; 施行：2026.01.22
       </div>
-      <h1 class="hero-title glitch fade-up" data-text="対境界線広域干渉及び">
+      <h1 class="hero-title fade-up">
         対境界線広域干渉及び<br>超領域的表現開発機構
       </h1>
       <p class="hero-title-en fade-up">
@@ -498,7 +501,7 @@
           組織形態<span>概念的枠組み</span>
         </div>
         <div class="hero-meta-item">
-          活動拠点<span>偏在的 / 非固定</span>
+          活動拠点<span>遍在的 / 非固定</span>
         </div>
         <div class="hero-meta-item">
           観測者の定義<span>本機構に触れ、認識的変容を起こした知的存在</span>
@@ -578,13 +581,13 @@
       </div>
 
       <!-- BOREAU BANNER -->
-      <a href="https://[ボロウのURL]" class="boreau-banner fade-up" target="_blank" rel="noopener">
-        <div class="boreau-label">指定拠点 / SEC.10</div>
-        <div class="boreau-title">虚構喫茶ボロウ</div>
-        <div class="boreau-desc">
+      <a href="https://waft-interfere.github.io/borrow/" class="borrow-banner fade-up" target="_blank" rel="noopener">
+        <div class="borrow-label">指定拠点 / SEC.10</div>
+        <div class="borrow-title">虚構喫茶ボロウ</div>
+        <div class="borrow-desc">
           観測者が空想することによってのみその存在が励起される境界観測基地。
         </div>
-        <div class="boreau-enter">来店する →</div>
+        <div class="borrow-enter">来店する →</div>
       </a>
 
     </div><!-- /.main-sections -->

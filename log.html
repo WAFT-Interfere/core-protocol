@@ -88,7 +88,7 @@
     .log-timeline::before {
       content: '';
       position: absolute;
-      left: 5.5rem;
+      left: 7.5rem;
       top: 0;
       bottom: 0;
       width: 0.5px;
@@ -97,7 +97,7 @@
 
     .log-entry {
       display: grid;
-      grid-template-columns: 6rem 1fr;
+      grid-template-columns: 8rem 1fr;
       gap: 0 2rem;
       margin-bottom: 0;
       position: relative;
@@ -118,7 +118,7 @@
 
     .log-node {
       position: absolute;
-      left: 5.5rem;
+      left: 7.5rem;
       top: 1.9rem;
       width: 7px;
       height: 7px;
@@ -211,7 +211,10 @@
 
   <nav id="site-nav">
     <a href="index.html" class="nav-wordmark">WAFT</a>
-    <ul class="nav-links">
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
       <li><a href="about.html">About</a></li>
       <li><a href="members.html">Members</a></li>
       <li><a href="archive.html">Archive</a></li>
