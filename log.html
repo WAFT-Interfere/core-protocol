@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log — WAFT</title>
+  <meta name="description" content="WAFT 活動記録。定時報告。境界線の観測記録。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .log-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .page-header { margin-bottom: 3rem; }
+    .page-header-id {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+    .page-header-title {
+      font-family: var(--mono);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+    .page-header-en {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+    }
+
+    /* ─── STATUS BAR ─── */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      border: 0.5px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      margin-bottom: 3rem;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      flex-wrap: wrap;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--ink-muted);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ink-faint);
+    }
+
+    .status-dot.active {
+      background: #00bb66;
+      box-shadow: 0 0 6px rgba(0,187,102,0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .status-interference {
+      color: var(--ink-faint);
+      margin-left: auto;
+      font-size: 0.58rem;
+    }
+
+    /* ─── LOG ENTRIES ─── */
+    .log-timeline {
+      position: relative;
+    }
+
+    .log-timeline::before {
+      content: '';
+      position: absolute;
+      left: 5.5rem;
+      top: 0;
+      bottom: 0;
+      width: 0.5px;
+      background: var(--border);
+    }
+
+    .log-entry {
+      display: grid;
+      grid-template-columns: 6rem 1fr;
+      gap: 0 2rem;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .log-date-col {
+      padding: 1.5rem 0;
+      text-align: right;
+    }
+
+    .log-date {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+    }
+
+    .log-node {
+      position: absolute;
+      left: 5.5rem;
+      top: 1.9rem;
+      width: 7px;
+      height: 7px;
+      border: 0.5px solid var(--border-strong);
+      background: var(--bg);
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    body.dark .log-node { background: var(--bg-dark); }
+
+    .log-node.aoya { border-color: var(--aoya); background: var(--aoya-dim); }
+    .log-node.misjo { border-color: var(--misjo); background: var(--misjo-dim); }
+    .log-node.system { background: var(--ink); border-color: var(--ink); }
+
+    .log-body-col {
+      padding: 1.25rem 0 1.25rem 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .log-entry:last-child .log-body-col { border-bottom: none; }
+
+    .log-tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .log-tag {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      border: 0.5px solid var(--border);
+      padding: 1px 6px;
+      color: var(--ink-faint);
+    }
+
+    .log-tag.tag-aoya { border-color: var(--aoya); color: var(--aoya); }
+    .log-tag.tag-misjo { border-color: var(--misjo); color: var(--misjo); }
+    .log-tag.tag-system { border-color: var(--ink-muted); color: var(--ink-muted); }
+
+    .log-title {
+      font-size: 0.88rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .log-text {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      line-height: 1.9;
+    }
+
+    /* ─── NOISE ENTRY ─── */
+    .log-noise {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      opacity: 0.6;
+    }
+
+    /* ─── EDIT GUIDE ─── */
+    .upload-note {
+      margin-top: 3rem;
+      border: 0.5px dashed var(--border);
+      padding: 1.25rem 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      line-height: 2;
+    }
+
+    .upload-note strong { color: var(--ink-muted); font-weight: 400; }
+
+    @media (max-width: 600px) {
+      .log-timeline::before { left: 0; }
+      .log-entry { grid-template-columns: 1fr; }
+      .log-date-col { display: none; }
+      .log-node { display: none; }
+      .log-body-col { padding-left: 0; }
+      .log-wrap { padding: 5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <div class="log-wrap">
+
+      <header class="page-header fade-up">
+        <div class="page-header-id">文書分類 : 公開 / SEC.04 — LOG</div>
+        <h1 class="page-header-title">活動記録</h1>
+        <p class="page-header-en">Transmission log — boundary observation records</p>
+      </header>
+
+      <div class="status-bar fade-up">
+        <div class="status-indicator">
+          <div class="status-dot active"></div>
+          <span>観測継続中</span>
+        </div>
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+          <span>位相間通信 : <span id="comms-status">安定</span></span>
+        </div>
+        <div class="status-interference" id="interference-label">
+          干渉レベル : 測定中<span class="cursor">_</span>
+        </div>
+      </div>
+
+      <!-- ─── LOG TIMELINE ─── -->
+      <div class="log-timeline fade-up" id="log-timeline">
+
+        <!-- ▼▼▼ ログを追加する場合はこの <div class="log-entry"> ブロックをコピーしてください ▼▼▼ -->
+        <!--
+          .log-node の class:
+            aoya   → 青yaヽ跨の記録
+            misjo  → 三条瞳の記録
+            system → システム / 機構の記録（黒）
+            （なし）→ 通常記録
+
+          .log-tag の class:
+            tag-aoya / tag-misjo / tag-system
+        -->
+
+        <!-- 機構施行 -->
+        <div class="log-entry">
+          <div class="log-date-col">
+            <div class="log-date">2026<br>01.22</div>
+          </div>
+          <div class="log-node system"></div>
+          <div class="log-body-col">
+            <div class="log-tags">
+              <span class="log-tag tag-system">SYSTEM</span>
+              <span class="log-tag">施行</span>
+            </div>
+            <div class="log-title">本要綱の施行。観測者との接触を開始する。</div>
+            <div class="log-text">
+              対境界線広域干渉及び超領域的表現開発機構（WAFT）、2026年1月22日より正式稼働。
+              観測者との接点が発生する一切の時空を暫定的な活動拠点と定義し、
+              干渉を開始する。
+            </div>
+          </div>
+        </div>
+
+        <!-- サンプル：青yaヽ跨の定時報告 -->
+        <div class="log-entry">
+          <div class="log-date-col">
+            <div class="log-date">——</div>
+          </div>
+          <div class="log-node aoya"></div>
+          <div class="log-body-col">
+            <div class="log-tags">
+              <span class="log-tag tag-aoya">青yaヽ跨</span>
+              <span class="log-tag">定時報告</span>
+            </div>
+            <div class="log-title">記録待機中 <span class="cursor">█</span></div>
+            <div class="log-text log-noise">
+              ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+            </div>
+          </div>
+        </div>
+
+        <!-- ▲▲▲ ここまで ▲▲▲ -->
+
+      </div><!-- /.log-timeline -->
+
+      <div class="upload-note fade-up">
+        <strong>【編集ガイド】</strong><br>
+        ログを追加する場合は log.html 内のコメント箇所を参照し、<br>
+        &lt;div class="log-entry"&gt; ブロックをコピーして追記してください。<br>
+        新しい記録ほど上に配置することを推奨します。
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="site-footer">
+    <div class="footer-left">
+      WAFT — SEC.04 / LOG<br>
+      定時報告。境界線の観測記録。<br>
+      活動停滞は「位相間の通信障害」として定義される
+    </div>
+    <div class="footer-right">
+      <a href="contact.html" style="color:var(--ink-faint);text-decoration:none;font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;">次 : 観測者との接触窓口 →</a>
+    </div>
+  </footer>
+
+  <script src="js/waft.js"></script>
+  <script>
+    // 通信状態のランダム揺らぎ
+    const commsEl = document.getElementById('comms-status');
+    const states = ['安定', '安定', '安定', '微弱な乱れ', '安定', '位相ノイズ検出', '安定'];
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % states.length;
+      commsEl.textContent = states[idx];
+    }, 7000);
+
+    // 干渉レベル
+    const intLabel = document.getElementById('interference-label');
+    const levels = ['干渉レベル : 0.02', '干渉レベル : 0.04', '干渉レベル : 0.01', '干渉レベル : 0.07', '干渉レベル : ███'];
+    let li = 0;
+    setInterval(() => {
+      li = (li + 1) % levels.length;
+      intLabel.innerHTML = levels[li] + '<span class="cursor">_</span>';
+    }, 4500);
+  </script>
+</body>
+</html>

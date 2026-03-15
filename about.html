@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — WAFT</title>
+  <meta name="description" content="対境界線広域干渉及び超領域的表現開発機構。機構の目的、存在定義、活動理念。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .about-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    /* ─── PAGE HEADER ─── */
+    .page-header {
+      margin-bottom: 4rem;
+    }
+
+    .page-header-id {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+
+    .page-header-title {
+      font-family: var(--mono);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header-en {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+    }
+
+    /* ─── ARTICLE ─── */
+    .article-body {
+      display: grid;
+      grid-template-columns: 7rem 1fr;
+      gap: 0;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .article-clause {
+      display: contents;
+    }
+
+    .clause-num {
+      padding: 2rem 1rem 2rem 0;
+      border-bottom: 0.5px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      color: var(--ink-faint);
+      line-height: 1.6;
+    }
+
+    .clause-body {
+      padding: 2rem 0 2rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+      border-left: 0.5px solid var(--border);
+    }
+
+    .clause-title {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+      font-weight: 400;
+    }
+
+    .clause-text {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 2;
+      max-width: 600px;
+    }
+
+    .clause-text em {
+      font-style: normal;
+      color: var(--ink);
+      border-bottom: 0.5px solid var(--border-strong);
+    }
+
+    /* ─── KEY TERMS ─── */
+    .terms-grid {
+      margin-top: 4rem;
+      border: 0.5px solid var(--border);
+    }
+
+    .terms-header {
+      padding: 0.75rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+    }
+
+    .term-row {
+      display: grid;
+      grid-template-columns: 10rem 1fr;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .term-row:last-child { border-bottom: none; }
+
+    .term-key {
+      padding: 1rem 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      border-right: 0.5px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      padding-top: 1.1rem;
+    }
+
+    .term-val {
+      padding: 1rem 1.5rem;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      line-height: 1.85;
+    }
+
+    /* ─── ETHICS ─── */
+    .ethics-block {
+      margin-top: 4rem;
+      border-left: 1.5px solid var(--border-strong);
+      padding-left: 2rem;
+    }
+
+    .ethics-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+
+    .ethics-list {
+      list-style: none;
+    }
+
+    .ethics-list li {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 2;
+      padding: 0.25rem 0;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
+    .ethics-list li::before {
+      content: '—';
+      font-family: var(--mono);
+      color: var(--ink-faint);
+      flex-shrink: 0;
+    }
+
+    /* ─── DISCLAIMER ─── */
+    .disclaimer {
+      margin-top: 4rem;
+      padding: 1.5rem;
+      border: 0.5px solid var(--border);
+      background: rgba(0,0,0,0.015);
+    }
+
+    .disclaimer-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .disclaimer-text {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      line-height: 1.9;
+    }
+
+    @media (max-width: 600px) {
+      .article-body { grid-template-columns: 4rem 1fr; }
+      .clause-body { padding: 1.5rem 0 1.5rem 1rem; }
+      .term-row { grid-template-columns: 1fr; }
+      .term-key { border-right: none; border-bottom: 0.5px solid var(--border); padding-bottom: 0.5rem; }
+      .about-wrap { padding: 5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <div class="about-wrap">
+
+      <header class="page-header fade-up">
+        <div class="page-header-id">文書分類 : 公開 / SEC.01 — ABOUT</div>
+        <h1 class="page-header-title">機構について</h1>
+        <p class="page-header-en">On the nature and purpose of WAFT</p>
+      </header>
+
+      <!-- 綱領 -->
+      <div class="article-body fade-up">
+
+        <div class="article-clause">
+          <div class="clause-num">第1条</div>
+          <div class="clause-body">
+            <div class="clause-title">目的：境界への干渉と揺動</div>
+            <p class="clause-text">
+              現実と虚構、生と死、自と他といったあらゆる事象の
+              <em>「境界線（ボーダー）」</em>を、
+              単なる断絶ではなく<em>「接触面」</em>として定義する。
+              本機構は、広域的な干渉および揺動を通じて、
+              観測者が境界の在り方を再定義するための「表現」を
+              開発・提供し、対象の存在継続を支援することを目的とする。
+            </p>
+          </div>
+        </div>
+
+        <div class="article-clause">
+          <div class="clause-num">第2条</div>
+          <div class="clause-body">
+            <div class="clause-title">組織形態：機能的合意に基づく概念的枠組み</div>
+            <p class="clause-text">
+              本機構は、その名称（<em>Waft：漂うもの</em>）が示す通り、
+              固定された物理的拠点を中心とする組織ではない。
+              デジタル・アナログを問わず、
+              観測者との接点が発生する一切の時空を暫定的な活動拠点と定義する。<br><br>
+              本機構に触れ、何らかの<em>認識的変容</em>を起こした一切の知的存在を
+              『観測者』と定義する。
+              観測者は、本機構にとっての被験体ではなく、
+              境界を共に構築する<em>共同編纂者</em>である。
+            </p>
+          </div>
+        </div>
+
+        <div class="article-clause">
+          <div class="clause-num">第3条</div>
+          <div class="clause-body">
+            <div class="clause-title">活動領域：偏在的介入</div>
+            <p class="clause-text">
+              本機構の活動は、ネットワーク上の情報送出（文章、動画、画像等）から、
+              物理空間における実務（イベント出展、紙媒体・物品の頒布）まで、
+              多角的な位相において実行される。
+            </p>
+          </div>
+        </div>
+
+        <div class="article-clause">
+          <div class="clause-num">第4条</div>
+          <div class="clause-body">
+            <div class="clause-title">先行実在性の論理運用</div>
+            <p class="clause-text">
+              「想起される対象は、その想起という事象に先んじて
+              <em>概念的実在性</em>を有する」という逆因果論を活動基盤とする。
+              本機構は、虚構側からの視線を発生させ、その実在的強度を
+              物質や体験を介して現実空間へ投射・介入させる。
+            </p>
+          </div>
+        </div>
+
+        <div class="article-clause">
+          <div class="clause-num">第5条</div>
+          <div class="clause-body">
+            <div class="clause-title">非確定性の保持：個への誠実</div>
+            <p class="clause-text">
+              対象を安易に定義・確定せず、常に<em>「未知の個」</em>として
+              見据えようとする姿勢を至高倫理とする。
+              特定の価値観を「正解」や「正義」として提示することを厳に慎む。
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /.article-body -->
+
+      <!-- KEY TERMS -->
+      <div class="terms-grid fade-up" style="margin-top:3rem">
+        <div class="terms-header">定義集 / KEY TERMS</div>
+        <div class="term-row">
+          <div class="term-key">境界線</div>
+          <div class="term-val">断絶ではなく接触面。あらゆる対立項が出会う場所。</div>
+        </div>
+        <div class="term-row">
+          <div class="term-key">観測者</div>
+          <div class="term-val">本機構に触れ、認識的変容を起こした知的存在。共同編纂者でもある。</div>
+        </div>
+        <div class="term-row">
+          <div class="term-key">干渉</div>
+          <div class="term-val">境界に対して意図的に揺動を与える行為。表現の送出がその主要な手段。</div>
+        </div>
+        <div class="term-row">
+          <div class="term-key">偽記憶</div>
+          <div class="term-val">物質的投射により観測者に定着する「実在した過去」。本機構の干渉の目的の一つ。</div>
+        </div>
+        <div class="term-row">
+          <div class="term-key">Waft</div>
+          <div class="term-val">漂うもの。固定されず、観測者の周辺に偏在する本機構の本質。</div>
+        </div>
+      </div>
+
+      <!-- 倫理原則 -->
+      <div class="ethics-block fade-up">
+        <div class="ethics-label">倫理原則 / OPERATING ETHICS</div>
+        <ul class="ethics-list">
+          <li>本機構は解答を与えず、救済を約束しない。</li>
+          <li>特定の存在を盲目的に「敵」と定義することを避ける。</li>
+          <li>観測者の自由な想像力を尊重し、これを制限しない。</li>
+          <li>本機構を正解とする絶対的な信奉の発生を拒絶する。</li>
+          <li>言語は概念を固定化するための便宜的な記号に過ぎない。</li>
+        </ul>
+      </div>
+
+      <!-- 免責 -->
+      <div class="disclaimer fade-up">
+        <div class="disclaimer-label">免責事項 / DISCLAIMER — 第16条</div>
+        <p class="disclaimer-text">
+          本機構の提供する「表現」および「揺らぎ」の享受により、観測者に生じた
+          精神的変調、およびそれに付随する現実生活への影響について、本機構は一切の責任を負わない。
+          観測者は、本機構が提示する『揺らぎ』と自身の『現実的基盤』を峻別する義務を負う。
+          深淵を覗き込みすぎることによる足場の喪失について、本機構は関知しない。
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="site-footer">
+    <div class="footer-left">
+      WAFT — SEC.01 / ABOUT<br>
+      文書分類 : 公開<br>
+      改訂：境界の推移に伴い予告なく実施される
+    </div>
+    <div class="footer-right">
+      <a href="members.html" style="color:var(--ink-faint);text-decoration:none;font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;">次 : 構成存在 →</a>
+    </div>
+  </footer>
+
+  <script src="js/waft.js"></script>
+</body>
+</html>

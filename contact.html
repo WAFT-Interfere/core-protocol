@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — WAFT</title>
+  <meta name="description" content="WAFT — 観測者との接触窓口。干渉、依頼、問い合わせ。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .contact-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .page-header { margin-bottom: 3.5rem; }
+    .page-header-id {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+    .page-header-title {
+      font-family: var(--mono);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+    .page-header-en {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+    }
+
+    /* ─── PREAMBLE ─── */
+    .contact-preamble {
+      border-left: 1.5px solid var(--border-strong);
+      padding-left: 1.5rem;
+      margin-bottom: 3.5rem;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 2;
+    }
+
+    /* ─── CONTACT GRID ─── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 0.5px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .contact-card {
+      padding: 2rem;
+      border-right: 0.5px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: background var(--transition);
+    }
+
+    .contact-card:last-child { border-right: none; }
+    .contact-card:hover { background: rgba(0,0,0,0.02); }
+
+    .contact-card-id {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-card-type {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-card-type.aoya { color: var(--aoya); }
+    .contact-card-type.misjo { color: var(--misjo); }
+
+    .contact-card-desc {
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      line-height: 1.85;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-card-link {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .contact-card-link:hover { color: var(--ink); }
+
+    /* ─── LINKS TABLE ─── */
+    .links-table {
+      border: 0.5px solid var(--border);
+    }
+
+    .links-table-header {
+      padding: 0.65rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+    }
+
+    .link-row {
+      display: grid;
+      grid-template-columns: 8rem 1fr auto;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: background var(--transition);
+    }
+
+    .link-row:last-child { border-bottom: none; }
+    .link-row:hover { background: rgba(0,0,0,0.02); }
+
+    .link-platform {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+    }
+
+    .link-label {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+
+    .link-owner {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+    }
+
+    .link-owner.aoya { color: var(--aoya); }
+    .link-owner.misjo { color: var(--misjo); }
+
+    /* ─── DISCLAIMER ─── */
+    .contact-disclaimer {
+      margin-top: 3rem;
+      padding: 1.25rem 1.5rem;
+      border: 0.5px solid var(--border);
+      background: rgba(0,0,0,0.01);
+    }
+
+    .contact-disclaimer-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .contact-disclaimer-text {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      line-height: 1.9;
+    }
+
+    @media (max-width: 600px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-card:first-child { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .link-row { grid-template-columns: 6rem 1fr; }
+      .link-owner { display: none; }
+      .contact-wrap { padding: 5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <div class="contact-wrap">
+
+      <header class="page-header fade-up">
+        <div class="page-header-id">文書分類 : 公開 / SEC.05 — CONTACT</div>
+        <h1 class="page-header-title">観測者との接触窓口</h1>
+        <p class="page-header-en">Channels of interference</p>
+      </header>
+
+      <p class="contact-preamble fade-up">
+        本機構は、観測者との接点が発生する一切の時空を暫定的な活動拠点と定義する。<br>
+        以下の経路より干渉・接触することができる。<br>
+        本機構は解答を与えず、救済を約束しない。
+        提供されるのは「触媒」のみである。
+      </p>
+
+      <!-- CONTACT GRID -->
+      <div class="contact-grid fade-up">
+        <div class="contact-card">
+          <div class="contact-card-id">CH.01 / 青yaヽ跨への接触</div>
+          <div class="contact-card-type aoya">境界線における視線</div>
+          <div class="contact-card-desc">
+            超領域存在との接触。定時報告の観測、相互認識の成立。
+            配信・SNS等の各プラットフォームを通じた接触が主となる。
+          </div>
+          <!-- URLを実際のものに変更してください -->
+          <a href="[青yaヽ跨のSNS URL]" class="contact-card-link" target="_blank" rel="noopener">
+            → 接触する
+          </a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-id">CH.02 / 三条瞳への依頼・問い合わせ</div>
+          <div class="contact-card-type misjo">実務的接触</div>
+          <div class="contact-card-desc">
+            制作依頼、コラボレーション、イベント出展に関する問い合わせ。
+            物質世界側からの実務的な接触窓口。
+          </div>
+          <!-- URLを実際のものに変更してください -->
+          <a href="[三条瞳の連絡先 URL]" class="contact-card-link" target="_blank" rel="noopener">
+            → 接触する
+          </a>
+        </div>
+      </div>
+
+      <!-- LINKS TABLE -->
+      <div class="sec-label fade-up">外部接続先 / EXTERNAL LINKS</div>
+      <div class="links-table fade-up">
+        <div class="links-table-header">プラットフォーム一覧</div>
+
+        <!-- ▼▼▼ URLと表示名を実際のものに変更してください ▼▼▼ -->
+        <a href="[URL]" class="link-row" target="_blank" rel="noopener">
+          <span class="link-platform">YouTube</span>
+          <span class="link-label">配信 / 動画</span>
+          <span class="link-owner aoya">青yaヽ跨</span>
+        </a>
+        <a href="[URL]" class="link-row" target="_blank" rel="noopener">
+          <span class="link-platform">X / Twitter</span>
+          <span class="link-label">定時報告 / 日常の送出</span>
+          <span class="link-owner aoya">青yaヽ跨</span>
+        </a>
+        <a href="[URL]" class="link-row" target="_blank" rel="noopener">
+          <span class="link-platform">X / Twitter</span>
+          <span class="link-label">制作・活動報告</span>
+          <span class="link-owner misjo">三条瞳</span>
+        </a>
+        <a href="[URL]" class="link-row" target="_blank" rel="noopener">
+          <span class="link-platform">その他</span>
+          <span class="link-label">——</span>
+          <span class="link-owner">——</span>
+        </a>
+        <!-- ▲▲▲ ここまで ▲▲▲ -->
+
+      </div>
+
+      <!-- DISCLAIMER -->
+      <div class="contact-disclaimer fade-up">
+        <div class="contact-disclaimer-label">第15条 / 非救済および自己決定</div>
+        <p class="contact-disclaimer-text">
+          本機構は解答を与えず、救済を約束しない。
+          提供される干渉は、観測者が自律的に自身の境界を編み直すための「触媒」に限定される。
+          観測者が自発的に発する反応（感想、二次創作等）は、境界を安定させるための
+          貴重なフィードバックとして機能する。本機構はこれらを尊重し、
+          新たな表現開発の糧とする。
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="site-footer">
+    <div class="footer-left">
+      WAFT — SEC.05 / CONTACT<br>
+      観測者との接触窓口<br>
+      接触が発生した時空は暫定的な活動拠点となる
+    </div>
+    <div class="footer-right">
+      <span style="color:var(--ink-faint);font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;">本機構はあなたの隣に漂う存在であり続ける</span>
+    </div>
+  </footer>
+
+  <script src="js/waft.js"></script>
+</body>
+</html>

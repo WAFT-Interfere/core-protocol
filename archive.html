@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archive — WAFT</title>
+  <meta name="description" content="WAFT 制作物アーカイブ。本機構が実行した干渉の記録。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .archive-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .page-header { margin-bottom: 3rem; }
+    .page-header-id {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+    .page-header-title {
+      font-family: var(--mono);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+    .page-header-en {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+    }
+
+    /* ─── FILTER ─── */
+    .filter-bar {
+      display: flex;
+      gap: 0;
+      border: 0.5px solid var(--border);
+      margin-bottom: 2.5rem;
+      overflow-x: auto;
+    }
+
+    .filter-btn {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-right: 0.5px solid var(--border);
+      background: transparent;
+      color: var(--ink-faint);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .filter-btn:last-child { border-right: none; }
+    .filter-btn:hover { background: rgba(0,0,0,0.03); color: var(--ink); }
+    .filter-btn.active { background: var(--ink); color: var(--bg); }
+
+    body.dark .filter-btn.active { background: #e8e8e0; color: var(--bg-dark); }
+
+    /* ─── ARCHIVE TABLE ─── */
+    .archive-table {
+      border: 0.5px solid var(--border);
+    }
+
+    .archive-table-head {
+      display: grid;
+      grid-template-columns: 6rem 1fr 7rem 5rem;
+      padding: 0.5rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      background: rgba(0,0,0,0.015);
+    }
+
+    .archive-table-head span {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      color: var(--ink-faint);
+    }
+
+    .archive-entry {
+      display: grid;
+      grid-template-columns: 6rem 1fr 7rem 5rem;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      align-items: start;
+      text-decoration: none;
+      color: inherit;
+      transition: background var(--transition);
+      cursor: pointer;
+    }
+
+    .archive-entry:last-child { border-bottom: none; }
+    .archive-entry:hover { background: rgba(0,0,0,0.02); }
+
+    .entry-date {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      padding-top: 0.15rem;
+    }
+
+    .entry-main {}
+
+    .entry-title {
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+      line-height: 1.5;
+    }
+
+    .entry-desc {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    .entry-author {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      padding-top: 0.2rem;
+    }
+
+    .entry-author.aoya { color: var(--aoya); }
+    .entry-author.misjo { color: var(--misjo); }
+    .entry-author.both {
+      background: linear-gradient(135deg, var(--aoya) 50%, var(--misjo) 50%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .entry-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      border: 0.5px solid var(--border);
+      padding: 1px 5px;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      padding-top: 0.2rem;
+    }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state {
+      padding: 4rem 2rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      line-height: 2.5;
+      display: none;
+    }
+
+    .empty-state.visible { display: block; }
+
+    /* ─── UPLOAD NOTE ─── */
+    .upload-note {
+      margin-top: 2.5rem;
+      border: 0.5px dashed var(--border);
+      padding: 1.25rem 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      line-height: 2;
+    }
+
+    .upload-note strong {
+      color: var(--ink-muted);
+      font-weight: 400;
+    }
+
+    @media (max-width: 640px) {
+      .archive-table-head { display: none; }
+      .archive-entry {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+      }
+      .entry-author { display: none; }
+      .archive-wrap { padding: 5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <div class="archive-wrap">
+
+      <header class="page-header fade-up">
+        <div class="page-header-id">文書分類 : 公開 / SEC.03 — ARCHIVE</div>
+        <h1 class="page-header-title">制作物アーカイブ</h1>
+        <p class="page-header-en">Records of interference</p>
+      </header>
+
+      <!-- FILTER -->
+      <div class="filter-bar fade-up" id="filter-bar">
+        <button class="filter-btn active" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="video">映像</button>
+        <button class="filter-btn" data-filter="text">文章</button>
+        <button class="filter-btn" data-filter="object">造形 / 物品</button>
+        <button class="filter-btn" data-filter="music">音楽</button>
+        <button class="filter-btn" data-filter="other">その他</button>
+      </div>
+
+      <!-- TABLE -->
+      <div class="archive-table fade-up" id="archive-table">
+        <div class="archive-table-head">
+          <span>日付</span>
+          <span>タイトル / 概要</span>
+          <span>担当</span>
+          <span>種別</span>
+        </div>
+
+        <!-- ▼▼▼ 作品を追加する場合は以下の <a> ブロックをコピーしてください ▼▼▼ -->
+        <!--
+          href      : 作品のURL（外部リンク or 詳細ページ）
+          data-type : video / text / object / music / other のいずれか
+
+          担当の class:
+            aoya  → 青yaヽ跨
+            misjo → 三条瞳
+            both  → 共作
+        -->
+
+        <!-- サンプルエントリー（削除してください） -->
+        <a href="#" class="archive-entry" data-type="other">
+          <div class="entry-date">——</div>
+          <div class="entry-main">
+            <div class="entry-title">記録待機中</div>
+            <div class="entry-desc">干渉の痕跡はここに蓄積される。</div>
+          </div>
+          <div class="entry-author">——</div>
+          <div class="entry-tag">——</div>
+        </a>
+
+        <!-- ▲▲▲ ここまで ▲▲▲ -->
+      </div>
+
+      <div class="empty-state" id="empty-state">
+        ARCHIVE EMPTY<br>
+        <span style="color:var(--ink-faint);font-size:0.6rem">— 該当する記録は存在しない —</span>
+      </div>
+
+      <!-- EDIT GUIDE -->
+      <div class="upload-note fade-up">
+        <strong>【編集ガイド】</strong><br>
+        作品を追加する場合は archive.html 内のコメント箇所を参照し、<br>
+        &lt;a&gt; ブロックをコピーして追記してください。<br>
+        href に作品URL、data-type に種別、entry-author の class で担当者を指定します。
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="site-footer">
+    <div class="footer-left">
+      WAFT — SEC.03 / ARCHIVE<br>
+      本機構が実行した干渉の記録<br>
+      体験の記録はその体験者（観測者）に帰属する
+    </div>
+    <div class="footer-right">
+      <a href="log.html" style="color:var(--ink-faint);text-decoration:none;font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;">次 : 活動記録 →</a>
+    </div>
+  </footer>
+
+  <script src="js/waft.js"></script>
+  <script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const entries = document.querySelectorAll('.archive-entry');
+    const emptyState = document.getElementById('empty-state');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        let visible = 0;
+
+        entries.forEach(entry => {
+          const type = entry.dataset.type;
+          const show = filter === 'all' || type === filter;
+          entry.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        emptyState.classList.toggle('visible', visible === 0);
+      });
+    });
+  </script>
+</body>
+</html>

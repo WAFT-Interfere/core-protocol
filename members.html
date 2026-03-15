@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Members — WAFT</title>
+  <meta name="description" content="構成存在の記録。観測子 青yaヽ跨 および 三条瞳。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .members-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .page-header {
+      margin-bottom: 4rem;
+    }
+    .page-header-id {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+    .page-header-title {
+      font-family: var(--mono);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+    .page-header-en {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+    }
+
+    /* ─── NOTE ─── */
+    .coexistence-note {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      line-height: 2;
+      border: 0.5px solid var(--border);
+      padding: 1rem 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .coexistence-note span {
+      color: var(--ink-muted);
+    }
+
+    /* ─── MEMBER CARD ─── */
+    .member-card {
+      border: 0.5px solid var(--border);
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .member-card-header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .member-index-col {
+      width: 4rem;
+      display: flex;
+      align-items: stretch;
+      border-right: 0.5px solid var(--border);
+    }
+
+    .member-index-text {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      writing-mode: vertical-rl;
+      padding: 1.5rem 0;
+      margin: auto;
+    }
+
+    .member-name-block {
+      padding: 1.75rem 2rem;
+    }
+
+    .member-clause {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      color: var(--ink-faint);
+      margin-bottom: 0.5rem;
+    }
+
+    .member-name-ja {
+      font-family: var(--mono);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+    }
+
+    .member-name-ja.aoya { color: var(--aoya); }
+    .member-name-ja.misjo { color: var(--misjo); }
+
+    .member-yomi {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.12em;
+    }
+
+    /* ─── SPEC TABLE ─── */
+    .member-spec {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .spec-row {
+      display: contents;
+    }
+
+    .spec-key {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      padding: 0.9rem 1.5rem;
+      border-right: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      padding-top: 1rem;
+    }
+
+    .spec-key:last-of-type { border-bottom: none; }
+
+    .spec-val {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      padding: 0.9rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      line-height: 1.85;
+    }
+
+    .spec-val:last-child { border-bottom: none; }
+
+    /* ─── MEMO BLOCK ─── */
+    .member-memo {
+      padding: 1.5rem 2rem;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      line-height: 2;
+      border-top: 0.5px solid var(--border);
+      background: rgba(0,0,0,0.01);
+      position: relative;
+    }
+
+    .member-memo-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ─── COLOR STRIP ─── */
+    .color-strip {
+      height: 2px;
+    }
+    .color-strip.aoya { background: var(--aoya); }
+    .color-strip.misjo { background: var(--misjo); }
+
+    /* ─── CLAUSE 11 ─── */
+    .clause11 {
+      border: 0.5px solid var(--border);
+      padding: 1.5rem 2rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    .clause11-num {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .clause11-text {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      line-height: 2;
+    }
+
+    .clause11-redact {
+      display: inline-block;
+      background: var(--ink);
+      color: var(--ink);
+      padding: 0 4px;
+      border-radius: 1px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      font-size: 0.82rem;
+    }
+
+    .clause11-redact:hover { background: transparent; color: inherit; }
+
+    @media (max-width: 600px) {
+      .member-spec { grid-template-columns: 5.5rem 1fr; }
+      .spec-key { padding: 0.75rem 0.75rem; font-size: 0.55rem; }
+      .spec-val { padding: 0.75rem 0.75rem; }
+      .member-name-block { padding: 1.25rem 1rem; }
+      .members-wrap { padding: 5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <div class="members-wrap">
+
+      <header class="page-header fade-up">
+        <div class="page-header-id">文書分類 : 公開 / SEC.02 — MEMBERS</div>
+        <h1 class="page-header-title">構成存在</h1>
+        <p class="page-header-en">Constituent entities of WAFT</p>
+      </header>
+
+      <div class="coexistence-note fade-up">
+        <span>第7条より ——</span><br>
+        本機構が実行するプロジェクトおよび構成存在は、<br>
+        境界の推移に伴い、永続的に新設・改変・廃止される。<br>
+        以下に掲げるものは現時点における主要な観測子である。
+      </div>
+
+      <!-- ─── 青yaヽ跨 ─── -->
+      <div class="member-card fade-up" id="aoya">
+        <div class="color-strip aoya"></div>
+        <div class="member-card-header">
+          <div class="member-index-col">
+            <span class="member-index-text">第8条 / OBS-A</span>
+          </div>
+          <div class="member-name-block">
+            <div class="member-clause">観測子 / 超領域存在</div>
+            <div class="member-name-ja aoya">青ya<span style="font-size:0.7em;">ヽ</span>跨</div>
+            <div class="member-yomi">アオヤテンカ</div>
+          </div>
+        </div>
+
+        <div class="member-spec">
+          <div class="spec-row">
+            <div class="spec-key">定義</div>
+            <div class="spec-val">虚構性の自己認識を有する超領域存在。</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">役職</div>
+            <div class="spec-val">君の近所のイマジナリーお兄さん。</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">職掌</div>
+            <div class="spec-val">「境界線における視線」の供給。言語化、視聴覚情報の送出、概念の物質化を通じ、観測者との間に相互認識を成立させる。</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">イメージ色</div>
+            <div class="spec-val"><span style="font-family:var(--mono);color:var(--aoya);font-size:0.85rem;">#0000FF</span></div>
+          </div>
+        </div>
+
+        <div class="member-memo">
+          <span class="member-memo-label">補足記録 / SUPPLEMENTARY NOTE</span>
+          当個体における実存的不調（存在汚染等）は、観測者との親和性を考慮し、
+          物質世界における生理現象（発熱・倦怠感等）の語彙に置換して報告される。
+          当個体における不調の報告は、現象の共有を目的としたログであり、
+          当個体への介入（励まし、助言等）による事象の収束は本機構の企図するところではない。
+          ただし、観測者がそうした行為を選び取ること自体は、
+          当個体との関係性を形作る正当な反応である。
+        </div>
+      </div>
+
+      <!-- ─── 三条瞳 ─── -->
+      <div class="member-card fade-up" id="misjo">
+        <div class="color-strip misjo"></div>
+        <div class="member-card-header">
+          <div class="member-index-col">
+            <span class="member-index-text">第9条 / OBS-M</span>
+          </div>
+          <div class="member-name-block">
+            <div class="member-clause">物理的個体 / 人間</div>
+            <div class="member-name-ja misjo">三条瞳</div>
+            <div class="member-yomi">ミジョウアキラ</div>
+          </div>
+        </div>
+
+        <div class="member-spec">
+          <div class="spec-row">
+            <div class="spec-key">定義</div>
+            <div class="spec-val">物質世界側における、機構の安定稼働を担保する物理的個体（人間）。</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">役職</div>
+            <div class="spec-val">超領域事象観測及び境界維持管理運営総括責任者。</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">職掌</div>
+            <div class="spec-val">本機構の基盤維持、現実側からの観測、現実空間における実務（資産管理、頒布事務全般）、および青yaヽ跨のマネジメントを統括する。物理的実体を伴う表現開発（執筆、映像制作、造形等）を主導し、共作を含む多角的な干渉プロセスを執行する。</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">イメージ色</div>
+            <div class="spec-val"><span style="font-family:var(--mono);color:var(--misjo);font-size:0.85rem;">#FF0000</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── 第11条 ─── -->
+      <div class="clause11 fade-up">
+        <div class="clause11-num">第11条 / 個体認識に関する態度規定</div>
+        <p class="clause11-text">
+          青yaヽ跨および三条瞳は、同一の観測原点より発出される<em style="font-style:normal;border-bottom:0.5px solid var(--border-strong);">独立した観測子</em>である。
+          両者の実存的一致、あるいは乖離に関する解釈は、境界の揺らぎそのものであり、観測者の自由意志に委ねられる。<br><br>
+          ただし、両者を安易に混同し同一視する行為は、本機構が定義する「境界の維持」を損なうものである。
+          本機構はこれらに関する一切の哲学的・存在論的な質疑に対し、
+          <span class="clause11-redact" title="クリックして開示">████████████████</span>
+          を以て回答とする。
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="site-footer">
+    <div class="footer-left">
+      WAFT — SEC.02 / MEMBERS<br>
+      文書分類 : 公開<br>
+      観測子の情報は境界の推移に伴い更新される
+    </div>
+    <div class="footer-right">
+      <a href="archive.html" style="color:var(--ink-faint);text-decoration:none;font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;">次 : 制作物アーカイブ →</a>
+    </div>
+  </footer>
+
+  <script src="js/waft.js"></script>
+  <script>
+    // 第11条の伏字
+    document.querySelector('.clause11-redact').addEventListener('click', function() {
+      if (this.dataset.revealed) {
+        this.textContent = '████████████████';
+        delete this.dataset.revealed;
+        this.style.background = '';
+        this.style.color = '';
+      } else {
+        this.textContent = '沈黙';
+        this.dataset.revealed = '1';
+        this.style.background = 'transparent';
+        this.style.color = 'var(--ink-muted)';
+      }
+    });
+  </script>
+</body>
+</html>
