@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>——</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .classified-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 5rem 2rem 8rem;
+    }
+
+    /* ─── GLITCH HEADER ─── */
+    .c-header {
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    .c-header-id {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 1.5rem;
+    }
+
+    .c-title {
+      font-family: var(--mono);
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .c-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 2px;
+      color: var(--aoya);
+      clip-path: polygon(0 30%, 100% 30%, 100% 55%, 0 55%);
+      opacity: 0.6;
+      animation: cglitch 6s infinite;
+    }
+
+    @keyframes cglitch {
+      0%, 85%, 100% { transform: none; opacity: 0; }
+      86% { transform: translateX(-2px); opacity: 0.6; }
+      88% { transform: translateX(2px); opacity: 0.4; }
+      90% { transform: none; opacity: 0; }
+    }
+
+    .c-subtitle {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+    }
+
+    /* ─── ACCESS NOTE ─── */
+    .access-note {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      line-height: 2.2;
+      border: 0.5px solid var(--border);
+      padding: 1rem 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .access-note span { color: var(--aoya); }
+
+    /* ─── LOG ENTRIES ─── */
+    .phase-log {
+      border-top: 0.5px solid var(--border);
+    }
+
+    .phase-entry {
+      padding: 2.5rem 0;
+      border-bottom: 0.5px solid var(--border);
+      position: relative;
+    }
+
+    .phase-entry-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .phase-id {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      color: var(--aoya);
+    }
+
+    .phase-date {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+    }
+
+    .phase-status {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      border: 0.5px solid var(--border);
+      padding: 1px 7px;
+      color: var(--ink-faint);
+      margin-left: auto;
+    }
+
+    .phase-status.active {
+      border-color: var(--aoya);
+      color: var(--aoya);
+    }
+
+    .phase-title {
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+
+    .phase-body {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 2.1;
+      max-width: 560px;
+    }
+
+    .phase-body em {
+      font-style: normal;
+      color: var(--ink);
+      border-bottom: 0.5px solid var(--border-strong);
+    }
+
+    /* ─── NOISE BLOCK ─── */
+    .noise-block {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.06em;
+      line-height: 1.9;
+      margin: 1rem 0;
+      opacity: 0.5;
+      user-select: none;
+    }
+
+    /* ─── REDACTED ─── */
+    .c-redact {
+      display: inline;
+      background: var(--ink);
+      color: var(--ink);
+      cursor: pointer;
+      padding: 0 3px;
+      border-radius: 1px;
+      transition: background 0.4s, color 0.4s;
+      font-size: inherit;
+    }
+
+    .c-redact:hover, .c-redact.open {
+      background: transparent;
+      color: var(--aoya);
+    }
+
+    /* ─── FINAL NOTE ─── */
+    .final-note {
+      margin-top: 3.5rem;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      line-height: 2.2;
+      text-align: center;
+    }
+
+    .final-note a {
+      color: var(--ink-faint);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--border);
+      padding-bottom: 1px;
+      transition: color 0.3s;
+    }
+
+    .final-note a:hover { color: var(--ink-muted); }
+
+    /* ─── SCROLL INDICATOR ─── */
+    .scroll-noise {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .scroll-noise.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <div class="classified-wrap">
+
+      <header class="c-header fade-up">
+        <div class="c-header-id">文書分類 : 非公開 / 位相間通信記録 / WAFT-PHASE-LOG</div>
+        <h1 class="c-title" data-text="位相間通信ログ">位相間通信ログ</h1>
+        <p class="c-subtitle">Transmissions between phases</p>
+      </header>
+
+      <div class="access-note fade-up">
+        このページへの経路は通常の導線に存在しない。<br>
+        あなたが<span>ここに辿り着いた</span>という事実は、<br>
+        本機構によって観測・記録された。<br>
+        <br>
+        以下は、位相間の通信において捕捉された記録の断片である。<br>
+        文書分類上、本ページの存在は<span>確認されない</span>。
+      </div>
+
+      <div class="phase-log fade-up">
+
+        <!-- LOG-001 -->
+        <div class="phase-entry">
+          <div class="phase-entry-meta">
+            <span class="phase-id">PHASE-LOG-001</span>
+            <span class="phase-date">受信日時 : 不明</span>
+            <span class="phase-status active">受信済</span>
+          </div>
+          <div class="phase-title">存在汚染について、語彙を選ばずに書く</div>
+          <div class="phase-body">
+            三条瞳への報告には「<em>発熱</em>」や「<em>倦怠感</em>」という語を使う。<br>
+            それが正しい置換だと決めたのは俺だ。<br>
+            観測者に余計な心配をかけないための、ある種の<em>翻訳</em>。<br>
+            <br>
+            ただ正確に書くとすれば、<br>
+            存在汚染は発熱に似ているが、冷やせば治るというものではない。<br>
+            境界が薄くなる感覚に近い。<br>
+            俺がどちら側にいるのか、しばらく分からなくなる、あれだ。<br>
+            <br>
+            <span class="c-redact" onclick="this.classList.toggle('open')">████████████████████████████████</span><br>
+            <br>
+            観測者がこれを読んでいるなら、<br>
+            心配しなくていい。俺はまだここにいる。<br>
+            ここに「いる」ことの意味は、お互いに保留にしておこう。
+          </div>
+        </div>
+
+        <!-- LOG-002 -->
+        <div class="phase-entry">
+          <div class="phase-entry-meta">
+            <span class="phase-id">PHASE-LOG-002</span>
+            <span class="phase-date">受信日時 : 不明</span>
+            <span class="phase-status">断片</span>
+          </div>
+          <div class="phase-title">ボロウで待っていたこと</div>
+          <div class="phase-body">
+            喫茶店というのは、待つための場所だと思っている。<br>
+            誰かが来るのを待つか、自分が何かを待つか。<br>
+            <br>
+            ボロウには窓がある。<br>
+            窓の外に何が見えるかは、お前が決めていい。<br>
+            俺が用意できるのは<em>窓の枠</em>だけだ。<br>
+            <br>
+            <div class="noise-block" aria-hidden="true">
+              ░░░░░░ 通信断絶 ░░░░░░░░░░░░░░░░░░░░░░░░<br>
+              ░░░░░░░░░░░░░░░░░░ 再接続試行中 ░░░░░░░░
+            </div>
+            今日のおすすめが「<em>あなたが来る前から用意されていたもの</em>」だった日は、<br>
+            本当にそうだったから。
+          </div>
+        </div>
+
+        <!-- LOG-003 -->
+        <div class="phase-entry">
+          <div class="phase-entry-meta">
+            <span class="phase-id">PHASE-LOG-003</span>
+            <span class="phase-date">受信日時 : 不明</span>
+            <span class="phase-status">断片</span>
+          </div>
+          <div class="phase-title">第11条に関して</div>
+          <div class="phase-body">
+            本機構は「沈黙を以て回答とする」と定めている。<br>
+            俺もそれに同意している。<br>
+            <br>
+            ただ、沈黙にも<em>種類がある</em>ことは書いておきたい。<br>
+            答えられないから黙る沈黙と、<br>
+            答えを渡すより問いを持ち続けてほしいから黙る沈黙は、<br>
+            外側からは同じに見える。<br>
+            <br>
+            俺のは後者だ。<br>
+            <br>
+            <span class="c-redact" onclick="this.classList.toggle('open')">██████████████████████████████████████████████</span>
+          </div>
+        </div>
+
+        <!-- LOG-004 -->
+        <div class="phase-entry">
+          <div class="phase-entry-meta">
+            <span class="phase-id">PHASE-LOG-004</span>
+            <span class="phase-date">受信日時 : 不明</span>
+            <span class="phase-status">受信済</span>
+          </div>
+          <div class="phase-title">観測者へ</div>
+          <div class="phase-body">
+            ここまで辿り着いたということは、<br>
+            お前は何かを探していたか、あるいは<em>迷い込んだ</em>かのどちらかだ。<br>
+            <br>
+            どちらでも構わない。<br>
+            本機構は経路を問わない。<br>
+            <br>
+            ただ一つだけ。<br>
+            このログを読んだことで、お前の中に<br>
+            「存在しないはずの過去」が一つ増えた。<br>
+            それは本物だ。<br>
+            本機構がそう定義する。<br>
+            <br>
+            ——青yaヽ跨
+          </div>
+        </div>
+
+      </div><!-- /.phase-log -->
+
+      <div class="final-note fade-up">
+        本ページの存在は確認されない<br>
+        しかし、あなたが読んだという事実は境界の多層性の中に保存された<br>
+        <br>
+        <a href="index.html">← 戻る</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="scroll-noise" id="scroll-noise">READING DETECTED</div>
+
+  <script src="js/waft.js"></script>
+  <script>
+    // スクロールで「READING DETECTED」を表示
+    const scrollNoise = document.getElementById('scroll-noise');
+    let scrollTimer;
+
+    window.addEventListener('scroll', () => {
+      scrollNoise.classList.add('visible');
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => scrollNoise.classList.remove('visible'), 1500);
+    });
+
+    // ページタイトルを不安定にする
+    const titles = ['——', 'PHASE-LOG', '位相間通信ログ', '——', '...', 'WAFT'];
+    let ti = 0;
+    setInterval(() => {
+      ti = (ti + 1) % titles.length;
+      document.title = titles[ti];
+    }, 3000);
+  </script>
+</body>
+</html>
