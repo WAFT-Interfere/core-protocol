@@ -82,61 +82,32 @@
 
     /* ─── LOG ENTRIES ─── */
     .log-timeline {
-      position: relative;
-    }
-
-    .log-timeline::before {
-      content: '';
-      position: absolute;
-      left: 7.5rem;
-      top: 0;
-      bottom: 0;
-      width: 0.5px;
-      background: var(--border);
+      border-top: 0.5px solid var(--border);
     }
 
     .log-entry {
-      display: grid;
-      grid-template-columns: 8rem 1fr;
-      gap: 0 2rem;
-      margin-bottom: 0;
-      position: relative;
+      padding: 1.75rem 0;
+      border-bottom: 0.5px solid var(--border);
     }
 
+    .log-entry:last-child { border-bottom: none; }
+
     .log-date-col {
-      padding: 1.5rem 0;
-      text-align: right;
+      margin-bottom: 0.75rem;
     }
 
     .log-date {
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       color: var(--ink-faint);
-      letter-spacing: 0.08em;
-      line-height: 1.8;
+      letter-spacing: 0.12em;
+      display: inline;
     }
 
-    .log-node {
-      position: absolute;
-      left: 7.5rem;
-      top: 1.9rem;
-      width: 7px;
-      height: 7px;
-      border: 0.5px solid var(--border-strong);
-      background: var(--bg);
-      transform: translateX(-50%);
-      z-index: 1;
-    }
-
-    body.dark .log-node { background: var(--bg-dark); }
-
-    .log-node.aoya { border-color: var(--aoya); background: var(--aoya-dim); }
-    .log-node.misjo { border-color: var(--misjo); background: var(--misjo-dim); }
-    .log-node.system { background: var(--ink); border-color: var(--ink); }
+    .log-node { display: none; }
 
     .log-body-col {
-      padding: 1.25rem 0 1.25rem 0;
-      border-bottom: 0.5px solid var(--border);
+      border-bottom: none;
     }
 
     .log-entry:last-child .log-body-col { border-bottom: none; }
@@ -198,11 +169,6 @@
     .upload-note strong { color: var(--ink-muted); font-weight: 400; }
 
     @media (max-width: 600px) {
-      .log-timeline::before { left: 0; }
-      .log-entry { grid-template-columns: 1fr; }
-      .log-date-col { display: none; }
-      .log-node { display: none; }
-      .log-body-col { padding-left: 0; }
       .log-wrap { padding: 5rem 1rem 4rem; }
     }
   </style>
@@ -251,25 +217,32 @@
 
         <!-- ▼▼▼ ログを追加する場合はこの <div class="log-entry"> ブロックをコピーしてください ▼▼▼ -->
         <!--
-          .log-node の class:
-            aoya   → 青yaヽ跨の記録
-            misjo  → 三条瞳の記録
-            system → システム / 機構の記録（黒）
-            （なし）→ 通常記録
+          ログ追加テンプレート:
 
-          .log-tag の class:
-            tag-aoya / tag-misjo / tag-system
+          <div class="log-entry">
+            <div class="log-date-col">
+              <span class="log-date">YYYY.MM.DD</span>
+              <span class="log-tag tag-aoya" style="margin-left:0.75rem;">青yaヽ跨</span>
+              ※ tag-aoya / tag-misjo / tag-system から選ぶ
+            </div>
+            <div class="log-body-col">
+              <div class="log-tags">
+                <span class="log-tag">定時報告</span>
+              </div>
+              <div class="log-title">タイトル</div>
+              <div class="log-text">本文</div>
+            </div>
+          </div>
         -->
 
         <!-- 機構施行 -->
         <div class="log-entry">
           <div class="log-date-col">
-            <div class="log-date">2026<br>01.22</div>
+            <span class="log-date">2026.01.22</span>
+            <span class="log-tag tag-system" style="margin-left:0.75rem;">SYSTEM</span>
           </div>
-          <div class="log-node system"></div>
           <div class="log-body-col">
             <div class="log-tags">
-              <span class="log-tag tag-system">SYSTEM</span>
               <span class="log-tag">施行</span>
             </div>
             <div class="log-title">本要綱の施行。観測者との接触を開始する。</div>
@@ -284,12 +257,11 @@
         <!-- サンプル：青yaヽ跨の定時報告 -->
         <div class="log-entry">
           <div class="log-date-col">
-            <div class="log-date">——</div>
+            <span class="log-date">——</span>
+            <span class="log-tag tag-aoya" style="margin-left:0.75rem;">青yaヽ跨</span>
           </div>
-          <div class="log-node aoya"></div>
           <div class="log-body-col">
             <div class="log-tags">
-              <span class="log-tag tag-aoya">青yaヽ跨</span>
               <span class="log-tag">定時報告</span>
             </div>
             <div class="log-title">記録待機中 <span class="cursor">█</span></div>

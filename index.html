@@ -549,11 +549,13 @@
           <div class="member-role">第8条 観測子</div>
           <div class="member-name aoya">青yaヽ跨</div>
           <div class="member-name-yomi">アオヤテンカ</div>
+          <div class="member-status" id="status-aoya" style="margin-top:0.75rem;font-family:var(--mono);font-size:0.55rem;letter-spacing:0.1em;color:var(--ink-faint);">——</div>
         </a>
         <a href="members.html#misjo" class="member-cell">
           <div class="member-role">第9条 物理的個体</div>
           <div class="member-name misjo">三条瞳</div>
           <div class="member-name-yomi">ミジョウアキラ</div>
+          <div class="member-status" id="status-misjo" style="margin-top:0.75rem;font-family:var(--mono);font-size:0.55rem;letter-spacing:0.1em;color:var(--ink-faint);">——</div>
         </a>
       </div>
 
@@ -688,6 +690,35 @@
       const states = ['STATUS : STANDBY', 'STATUS : MONITORING', 'STATUS : ░░░░░░░░'];
       statusEl.textContent = states[Math.floor(Math.random() * states.length)];
     }, 5000);
+
+    // ─── 二人の接続状態（時刻ベース、同時にオンラインにならない）───
+    function updateMemberStatus() {
+      const now = new Date();
+      const h = now.getHours();
+      const min = now.getMinutes();
+      // 時刻の合計値で決定論的に振り分ける（毎回同じ結果）
+      const seed = h * 60 + min;
+      const aoyaOnline  = (seed % 7 < 3) && !(seed % 11 === 0); // 約43%の時間帯
+      const misjoOnline = !aoyaOnline && (seed % 5 < 2);         // 青が出ていない時の約40%
+
+      const sa = document.getElementById('status-aoya');
+      const sm = document.getElementById('status-misjo');
+      if (!sa || !sm) return;
+
+      if (aoyaOnline) {
+        sa.innerHTML = '<span style="color:var(--aoya);">● ONLINE</span>';
+        sm.textContent = '○ STANDBY';
+      } else if (misjoOnline) {
+        sa.textContent = '○ STANDBY';
+        sm.innerHTML = '<span style="color:var(--misjo);">● ONLINE</span>';
+      } else {
+        sa.textContent = '○ STANDBY';
+        sm.textContent = '○ STANDBY';
+      }
+    }
+
+    setTimeout(updateMemberStatus, 3500);
+    setInterval(updateMemberStatus, 60000);
   </script>
 </body>
 </html>

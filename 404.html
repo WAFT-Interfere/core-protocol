@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — WAFT</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .lost-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .lost-code {
+      font-family: var(--mono);
+      font-size: clamp(4rem, 15vw, 9rem);
+      font-weight: 400;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 2rem;
+      opacity: 0.18;
+    }
+
+    .lost-header-id {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+
+    .lost-title {
+      font-family: var(--mono);
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+
+    .lost-sub {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .lost-body {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 2.1;
+      border-left: 0.5px solid var(--border-strong);
+      padding-left: 1.5rem;
+      margin-bottom: 3rem;
+      max-width: 480px;
+    }
+
+    .lost-body em {
+      font-style: normal;
+      color: var(--ink);
+      border-bottom: 0.5px solid var(--border-strong);
+    }
+
+    .lost-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 0.5px solid var(--border);
+      max-width: 400px;
+    }
+
+    .lost-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-bottom: 0.5px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .lost-link:last-child { border-bottom: none; }
+    .lost-link:hover { background: rgba(0,0,0,0.02); color: var(--ink); }
+
+    .lost-link-arrow {
+      color: var(--ink-faint);
+      transition: transform var(--transition);
+    }
+
+    .lost-link:hover .lost-link-arrow { transform: translateX(4px); }
+
+    /* 隠しリンク：見た目はノイズ、クリックでclassifiedへ */
+    .lost-noise {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.06em;
+      opacity: 0.3;
+      margin-top: 3rem;
+      line-height: 2;
+      user-select: none;
+    }
+
+    .lost-noise a {
+      color: inherit;
+    }
+
+    @media (max-width: 480px) {
+      .lost-wrap { padding: 5rem 1.25rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <div class="lost-wrap">
+
+      <div class="lost-code fade-up">404</div>
+
+      <div class="fade-up">
+        <div class="lost-header-id">位相間通信エラー / BOUNDARY DISSOLUTION</div>
+        <h1 class="lost-title">このページは消滅しました</h1>
+        <p class="lost-sub">The page you observed no longer exists</p>
+      </div>
+
+      <p class="lost-body fade-up">
+        本機構が送出する情報は、<em>境界の揺らぎ</em>に伴い、予告なく削除・消滅する場合がある。<br><br>
+        過去の記録と現在の事象に齟齬が生じた場合、<br>
+        観測者は各々の観測時における事象を<em>唯一の真実</em>として受理されたし。<br><br>
+        ——第18条
+      </p>
+
+      <div class="lost-links fade-up">
+        <a href="index.html" class="lost-link">
+          <span>機構トップへ戻る</span>
+          <span class="lost-link-arrow">→</span>
+        </a>
+        <a href="log.html" class="lost-link">
+          <span>活動記録を確認する</span>
+          <span class="lost-link-arrow">→</span>
+        </a>
+        <a href="about.html" class="lost-link">
+          <span>機構について</span>
+          <span class="lost-link-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- 隠しルート：ノイズに紛れたclassifiedへのリンク -->
+      <div class="lost-noise" aria-hidden="true">
+        ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░<br>
+        ░░░░░<a href="classified.html">░░░░░░░░░░░░░░░░░░</a>░░░░░░░░░░░<br>
+        ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="site-footer">
+    <div class="footer-left">
+      WAFT — 404<br>
+      境界の揺らぎに伴う消滅<br>
+      第18条：情報の非永続性
+    </div>
+  </footer>
+
+  <script src="js/waft.js"></script>
+</body>
+</html>
