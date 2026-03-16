@@ -113,8 +113,6 @@
   console.log(...msg);
   console.log(...msg2);
 
-})();
-
   // ─── ハンバーガーメニュー ───
   const hamburger = document.getElementById('nav-hamburger');
   const navLinks  = document.getElementById('nav-links');
@@ -123,11 +121,9 @@
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('open');
       navLinks.classList.toggle('open');
-      // メニュー開放中はスクロール禁止
       document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
     });
 
-    // リンククリックでメニューを閉じる
     navLinks.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         hamburger.classList.remove('open');
@@ -136,3 +132,5 @@
       });
     });
   }
+
+})();
