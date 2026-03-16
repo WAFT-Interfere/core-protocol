@@ -142,10 +142,7 @@ body.dark #site-nav { background: var(--bg-dark); }
   list-style: none;
 }
 
-/* スマホ幅では初期状態で非表示 */
-@media (max-width: 640px) {
-  .nav-links { display: none; }
-}
+/* スマホ幅では初期状態で非表示（下のMOBILE NAV DRAWERブロックで制御） */
 
 .nav-links a {
   font-family: var(--mono);
@@ -393,10 +390,12 @@ body.dark #site-nav { background: var(--bg-dark); }
 @media (max-width: 640px) {
   .nav-hamburger { display: flex; }
 
+  /* 初期状態：非表示 */
   .nav-links {
+    display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #f5f4f0;
+    background: #f5f4f0 !important;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -404,9 +403,12 @@ body.dark #site-nav { background: var(--bg-dark); }
     z-index: 99999;
   }
 
-  body.dark .nav-links { background-color: #0a0a0a; }
+  body.dark .nav-links { background: #0a0a0a !important; }
 
-  .nav-links.open { display: flex; }
+  /* openクラスで表示 */
+  .nav-links.open {
+    display: flex;
+  }
 
   .nav-hamburger { z-index: 100000; position: relative; }
 
