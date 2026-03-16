@@ -142,7 +142,7 @@ body.dark #site-nav { background: var(--bg-dark); }
   list-style: none;
 }
 
-/* スマホ幅では初期状態で非表示（下のMOBILE NAV DRAWERブロックで制御） */
+/* スマホ幅では初期状態で非表示（MOBILE NAV DRAWERブロックで制御） */
 
 .nav-links a {
   font-family: var(--mono);
@@ -395,22 +395,27 @@ body.dark #site-nav { background: var(--bg-dark); }
     display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: #f5f4f0 !important;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2.5rem;
     z-index: 99999;
+    background-color: #f5f4f0;
   }
 
-  body.dark .nav-links { background: #0a0a0a !important; }
+  body.dark .nav-links {
+    background-color: #0a0a0a;
+  }
 
   /* openクラスで表示 */
   .nav-links.open {
     display: flex;
   }
 
-  .nav-hamburger { z-index: 100000; position: relative; }
+  .nav-hamburger {
+    z-index: 100000;
+    position: relative;
+  }
 
   .nav-links a {
     font-size: 0.9rem;
@@ -423,6 +428,12 @@ body.dark #site-nav { background: var(--bg-dark); }
   .page-content { padding-top: 3.5rem; }
 
   .doc-frame { padding: 1.25rem 1rem; }
+}
+
+/* メニューオープン時、ノイズ・スキャンラインを非表示 */
+body.nav-open::before,
+body.nav-open::after {
+  display: none;
 }
 
 /* ─── FOOTER — レスポンシブ改善 ─── */
