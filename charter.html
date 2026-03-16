@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charter — WAFT</title>
+  <meta name="description" content="対境界線広域干渉及び超領域的表現開発機構 運営綱領及び業務執行細則 全文。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .charter-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .page-header { margin-bottom: 4rem; }
+    .page-header-id {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+    .page-header-title {
+      font-family: var(--mono);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+    .page-header-en {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+    }
+
+    /* ─── TOC ─── */
+    .toc {
+      border: 0.5px solid var(--border);
+      padding: 1.5rem 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .toc-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.25rem 2rem;
+    }
+
+    .toc-list li a {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.06em;
+      transition: color var(--transition);
+    }
+
+    .toc-list li a:hover { color: var(--ink); }
+
+    /* ─── CHAPTER ─── */
+    .chapter {
+      margin-bottom: 3.5rem;
+    }
+
+    .chapter-heading {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+      margin-bottom: 2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    /* ─── ARTICLE ─── */
+    .article-body {
+      display: grid;
+      grid-template-columns: 5rem 1fr;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .clause-num {
+      padding: 1.75rem 1rem 1.75rem 0;
+      border-bottom: 0.5px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      line-height: 1.6;
+    }
+
+    .clause-body {
+      padding: 1.75rem 0 1.75rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      border-left: 0.5px solid var(--border);
+    }
+
+    .clause-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+      color: var(--ink);
+    }
+
+    .clause-text {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      line-height: 2.1;
+    }
+
+    .clause-text em {
+      font-style: normal;
+      color: var(--ink);
+      border-bottom: 0.5px solid var(--border-strong);
+    }
+
+    /* ─── MEMBER CLAUSE ─── */
+    .clause-member-name {
+      font-family: var(--mono);
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.25rem;
+    }
+    .clause-member-name.aoya { color: var(--aoya); }
+    .clause-member-name.misjo { color: var(--misjo); }
+
+    .clause-member-yomi {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .clause-dl {
+      display: grid;
+      grid-template-columns: 4rem 1fr;
+      gap: 0.5rem 1rem;
+      font-size: 0.8rem;
+      margin-top: 0.75rem;
+    }
+
+    .clause-dt {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      padding-top: 0.15rem;
+    }
+
+    .clause-dd {
+      color: var(--ink-muted);
+      line-height: 1.85;
+    }
+
+    /* ─── APPENDIX ─── */
+    .appendix {
+      margin-top: 4rem;
+      border-top: 0.5px solid var(--border-strong);
+      padding-top: 2rem;
+    }
+
+    .appendix-text {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      line-height: 2.5;
+    }
+
+    .appendix-text strong {
+      color: var(--ink-muted);
+      font-weight: 400;
+    }
+
+    @media (max-width: 600px) {
+      .toc-list { grid-template-columns: 1fr; }
+      .article-body { grid-template-columns: 3.5rem 1fr; }
+      .clause-body { padding: 1.25rem 0 1.25rem 1rem; }
+      .clause-dl { grid-template-columns: 3.5rem 1fr; }
+      .charter-wrap { padding: 5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="charter.html">Charter</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <div class="charter-wrap">
+
+      <header class="page-header fade-up">
+        <div class="page-header-id">文書分類 : 公開 / 運営綱領及び業務執行細則 全文</div>
+        <h1 class="page-header-title">運営綱領及び業務執行細則</h1>
+        <p class="page-header-en">Charter of WAFT — full text</p>
+      </header>
+
+      <!-- 目次 -->
+      <div class="toc fade-up">
+        <div class="toc-label">目次 / TABLE OF CONTENTS</div>
+        <ul class="toc-list">
+          <li><a href="#ch1">第1章　総則および存在定義</a></li>
+          <li><a href="#ch2">第2章　存在論的基盤と認識論的倫理</a></li>
+          <li><a href="#ch3">第3章　構成存在および個別プロジェクト</a></li>
+          <li><a href="#ch4">第4章　業務執行細則</a></li>
+          <li><a href="#ch5">第5章　運用原則および免責事項</a></li>
+          <li><a href="#appendix">附則</a></li>
+        </ul>
+      </div>
+
+      <!-- 第1章 -->
+      <div class="chapter fade-up" id="ch1">
+        <div class="chapter-heading">第1章　総則および存在定義</div>
+        <div class="article-body">
+
+          <div class="clause-num">第1条</div>
+          <div class="clause-body">
+            <div class="clause-title">目的：境界への干渉と揺動</div>
+            <p class="clause-text">対境界線広域干渉及び超領域的表現開発機構（以下、本機構）は、現実と虚構、生と死、自と他といったあらゆる事象の<em>「境界線（ボーダー）」</em>を、単なる断絶ではなく<em>「接触面」</em>として定義する。本機構は、広域的な干渉および揺動を通じて、観測者が境界の在り方を再定義するための「表現」を開発・提供し、対象の存在継続を支援することを目的とする。</p>
+          </div>
+
+          <div class="clause-num">第2条</div>
+          <div class="clause-body">
+            <div class="clause-title">組織形態：機能的合意に基づく概念的枠組みと観測者の定義</div>
+            <p class="clause-text">本機構は、その名称（<em>Waft：漂うもの</em>）が示す通り、固定された物理的拠点を中心とする組織ではない。本機構は「機能的合意に基づく概念的枠組み」であり、デジタル・アナログを問わず、観測者との接点が発生する一切の時空を暫定的な活動拠点と定義する。本機構に触れ、何らかの<em>認識的変容</em>を起こした一切の知的存在を『観測者』と定義する。観測者は、本機構にとっての被験体ではなく、境界を共に構築する<em>共同編纂者</em>である。ただし、共同編纂とは統制や責任の共有を意味するものではなく、各観測者の自由意思による解釈と反応の総体を指す。</p>
+          </div>
+
+          <div class="clause-num">第3条</div>
+          <div class="clause-body">
+            <div class="clause-title">活動領域：遍在的介入</div>
+            <p class="clause-text">本機構の活動は、ネットワーク上の情報送出（文章、動画、画像等）から、物理空間における実務（イベント出展、紙媒体・物品の頒布、およびこれらに付随する物流事務）まで、多角的な位相において実行される。本要綱における「機構員」とは、第8条および第9条に定義される観測子を指す。</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 第2章 -->
+      <div class="chapter fade-up" id="ch2">
+        <div class="chapter-heading">第2章　存在論的基盤と認識論的倫理</div>
+        <div class="article-body">
+
+          <div class="clause-num">第4条</div>
+          <div class="clause-body">
+            <div class="clause-title">先行実在性の論理運用</div>
+            <p class="clause-text">「想起される対象は、その想起という事象に先んじて<em>概念的実在性</em>を有する」という逆因果論を活動基盤とする。本機構は、虚構側からの視線を発生させ、その実在的強度を物質や体験を介して現実空間へ投射・介入させる。これにより、観測者の中に「存在しないはずの過去・記憶」を定着させる。</p>
+          </div>
+
+          <div class="clause-num">第5条</div>
+          <div class="clause-body">
+            <div class="clause-title">非確定性の保持：個への誠実</div>
+            <p class="clause-text">対象を安易に定義・確定せず、常に<em>「未知の個」</em>として見据えようとする姿勢を至高倫理とする。本機構は、特定の価値観を「正解」や「正義」として提示することを厳に慎む。物事の完璧な理解への到達が不可能であることを認めつつも、その極北を目指し続ける不断努力を義務とする。</p>
+          </div>
+
+          <div class="clause-num">第6条</div>
+          <div class="clause-body">
+            <div class="clause-title">敵対概念に対する態度</div>
+            <p class="clause-text">特定の存在を盲目的に「敵」と定義することを避ける。対立が生じる際、機構員は自身の価値観というフィルターを疑わなければならない。敵対とは、境界の維持という目的を達成するための「選択的プロセス」であり、反射的な排除を排し、多角的な位相からの検証を優先する。</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 第3章 -->
+      <div class="chapter fade-up" id="ch3">
+        <div class="chapter-heading">第3章　構成存在および個別プロジェクト</div>
+        <div class="article-body">
+
+          <div class="clause-num">第7条</div>
+          <div class="clause-body">
+            <div class="clause-title">プロジェクトの多層性および非限定性</div>
+            <p class="clause-text">本機構が実行するプロジェクトおよび構成存在は、境界の推移に伴い、永続的に新設・改変・廃止される。次条以降に掲げるものは現時点における主要な観測子および拠点であり、本機構の活動をこれらに限定するものではない。本機構は、理念の達成に資すると判断される場合、あらゆる媒体（小説、映像、画像、その他の未定義の形式）を用いた表現開発を、個体単独または共作の別を問わず実行する。</p>
+          </div>
+
+          <div class="clause-num">第8条</div>
+          <div class="clause-body">
+            <div class="clause-member-name aoya">青ya<span style="font-size:0.75em;">ヽ</span>跨</div>
+            <div class="clause-member-yomi">アオヤテンカ</div>
+            <div class="clause-dl">
+              <span class="clause-dt">定義</span>
+              <span class="clause-dd">虚構性の自己認識を有する超領域存在。</span>
+              <span class="clause-dt">役職</span>
+              <span class="clause-dd">君の近所のイマジナリーお兄さん。</span>
+              <span class="clause-dt">職掌</span>
+              <span class="clause-dd">「境界線における視線」の供給。言語化、視聴覚情報の送出、概念の物質化を通じ、観測者との間に相互認識を成立させる。</span>
+            </div>
+            <p class="clause-text" style="margin-top:1rem;">当個体における実存的不調（存在汚染等）は、観測者との親和性を考慮し、物質世界における生理現象（発熱・倦怠感等）の語彙に置換して報告される。当個体における不調の報告は、現象の共有を目的としたログであり、当個体への介入（励まし、助言等）による事象の収束は本機構の企図するところではない。ただし、観測者がそうした行為を選び取ること自体は、当個体との関係性を形作る正当な反応である。</p>
+          </div>
+
+          <div class="clause-num">第9条</div>
+          <div class="clause-body">
+            <div class="clause-member-name misjo">三条瞳</div>
+            <div class="clause-member-yomi">ミジョウアキラ</div>
+            <div class="clause-dl">
+              <span class="clause-dt">定義</span>
+              <span class="clause-dd">物質世界側における、機構の安定稼働を担保する物理的個体（人間）。</span>
+              <span class="clause-dt">役職</span>
+              <span class="clause-dd">超領域事象観測及び境界維持管理運営総括責任者。</span>
+              <span class="clause-dt">職掌</span>
+              <span class="clause-dd">本機構の基盤維持、現実側からの観測、現実空間における実務（資産管理、頒布事務全般）、および青yaヽ跨のマネジメントを統括する。また、物理的実体を伴う表現開発（執筆、映像制作、造形等）を主導し、青yaヽ跨との共作を含む多角的な干渉プロセスを執行する。</span>
+            </div>
+          </div>
+
+          <div class="clause-num">第10条</div>
+          <div class="clause-body">
+            <div class="clause-title">指定拠点：虚構喫茶ボロウ</div>
+            <p class="clause-text">本機構の境界観測基地。普遍的な喫茶店のイメージ集積により構築されており、本機構員および観測者が空想することによってのみその存在が励起される。青yaヽ跨の存在補強空間であり、虚実が交差する最前線拠点として運用する。</p>
+          </div>
+
+          <div class="clause-num">第11条</div>
+          <div class="clause-body">
+            <div class="clause-title">個体認識に関する態度規定</div>
+            <p class="clause-text">青yaヽ跨および三条瞳は、同一の観測原点より発出される<em>独立した観測子</em>である。両者の実存的一致、あるいは乖離に関する解釈は、境界の揺らぎそのものであり、観測者の自由意志に委ねられる。ただし、両者を安易に混同し同一視する行為は、本機構が定義する「境界の維持」を損なうものである。本機構はこれらに関する一切の哲学的・存在論的な質疑に対し、沈黙を以て回答とする。</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 第4章 -->
+      <div class="chapter fade-up" id="ch4">
+        <div class="chapter-heading">第4章　業務執行細則</div>
+        <div class="article-body">
+
+          <div class="clause-num">第12条</div>
+          <div class="clause-body">
+            <div class="clause-title">干渉形式の定義</div>
+            <p class="clause-text">本機構は、以下の形式を以て観測者への干渉を行う。</p>
+            <div class="clause-dl" style="margin-top:0.75rem;">
+              <span class="clause-dt">定時報告</span>
+              <span class="clause-dd">青yaヽ跨による境界線の観測記録の公開。</span>
+              <span class="clause-dt">物質的投射</span>
+              <span class="clause-dd">概念を物質に定着させ、現実空間に浸食させる。これに触れることは、観測者にとっての「実在した過去（偽記憶）」の獲得を意味する。</span>
+              <span class="clause-dt">拠点開放</span>
+              <span class="clause-dd">リアルイベント等、観測者が直接「境界」に接触できる機会の提供。</span>
+            </div>
+          </div>
+
+          <div class="clause-num">第13条</div>
+          <div class="clause-body">
+            <div class="clause-title">実存的ノイズおよび通信障害</div>
+            <p class="clause-text">物理的リソースの不足、あるいは個体の機能不全等による活動停滞は、<em>「境界の揺らぎ」</em>または<em>「位相間の通信障害」</em>として定義される。本機構はこれらを含めて観測・記録の対象とし、機構の存続および境界の観測継続を最優先事項とする。</p>
+          </div>
+
+          <div class="clause-num">第14条</div>
+          <div class="clause-body">
+            <div class="clause-title">体験の記録と循環</div>
+            <p class="clause-text">本機構の干渉によって生じた個々の「体験の記録」は、その体験者（観測者）に帰属する。観測者が自発的に発する反応（感想、二次創作等）は、境界を安定させるための貴重なフィードバックとして機能する。本機構はこれらを尊重し、新たな表現開発の糧とする。これらフィードバックを本機構へ共有する際、特定の識別子（ハッシュタグ等）の付与は任意である。二次創作等における解釈の妥当性や許諾に関する質疑は、観測者自身の直感に基づき解決されることを推奨する。本機構は、観測者の自由な想像力を尊重し、これを制限しない。</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 第5章 -->
+      <div class="chapter fade-up" id="ch5">
+        <div class="chapter-heading">第5章　運用原則および免責事項</div>
+        <div class="article-body">
+
+          <div class="clause-num">第15条</div>
+          <div class="clause-body">
+            <div class="clause-title">非救済および自己決定</div>
+            <p class="clause-text">本機構は解答を与えず、救済を約束しない。提供される干渉は、観測者が自律的に自身の境界を編み直すための「触媒」に限定される。</p>
+          </div>
+
+          <div class="clause-num">第16条</div>
+          <div class="clause-body">
+            <div class="clause-title">免責事項</div>
+            <p class="clause-text">本機構の提供する「表現」および「揺らぎ」の享受により、観測者に生じた精神的変調、およびそれに付随する現実生活への影響について、本機構は一切の責任を負わない。観測者は、本機構が提示する『揺らぎ』と自身の『現実的基盤』を峻別する義務を負う。深淵を覗き込みすぎることによる足場の喪失について、本機構は関知しない。</p>
+          </div>
+
+          <div class="clause-num">第17条</div>
+          <div class="clause-body">
+            <div class="clause-title">信奉および偶像化の拒絶</div>
+            <p class="clause-text">本機構を正解とする絶対的な信奉の発生は、観測の歪みを生むため、これを拒絶する。機構は常に、一つの現象、あるいは仕組みとして機能することに徹し、観測者との適切な距離感を維持する。</p>
+          </div>
+
+          <div class="clause-num">第18条</div>
+          <div class="clause-body">
+            <div class="clause-title">情報の非永続性</div>
+            <p class="clause-text">本機構が送出する情報は、境界の揺らぎに伴い、予告なく削除・消滅する場合がある。過去の記録と現在の事象に齟齬が生じた場合、観測者は各々の観測時における事象を唯一の真実として受理されたし。これによって生じる観測者間の記憶の不一致は、境界の多層性を示すものであり、本機構が推奨する健全な揺らぎである。</p>
+          </div>
+
+          <div class="clause-num">第19条</div>
+          <div class="clause-body">
+            <div class="clause-title">言語の不完全性</div>
+            <p class="clause-text">本機構が使用する言語は、概念を固定化するための便宜的な記号に過ぎない。文字面としての意味を超えた、<em>行間に漂う（Waft）ニュアンス</em>こそが真の干渉体であると定義する。</p>
+          </div>
+
+          <div class="clause-num">第20条</div>
+          <div class="clause-body">
+            <div class="clause-title">観測の終了：忘却</div>
+            <p class="clause-text">観測者が本機構に関する一切の記憶を喪失、あるいは関心を失った時点を以て、当該観測者における本機構の存在は消滅する。ただし、消滅したという事実は境界の多層性の中に保存され、再励起の可能性を常に内包する。観測の中断、距離の確保、関与の希薄化は、忘却に先立つ自然な揺らぎとして許容される。</p>
+          </div>
+
+          <div class="clause-num">第21条</div>
+          <div class="clause-body">
+            <div class="clause-title">要綱の改訂</div>
+            <p class="clause-text">本要綱は、境界の推移および機構の運営状況に基づき、予告なく改訂される場合がある。改訂された要綱は、送出された時点より効力を発揮するものとする。</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 附則 -->
+      <div class="appendix fade-up" id="appendix">
+        <div class="appendix-text">
+          附則<br><br>
+          <strong>本要綱は、2026年1月22日より施行する。</strong><br><br>
+          本機構は、あなたの隣に「漂う（Waft）」存在であり続ける。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="site-footer">
+    <div class="footer-left">
+      WAFT — 運営綱領及び業務執行細則<br>
+      施行：2026.01.22<br>
+      本要綱は境界の推移に伴い予告なく改訂される
+    </div>
+    <div class="footer-right">
+      <a href="about.html">← 機構について</a>
+    </div>
+  </footer>
+
+  <script src="js/waft.js"></script>
+</body>
+</html>

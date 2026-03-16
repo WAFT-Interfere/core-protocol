@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events — WAFT</title>
+  <meta name="description" content="WAFT 拠点開放記録。リアルイベント出展情報および予告。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .events-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .page-header { margin-bottom: 3.5rem; }
+    .page-header-id {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      margin-bottom: 1rem;
+    }
+    .page-header-title {
+      font-family: var(--mono);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+    .page-header-en {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+    }
+
+    /* ─── STATUS ─── */
+    .events-status {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      border: 0.5px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .status-dot-upcoming {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--aoya);
+      flex-shrink: 0;
+      animation: pulse-blue 2s infinite;
+    }
+
+    @keyframes pulse-blue {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ─── EVENT CARD ─── */
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 0.5px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .event-card {
+      display: grid;
+      grid-template-columns: 9rem 1fr;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .event-card:last-child { border-bottom: none; }
+
+    .event-date-col {
+      padding: 1.75rem 1.5rem;
+      border-right: 0.5px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .event-date {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .event-status-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      padding: 2px 7px;
+      border: 0.5px solid var(--border);
+      color: var(--ink-faint);
+      width: fit-content;
+    }
+
+    .event-status-badge.upcoming {
+      border-color: var(--aoya);
+      color: var(--aoya);
+    }
+
+    .event-status-badge.past {
+      opacity: 0.5;
+    }
+
+    .event-body-col {
+      padding: 1.75rem 2rem;
+    }
+
+    .event-name {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+      color: var(--ink);
+    }
+
+    .event-venue {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .event-desc {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    .event-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .event-tag {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      border: 0.5px solid var(--border);
+      padding: 2px 8px;
+      color: var(--ink-faint);
+    }
+
+    .event-tag.booth { border-color: var(--misjo); color: var(--misjo); }
+    .event-tag.online { border-color: var(--aoya); color: var(--aoya); }
+
+    .event-link {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      border-bottom: 0.5px solid var(--border);
+      padding-bottom: 1px;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .event-link:hover {
+      color: var(--ink);
+      border-color: var(--border-strong);
+    }
+
+    /* ─── EMPTY STATE ─── */
+    .events-empty {
+      padding: 3rem 2rem;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      line-height: 2.5;
+      border: 0.5px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    /* ─── EDIT GUIDE ─── */
+    .upload-note {
+      border: 0.5px dashed var(--border);
+      padding: 1.25rem 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      line-height: 2;
+    }
+
+    .upload-note strong { color: var(--ink-muted); font-weight: 400; }
+
+    @media (max-width: 600px) {
+      .event-card { grid-template-columns: 1fr; }
+      .event-date-col {
+        border-right: none;
+        border-bottom: 0.5px solid var(--border);
+        flex-direction: row;
+        align-items: center;
+        padding: 1rem 1.25rem;
+        gap: 1rem;
+      }
+      .event-body-col { padding: 1.25rem; }
+      .events-wrap { padding: 5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="site-nav">
+    <a href="index.html" class="nav-wordmark">WAFT</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="archive.html">Archive</a></li>
+      <li><a href="log.html">Log</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="charter.html">Charter</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <div class="events-wrap">
+
+      <header class="page-header fade-up">
+        <div class="page-header-id">文書分類 : 公開 / SEC.06 — EVENTS</div>
+        <h1 class="page-header-title">拠点開放記録</h1>
+        <p class="page-header-en">Physical contact events — interference in real space</p>
+      </header>
+
+      <div class="events-status fade-up">
+        <div class="status-dot-upcoming"></div>
+        <span id="events-status-text">次回拠点開放：確認中</span>
+      </div>
+
+      <!-- ▼▼▼ イベントを追加する場合は .event-card ブロックをコピーしてください ▼▼▼ -->
+      <!--
+        .event-status-badge の class:
+          upcoming → 予告・今後のイベント
+          past     → 終了したイベント
+
+        .event-tag の class:
+          booth  → 三条瞳（赤）
+          online → 青yaヽ跨（青）
+          ※ classなし → 通常タグ（グレー）
+      -->
+
+      <div class="event-list fade-up" id="event-list">
+
+        <!-- サンプルエントリー（削除して実際のイベントに差し替えてください） -->
+        <div class="event-card">
+          <div class="event-date-col">
+            <div class="event-date">——</div>
+            <span class="event-status-badge upcoming">UPCOMING</span>
+          </div>
+          <div class="event-body-col">
+            <div class="event-name">次回イベント</div>
+            <div class="event-venue">場所・会場 未定</div>
+            <div class="event-desc">
+              詳細確定次第、このページおよび各SNSにて送出する。<br>
+              観測者の来場を、本機構は静かに待っている。
+            </div>
+            <div class="event-tags">
+              <span class="event-tag booth">三条瞳 出展</span>
+              <span class="event-tag">頒布あり</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ▲▲▲ ここまで ▲▲▲ -->
+
+      <div class="upload-note fade-up">
+        <strong>【編集ガイド】</strong><br>
+        イベントを追加する場合は events.html 内のコメント箇所を参照し、<br>
+        .event-card ブロックをコピーして追記してください。<br>
+        終了したイベントは .event-status-badge を past に変更します。<br>
+        新しいイベントほど上に配置することを推奨します。
+      </div>
+
+    </div>
+  </div>
+
+  <footer id="site-footer">
+    <div class="footer-left">
+      WAFT — SEC.06 / EVENTS<br>
+      第12条：拠点開放（接触機会）<br>
+      観測者が直接「境界」に接触できる機会の提供
+    </div>
+    <div class="footer-right">
+      <a href="contact.html">接触窓口 →</a>
+    </div>
+  </footer>
+
+  <script src="js/waft.js"></script>
+  <script>
+    // 直近のUPCOMINGイベントがあればステータスを更新
+    const upcoming = document.querySelector('.event-status-badge.upcoming');
+    const statusText = document.getElementById('events-status-text');
+    if (upcoming) {
+      const card = upcoming.closest('.event-card');
+      const name = card ? card.querySelector('.event-name').textContent.trim() : null;
+      const date = card ? card.querySelector('.event-date').textContent.trim() : null;
+      if (name && date && date !== '——') {
+        statusText.textContent = '次回拠点開放：' + date + ' / ' + name;
+      } else if (name) {
+        statusText.textContent = '次回拠点開放：' + name + '（日程調整中）';
+      }
+    } else {
+      statusText.textContent = '現在、予定されている拠点開放はありません';
+    }
+  </script>
+</body>
+</html>
