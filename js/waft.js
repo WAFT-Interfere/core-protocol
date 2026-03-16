@@ -6,6 +6,15 @@
 (function () {
   'use strict';
 
+  // ─── ノイズ・スキャンライン div を生成 ───
+  const noiseEl = document.createElement('div');
+  noiseEl.id = 'waft-noise';
+  document.body.appendChild(noiseEl);
+
+  const scanEl = document.createElement('div');
+  scanEl.id = 'waft-scanlines';
+  document.body.appendChild(scanEl);
+
   // ─── カスタムカーソル ───
   const cursor = document.createElement('div');
   cursor.id = 'waft-cursor';
@@ -121,9 +130,7 @@
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('open');
       navLinks.classList.toggle('open');
-      const isOpen = navLinks.classList.contains('open');
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-      document.body.classList.toggle('nav-open', isOpen);
+      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
     });
 
     navLinks.querySelectorAll('a').forEach(a => {
@@ -131,7 +138,6 @@
         hamburger.classList.remove('open');
         navLinks.classList.remove('open');
         document.body.style.overflow = '';
-        document.body.classList.remove('nav-open');
       });
     });
   }
