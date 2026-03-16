@@ -392,7 +392,7 @@ body.dark #site-nav { background: var(--bg-dark); }
     display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--bg);
+    background: #f5f4f0;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -400,7 +400,7 @@ body.dark #site-nav { background: var(--bg-dark); }
     z-index: 1001;
   }
 
-  body.dark .nav-links { background: var(--bg-dark); }
+  body.dark .nav-links { background: #0a0a0a; }
 
   .nav-links.open { display: flex; }
 
@@ -465,4 +465,3 @@ body.dark #site-nav { background: var(--bg-dark); }
   }
   .footer-right { text-align: left; }
 }
-
