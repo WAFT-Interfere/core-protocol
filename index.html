@@ -430,6 +430,97 @@
       color: var(--ink-muted);
     }
 
+    /* ─── CHARTER BANNER ─── */
+    .charter-banner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      border: 0.5px solid var(--border-strong);
+      border-top: none;
+      padding: 2rem 2rem;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--transition), border-color var(--transition);
+      align-items: center;
+    }
+
+    .charter-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--ink);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .charter-banner:hover { border-color: var(--border-strong); }
+    .charter-banner:hover::before { opacity: 0.025; }
+
+    .charter-banner-left { position: relative; }
+
+    .charter-banner-id {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .charter-banner-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(0.72rem, 1.6vw, 0.9rem);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .charter-banner-sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+    }
+
+    .charter-banner-right {
+      position: relative;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .charter-banner-chapters {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .charter-banner-chapters span {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+    }
+
+    .charter-banner-enter {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: var(--ink-muted);
+      transition: color var(--transition), transform var(--transition);
+    }
+
+    .charter-banner:hover .charter-banner-enter {
+      color: var(--ink);
+      transform: translateX(4px);
+    }
+
     @media (max-width: 600px) {
       .article-grid { grid-template-columns: 1fr; }
       .article-item:nth-child(2n) { border-right: 0.5px solid var(--border); }
@@ -440,6 +531,9 @@
       .transmission-entry { grid-template-columns: 1fr; gap: 0.25rem; }
       .hero { padding: 5rem 1rem 3rem; }
       .main-sections { padding: 0 1rem 3rem; }
+      .charter-banner { grid-template-columns: 1fr; }
+      .charter-banner-right { align-items: flex-start; text-align: left; }
+      .charter-banner-chapters { display: none; }
     }
   </style>
 </head>
@@ -544,6 +638,25 @@
           <div class="article-item-arrow">→</div>
         </a>
       </div>
+
+      <!-- CHARTER BANNER -->
+      <a href="charter.html" class="charter-banner fade-up">
+        <div class="charter-banner-left">
+          <div class="charter-banner-id">運営綱領及び業務執行細則 全文 / CHARTER</div>
+          <div class="charter-banner-title">対境界線広域干渉及び超領域的表現開発機構<br>運営綱領及び業務執行細則</div>
+          <div class="charter-banner-sub">全21条・附則 — 2026.01.22 施行</div>
+        </div>
+        <div class="charter-banner-right">
+          <div class="charter-banner-chapters">
+            <span>第1章　総則および存在定義</span>
+            <span>第2章　存在論的基盤と認識論的倫理</span>
+            <span>第3章　構成存在および個別プロジェクト</span>
+            <span>第4章　業務執行細則</span>
+            <span>第5章　運用原則および免責事項</span>
+          </div>
+          <div class="charter-banner-enter">全文を読む →</div>
+        </div>
+      </a>
 
       <!-- MEMBERS STRIP -->
       <div class="members-strip fade-up">
