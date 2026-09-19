@@ -151,13 +151,28 @@
     .after { font-size: 0.9rem; color: var(--muted); margin-top: 1rem; }
     .after ol { margin: 0.4rem 0 0; padding-left: 1.4rem; }
     .copied { color: var(--green); font-size: 0.9rem; margin-left: 0.5rem; }
+
+    /* ─── 格納庫（画像）─── */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+    .credit-row { display: grid; grid-template-columns: 1fr 1.2fr 1.5fr; gap: 0.4rem; margin-bottom: 0.4rem; }
+    #img-preview img { max-width: 100%; max-height: 320px; border: 1px solid var(--line); border-radius: 6px; display: block; margin-top: 0.75rem; background: repeating-conic-gradient(#eee 0 25%, #fff 0 50%) 0 0 / 16px 16px; }
+    #img-info { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+    #img-info.err { color: var(--red); }
+    .upl { display: flex; justify-content: space-between; gap: 0.75rem; font-size: 0.85rem; padding: 0.35rem 0; border-bottom: 1px solid var(--line); }
+    .upl:last-child { border-bottom: none; }
+    .upl span:last-child { color: var(--muted); white-space: nowrap; }
+    @media (max-width: 600px) {
+      .grid2 { grid-template-columns: 1fr; }
+      .credit-row { grid-template-columns: 1fr; padding-bottom: 0.6rem; border-bottom: 1px dashed var(--line); }
+    }
   </style>
 </head>
 <body>
+<datalist id="role-list"><option value="イラスト"><option value="キャラクターデザイン"><option value="ロゴデザイン"><option value="Live2Dモデリング"><option value="3Dモデリング"><option value="設定原案"><option value="装飾・加工"></datalist>
 <div class="wrap">
 
   <h1>WAFT 更新ツール</h1>
-  <p class="sub">お知らせ・制作物・イベントを、フォームに入力するだけで更新できます。（このページは検索には出ません）</p>
+  <p class="sub">お知らせ・制作物・イベント・格納庫（立ち絵やロゴ）を、フォームに入力するだけで更新できます。（このページは検索には出ません）</p>
 
   <!-- ═════════ 使い方ガイド ═════════ -->
   <details class="card guide" id="guide" open>
@@ -195,6 +210,26 @@
         <dt>間違えた内容を直したい・消したい</dt>
         <dd>各タブの「今ある内容」の一覧で、<b>［編集］</b>または<b>［削除］</b>を押してください。同じ手順でコピー→貼り付けをすれば反映されます。</dd>
       </dl>
+
+      <details class="guide2" style="margin-top:1rem;border-top:1px solid var(--line);padding-top:0.75rem">
+        <summary style="cursor:pointer;font-weight:700">画像を載せるとき（格納庫タブ）の手順と注意</summary>
+        <div style="margin-top:0.75rem">
+          <ol class="steps">
+            <li><b>「格納庫」タブ</b>を開き、<b>画像ファイルを選ぶ</b>。ツールが自動で「縮小＋透かし入り」の画像に加工します。</li>
+            <li>タイトル・種別・<b>クレジット</b>（イラスト、ロゴ、モデリングなど、関わった方の役割・名前・URL）を入力して「追加する」。</li>
+            <li>続けて画像を追加してもかまいません（クレジットは引き継がれます）。</li>
+            <li>「<b>アップロードする画像</b>」の欄で<b>zipをダウンロード</b>し、解凍する。「GitHubの画像アップロード画面を開く」を押し、解凍した<b>画像ファイルを全部ドラッグ</b>して、下の「Commit changes」を押す。</li>
+            <li><b>画像のアップロードが先、データの反映（従来のコピー→貼り付け）があと</b>です。逆だと、一時的に画像が表示されません。</li>
+          </ol>
+          <div class="note">
+            <b>大事な注意</b><br>
+            ・ 元の画像は、このツールの中（あなたのパソコン／スマホの中だけ）で加工され、外部には送信されません。<br>
+            ・ 格納庫に載る画像は、加工後のもの（縮小・透かし入り）です。GitHubの公開リポジトリに置いた画像は、URLを知っていれば誰でも取得できるため、<b>元の高解像度データは絶対にアップロードしないでください。</b><br>
+            ・ 右クリック・長押し・ドラッグでの保存は防いでいますが、スクリーンショットまでは防げません。透かしと解像度の上限が、実際の守りです。<br>
+            ・ クレジットに載せる方の名前・URLは、発注時のお約束（掲載範囲、クレジット表記、公開してよい画質など）を確認してから載せてください。
+          </div>
+        </div>
+      </details>
     </div>
   </details>
 
@@ -203,9 +238,46 @@
     <button class="tab active" data-tab="log">活動記録<small>お知らせ・定時報告</small></button>
     <button class="tab" data-tab="archive">制作物<small>アーカイブ</small></button>
     <button class="tab" data-tab="events">イベント<small>拠点開放記録</small></button>
+    <button class="tab" data-tab="gallery">格納庫<small>立ち絵・ロゴ</small></button>
   </div>
 
   <div id="status" class="status warn">読み込み中…</div>
+
+  <!-- ═════════ 画像の加工（格納庫のみ）═════════ -->
+  <div class="card" id="image-card" style="display:none">
+    <h2>画像を選ぶ・加工する</h2>
+    <p style="margin-top:0;font-size:0.9rem;color:var(--muted)">選んだ画像は、この画面の中で「縮小＋透かし入り」に加工されます。元の画像は外に送信されません。</p>
+    <div class="field">
+      <label for="img-file">画像ファイル<span class="req">必須</span></label>
+      <input type="file" id="img-file" accept="image/*" />
+      <div class="hint" id="img-current"></div>
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label for="img-size">大きさ（長い辺）</label>
+        <select id="img-size">
+          <option value="1200">1200px（軽い）</option>
+          <option value="1600" selected>1600px（標準・おすすめ）</option>
+          <option value="2000">2000px（高画質）</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="img-wm">透かし</label>
+        <select id="img-wm">
+          <option value="standard" selected>標準（全面に薄く）</option>
+          <option value="strong">強（全面に濃く）</option>
+          <option value="corner">弱（右下に小さく）</option>
+          <option value="none">なし（ロゴなど）</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label for="img-wmtext">透かしの文言</label>
+      <input type="text" id="img-wmtext" value="© WAFT / 青yaヽ跨  無断転載・転用禁止" />
+    </div>
+    <div id="img-preview"></div>
+    <div id="img-info"></div>
+  </div>
 
   <!-- ═════════ 入力フォーム ═════════ -->
   <div class="card">
@@ -227,10 +299,26 @@
     </div>
   </div>
 
+  <!-- ═════════ アップロードする画像（格納庫のみ）═════════ -->
+  <div class="card" id="upload-card" style="display:none">
+    <h2>アップロードする画像 <small id="upl-count" style="font-weight:400;color:var(--muted)"></small></h2>
+    <div id="upl-list"><div class="empty">まだありません。画像を選んで「追加する」を押すと、ここに並びます。</div></div>
+    <div class="row" style="margin-top:0.75rem">
+      <button class="btn" id="btn-zip" disabled><span class="step-label" style="background:#fff;color:var(--ink)">A</span>まとめてダウンロード（zip）</button>
+      <a class="btn blue" id="btn-upload" href="#" target="_blank" rel="noopener"><span class="step-label" style="background:#fff;color:var(--blue)">B</span>GitHubの画像アップロード画面を開く</a>
+      <button class="btn secondary small" id="btn-clear-upl" disabled>一覧を空にする</button>
+    </div>
+    <div class="after">
+      A のzipを<b>解凍</b>し、B の画面に<b>中の画像ファイルを全部ドラッグ</b> → 下の緑の「Commit changes」。<br>
+      ※ 画像のアップロードが終わってから、下の「反映する」（データの反映）を行ってください。
+    </div>
+  </div>
+
   <!-- ═════════ 出力 ═════════ -->
   <div class="card" id="output-card">
     <h2>反映する <span id="dirty" class="badge clean">変更なし</span></h2>
     <p style="margin-top:0">下の内容が、<b id="file-name"></b> の新しい中身です。</p>
+    <div class="note" id="order-note" style="display:none">画像を載せる場合は、<b>先に画像のアップロード</b>（上の「アップロードする画像」）を済ませてから、ここを反映してください。</div>
     <div class="row" style="margin-bottom:0.75rem">
       <button class="btn" id="btn-copy"><span class="step-label" style="background:#fff;color:var(--ink)">①</span>内容をコピー</button>
       <a class="btn blue" id="btn-github" href="#" target="_blank" rel="noopener"><span class="step-label" style="background:#fff;color:var(--blue)">②</span>GitHubの編集画面を開く</a>
@@ -294,8 +382,23 @@
         { key: 'url',    label: '詳細URL（あれば）', type: 'text', placeholder: 'https://…' }
       ],
       summary: function (it) { return { d: (it.date || '——') + (it.status === 'past' ? '（終了）' : ''), t: it.name || '(名称なし)' }; }
+    },
+    gallery: {
+      label: '格納庫',
+      file: 'data/gallery.json',
+      hasImage: true,
+      keep: ['credits', 'kind'],   // 続けて追加するとき、入力を引き継ぐ項目
+      fields: [
+        { key: 'date',    label: '納品日・公開日', type: 'date', required: true },
+        { key: 'kind',    label: '種別', type: 'select', options: [['avatar', '立ち絵 / アバター'], ['logo', 'ロゴ'], ['illust', 'イラスト'], ['other', 'その他']] },
+        { key: 'title',   label: 'タイトル', type: 'text', required: true, placeholder: '例：基本立ち絵 ／ 表情差分（笑顔） ／ ロゴ（横）' },
+        { key: 'desc',    label: '説明（設定・使い道など）', type: 'textarea', hint: '空でもかまいません。' },
+        { key: 'credits', label: 'クレジット', type: 'credits', hint: '関わった方を役割・名前で。URL（SNSなど）は任意。空の行は無視されます。' }
+      ],
+      summary: function (it) { return { d: it.date || '——', t: it.title || '(タイトルなし)' }; }
     }
   };
+  var CREDIT_ROWS = 4;
 
   var state = {};   // 各データの作業状態
   var current = 'log';
@@ -401,6 +504,11 @@
     $('btn-copy').disabled = !usable;
     $('file-name').textContent = cfg.file;
     $('btn-github').href = 'https://github.com/' + OWNER + '/' + REPO + '/edit/' + BRANCH + '/' + cfg.file;
+    $('image-card').style.display = cfg.hasImage ? '' : 'none';
+    $('upload-card').style.display = cfg.hasImage ? '' : 'none';
+    $('order-note').style.display = cfg.hasImage ? '' : 'none';
+    $('btn-upload').href = 'https://github.com/' + OWNER + '/' + REPO + '/upload/' + BRANCH + '/images/gallery';
+    if (cfg.hasImage) renderUploads();
 
     // 一覧
     var list = $('list');
@@ -436,6 +544,12 @@
     // 出力
     $('out').value = jsonText(st.items);
     setDirty(JSON.stringify(st.items) !== st.original);
+
+    // 編集中の現在の画像
+    if (cfg.hasImage) {
+      var cur = (st.editIndex !== null && st.items[st.editIndex]) ? st.items[st.editIndex].image : '';
+      $('img-current').textContent = cur ? '現在の画像：' + cur + '（差し替えるときだけ、新しい画像を選んでください）' : '';
+    }
 
     // フォーム見出し
     if (st.editIndex !== null) {
@@ -473,7 +587,19 @@
       wrap.appendChild(label);
 
       var input;
-      if (f.type === 'textarea') {
+      if (f.type === 'credits') {
+        input = document.createElement('div');
+        for (var ci = 0; ci < CREDIT_ROWS; ci++) {
+          var crow = document.createElement('div'); crow.className = 'credit-row';
+          [['role', '役割（例：イラスト）', true], ['name', '名前', false], ['url', 'URL（任意）', false]].forEach(function (p) {
+            var inp = document.createElement('input');
+            inp.type = 'text'; inp.id = 'f-credits-' + p[0] + '-' + ci; inp.placeholder = p[1];
+            if (p[2]) inp.setAttribute('list', 'role-list');
+            crow.appendChild(inp);
+          });
+          input.appendChild(crow);
+        }
+      } else if (f.type === 'textarea') {
         input = document.createElement('textarea');
       } else if (f.type === 'select') {
         input = document.createElement('select');
@@ -486,7 +612,7 @@
         input.type = (f.type === 'date') ? 'date' : 'text';
       }
       input.id = 'f-' + f.key;
-      if (f.placeholder) input.placeholder = f.placeholder;
+      if (f.placeholder && f.type !== 'credits') input.placeholder = f.placeholder;
       if (f.type === 'date') input.value = todayStr();
       wrap.appendChild(input);
 
@@ -508,18 +634,37 @@
   function dotToDash(v) { var m = /^(\d{4})\.(\d{2})\.(\d{2})/.exec(v || ''); return m ? m[1] + '-' + m[2] + '-' + m[3] : ''; }
   function dashToDot(v) { return (v || '').replace(/-/g, '.'); }
 
+  function readCredits() {
+    var out = [];
+    for (var i = 0; i < CREDIT_ROWS; i++) {
+      var role = $('f-credits-role-' + i).value.trim();
+      var name = $('f-credits-name-' + i).value.trim();
+      var url  = $('f-credits-url-' + i).value.trim();
+      if (!name) continue;               // 名前が無い行は無視
+      var c = {};
+      if (role) c.role = role;
+      c.name = name;
+      if (url) c.url = url;
+      out.push(c);
+    }
+    return out;
+  }
+
   function readForm() {
     var cfg = CONFIG[current];
     var item = {};
     var missing = [];
     cfg.fields.forEach(function (f) {
-      var raw = $('f-' + f.key).value;
       var val;
-      if (f.type === 'date') val = dashToDot(raw);
-      else if (f.type === 'tags') val = raw.split(/[、,，]/).map(function (x) { return x.trim(); }).filter(Boolean);
-      else if (f.type === 'textarea') val = raw.replace(/\r\n/g, '\n').replace(/^\s+|\s+$/g, '');
-      else val = raw.trim();
-
+      if (f.type === 'credits') {
+        val = readCredits();
+      } else {
+        var raw = $('f-' + f.key).value;
+        if (f.type === 'date') val = dashToDot(raw);
+        else if (f.type === 'tags') val = raw.split(/[、,，]/).map(function (x) { return x.trim(); }).filter(Boolean);
+        else if (f.type === 'textarea') val = raw.replace(/\r\n/g, '\n').replace(/^\s+|\s+$/g, '');
+        else val = raw.trim();
+      }
       var empty = Array.isArray(val) ? val.length === 0 : val === '';
       if (f.required && empty) missing.push(f.label);
       if (!empty) item[f.key] = val;
@@ -529,11 +674,245 @@
 
   function fillForm(it) {
     CONFIG[current].fields.forEach(function (f) {
-      var input = $('f-' + f.key);
       var v = it[f.key];
+      if (f.type === 'credits') {
+        var cs = Array.isArray(v) ? v : [];
+        for (var i = 0; i < CREDIT_ROWS; i++) {
+          var c = cs[i] || {};
+          $('f-credits-role-' + i).value = c.role || '';
+          $('f-credits-name-' + i).value = c.name || '';
+          $('f-credits-url-' + i).value = c.url || '';
+        }
+        return;
+      }
+      var input = $('f-' + f.key);
       if (f.type === 'date') input.value = dotToDash(v);
       else if (f.type === 'tags') input.value = Array.isArray(v) ? v.join('、') : '';
       else input.value = (v === undefined) ? (f.type === 'select' ? input.options[0].value : '') : v;
+    });
+  }
+
+
+  // ═══════════════════════════════════════
+  //  画像の加工（縮小 + 透かし）と アップロード用zip
+  // ═══════════════════════════════════════
+  var pending = null;    // 加工済みで、まだ「追加する」を押していない画像
+  var uploads = [];      // GitHubにアップロードが必要な画像 [{name, blob}]
+  var procSeq = 0;
+
+  function loadImageFromFile(file) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        var img = new Image();
+        img.onload = function () { resolve(img); };
+        img.onerror = function () { reject(new Error('画像として読み込めませんでした（jpg / png / webp などを選んでください）')); };
+        img.src = fr.result;
+      };
+      fr.onerror = function () { reject(new Error('ファイルを読み込めませんでした')); };
+      fr.readAsDataURL(file);
+    });
+  }
+
+  function hasAlpha(img) {
+    var c = document.createElement('canvas'); c.width = c.height = 64;
+    var x = c.getContext('2d');
+    x.drawImage(img, 0, 0, 64, 64);
+    var d = x.getImageData(0, 0, 64, 64).data;
+    for (var i = 3; i < d.length; i += 4) if (d[i] < 250) return true;
+    return false;
+  }
+
+  function drawWatermark(ctx, w, h, mode, text) {
+    if (mode === 'none' || !text) return;
+    var fs = Math.max(12, Math.round(Math.max(w, h) / 70));
+    ctx.save();
+    ctx.font = fs + 'px "Hiragino Sans","Yu Gothic",Meiryo,sans-serif';
+    ctx.textBaseline = 'middle';
+    function stamp(x, y, a) {
+      ctx.fillStyle = 'rgba(0,0,0,' + a + ')';   ctx.fillText(text, x + 1, y + 1);
+      ctx.fillStyle = 'rgba(255,255,255,' + a + ')'; ctx.fillText(text, x, y);
+    }
+    if (mode === 'corner') {
+      ctx.textAlign = 'right';
+      stamp(w - fs, h - fs * 1.2, 0.6);
+    } else {
+      var alpha = mode === 'strong' ? 0.34 : 0.18;
+      var stepY = fs * (mode === 'strong' ? 4 : 6.5);
+      var tw = ctx.measureText(text).width;
+      var stepX = tw + fs * 3;
+      var diag = Math.sqrt(w * w + h * h);
+      ctx.textAlign = 'left';
+      ctx.translate(w / 2, h / 2);
+      ctx.rotate(-Math.PI / 6);
+      var row = 0;
+      for (var y = -diag / 2; y < diag / 2; y += stepY, row++) {
+        var off = (row % 2) * (stepX / 2);
+        for (var x = -diag / 2 - off; x < diag / 2; x += stepX) stamp(x, y, alpha);
+      }
+    }
+    ctx.restore();
+  }
+
+  function toBlobP(canvas, type, q) {
+    return new Promise(function (res) { canvas.toBlob(function (b) { res(b); }, type, q); });
+  }
+
+  function scaledCanvas(src, longEdge) {
+    var s = Math.min(1, longEdge / Math.max(src.width, src.height));
+    var c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(src.width * s));
+    c.height = Math.max(1, Math.round(src.height * s));
+    var x = c.getContext('2d');
+    x.imageSmoothingQuality = 'high';
+    x.drawImage(src, 0, 0, c.width, c.height);
+    return c;
+  }
+
+  function makeImages(img, opt) {
+    var sw = img.naturalWidth || img.width, sh = img.naturalHeight || img.height;
+    var s = Math.min(1, opt.size / Math.max(sw, sh));   // 拡大はしない
+    var w = Math.max(1, Math.round(sw * s)), h = Math.max(1, Math.round(sh * s));
+    var alpha = hasAlpha(img);
+
+    var c = document.createElement('canvas'); c.width = w; c.height = h;
+    var ctx = c.getContext('2d');
+    if (!alpha) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h); }   // JPEGは透過できないため白地
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, w, h);
+    drawWatermark(ctx, w, h, opt.mode, opt.text);
+
+    var tc = scaledCanvas(c, 480);
+
+    var type, ext, q1 = 0.88, q2 = 0.82;
+    return (alpha ? toBlobP(c, 'image/webp', 0.9) : Promise.resolve(null)).then(function (wb) {
+      if (alpha) {
+        if (wb && wb.type === 'image/webp') { type = 'image/webp'; ext = 'webp'; return wb; }
+        type = 'image/png'; ext = 'png'; return toBlobP(c, 'image/png');
+      }
+      type = 'image/jpeg'; ext = 'jpg';
+      return toBlobP(c, 'image/jpeg', q1);
+    }).then(function (mainBlob) {
+      return toBlobP(tc, type, q2).then(function (thumbBlob) {
+        var d = new Date();
+        var ymd = d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2);
+        var base = 'g-' + ymd + '-' + Math.random().toString(36).slice(2, 8);
+        var pv = scaledCanvas(c, 800);
+        return {
+          main:  { name: base + '.' + ext,       blob: mainBlob },
+          thumb: { name: base + '-s.' + ext,     blob: thumbBlob },
+          w: w, h: h, srcW: sw, srcH: sh, ext: ext, alpha: alpha,
+          preview: pv.toDataURL('image/jpeg', 0.75)
+        };
+      });
+    });
+  }
+
+  function kb(n) { return n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB'; }
+
+  function processCurrentFile() {
+    var file = $('img-file').files && $('img-file').files[0];
+    var info = $('img-info');
+    info.className = '';
+    if (!file) { pending = null; $('img-preview').innerHTML = ''; info.textContent = ''; return Promise.resolve(); }
+    var seq = ++procSeq;
+    pending = null;
+    info.textContent = '加工中…';
+    return loadImageFromFile(file).then(function (img) {
+      return makeImages(img, { size: parseInt($('img-size').value, 10) || 1600, mode: $('img-wm').value, text: $('img-wmtext').value.trim() });
+    }).then(function (res) {
+      if (seq !== procSeq) return;
+      pending = res;
+      var pv = $('img-preview'); pv.innerHTML = '';
+      var im = document.createElement('img'); im.src = res.preview; im.alt = '加工後のプレビュー';
+      pv.appendChild(im);
+      var note = (res.srcW < parseInt($('img-size').value, 10) && res.srcH < parseInt($('img-size').value, 10)) ? '（元画像が小さいため、拡大はしていません）' : '';
+      var big = res.main.blob.size > 5 * 1048576 ? ' ※ ファイルが大きめです。サイズを小さくすると軽くなります。' : '';
+      info.textContent = '加工できました：' + res.w + '×' + res.h + 'px / ' + res.ext.toUpperCase() + ' / ' + kb(res.main.blob.size) + '（一覧用の小さい画像 ' + kb(res.thumb.blob.size) + '）' + note + big;
+      if (res.alpha && res.ext === 'png') info.textContent += ' ※ このブラウザは透過WebPに対応しないためPNGになります。';
+    }).catch(function (e) {
+      if (seq !== procSeq) return;
+      pending = null;
+      $('img-preview').innerHTML = '';
+      info.className = 'err';
+      info.textContent = '加工できませんでした：' + e.message;
+    });
+  }
+
+  // ─── zip（無圧縮）を自前で作る ───
+  var CRC_TABLE = (function () {
+    var t = [], c, n, k;
+    for (n = 0; n < 256; n++) { c = n; for (k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1); t[n] = c >>> 0; }
+    return t;
+  })();
+  function crc32(u8) {
+    var c = 0xFFFFFFFF;
+    for (var i = 0; i < u8.length; i++) c = CRC_TABLE[(c ^ u8[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+  function blobToU8(blob) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onload = function () { resolve(new Uint8Array(fr.result)); };
+      fr.onerror = function () { reject(new Error('ファイルを読み込めませんでした')); };
+      fr.readAsArrayBuffer(blob);
+    });
+  }
+  function makeZip(files) {   // files: [{name, blob}]  → Promise<Blob>
+    return Promise.all(files.map(function (f) { return blobToU8(f.blob); })).then(function (datas) {
+      var enc = new TextEncoder();
+      var now = new Date();
+      var dtime = (now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1);
+      var ddate = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+      var parts = [], central = [], offset = 0;
+      files.forEach(function (f, i) {
+        var name = enc.encode(f.name), data = datas[i], crc = crc32(data);
+        var lh = new DataView(new ArrayBuffer(30));
+        lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(8, 0, true);
+        lh.setUint16(10, dtime, true); lh.setUint16(12, ddate, true); lh.setUint32(14, crc, true);
+        lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true); lh.setUint16(26, name.length, true); lh.setUint16(28, 0, true);
+        parts.push(lh.buffer, name, data);
+        var ch = new DataView(new ArrayBuffer(46));
+        ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint16(10, 0, true);
+        ch.setUint16(12, dtime, true); ch.setUint16(14, ddate, true); ch.setUint32(16, crc, true);
+        ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true); ch.setUint16(28, name.length, true);
+        ch.setUint32(42, offset, true);
+        central.push(ch.buffer, name);
+        offset += 30 + name.length + data.length;
+      });
+      var csize = 0; central.forEach(function (p) { csize += (p.byteLength !== undefined ? p.byteLength : p.length); });
+      var end = new DataView(new ArrayBuffer(22));
+      end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+      end.setUint32(12, csize, true); end.setUint32(16, offset, true);
+      return new Blob(parts.concat(central, [end.buffer]), { type: 'application/zip' });
+    });
+  }
+
+  function renderUploads() {
+    var box = $('upl-list');
+    box.innerHTML = '';
+    if (uploads.length === 0) {
+      box.innerHTML = '<div class="empty">まだありません。画像を選んで「追加する」を押すと、ここに並びます。</div>';
+    }
+    uploads.forEach(function (u) {
+      var row = document.createElement('div'); row.className = 'upl';
+      var n = document.createElement('span'); n.textContent = u.name;
+      var z = document.createElement('span'); z.textContent = kb(u.blob.size);
+      row.appendChild(n); row.appendChild(z); box.appendChild(row);
+    });
+    $('upl-count').textContent = uploads.length ? '（' + uploads.length + 'ファイル）' : '';
+    $('btn-zip').disabled = uploads.length === 0;
+    $('btn-clear-upl').disabled = uploads.length === 0;
+  }
+
+  function downloadZip() {
+    if (!uploads.length) return;
+    makeZip(uploads).then(function (blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'waft-gallery-upload.zip';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 5000);
     });
   }
 
@@ -549,7 +928,8 @@
   function removeItem(i) {
     var st = state[current];
     var sm = CONFIG[current].summary(st.items[i]);
-    if (!confirm('「' + sm.t + '」を削除します。よろしいですか？\n（GitHubに反映するまでは、サイトには影響しません）')) return;
+    var extra = CONFIG[current].hasImage ? '\n※ 画像ファイルそのものはGitHubに残ります（サイトの表示からは消えます）。' : '';
+    if (!confirm('「' + sm.t + '」を削除します。よろしいですか？\n（GitHubに反映するまでは、サイトには影響しません）' + extra)) return;
     st.items.splice(i, 1);
     if (st.editIndex === i) { st.editIndex = null; buildForm(); }
     else if (st.editIndex !== null && st.editIndex > i) st.editIndex--;
@@ -557,21 +937,65 @@
     $('output-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  // 追加後、指定した項目だけ入力を残してフォームを作り直す
+  function rebuildKeeping(keys) {
+    var saved = {};
+    document.querySelectorAll('#fields [id^="f-"]').forEach(function (e) {
+      var k = e.id.replace(/^f-/, '').split('-')[0];
+      if (keys.indexOf(k) !== -1 && e.tagName !== 'DIV') saved[e.id] = e.value;
+    });
+    buildForm();
+    Object.keys(saved).forEach(function (id) { var e = $(id); if (e) e.value = saved[id]; });
+  }
+
+  function clearImageInput() {
+    pending = null; procSeq++;
+    try { $('img-file').value = ''; } catch (e) {}
+    $('img-preview').innerHTML = '';
+    $('img-info').textContent = '';
+    $('img-info').className = '';
+  }
+
   function submit() {
+    var cfg = CONFIG[current];
     var st = state[current];
     var r = readForm();
-    if (r.missing.length) {
-      $('formerr').textContent = '入力してください：' + r.missing.join('、');
+    var missing = r.missing.slice();
+    var item = r.item;
+
+    if (cfg.hasImage) {
+      var old = st.editIndex !== null ? st.items[st.editIndex] : null;
+      var img = null, thumb = null;
+      if (pending) { img = 'images/gallery/' + pending.main.name; thumb = 'images/gallery/' + pending.thumb.name; }
+      else if (old && old.image) { img = old.image; thumb = old.thumb || ''; }
+      else missing.push('画像');
+      if (img) {
+        var o = {};
+        ['date', 'kind', 'title', 'desc'].forEach(function (k) { if (k in item) o[k] = item[k]; });
+        o.image = img;
+        if (thumb) o.thumb = thumb;
+        if (item.credits) o.credits = item.credits;
+        item = o;
+      }
+    }
+
+    if (missing.length) {
+      $('formerr').textContent = '入力してください：' + missing.join('、');
       return;
     }
     $('formerr').textContent = '';
+
+    if (cfg.hasImage && pending) {
+      uploads.push(pending.main, pending.thumb);
+    }
     if (st.editIndex !== null) {
-      st.items[st.editIndex] = r.item;
+      st.items[st.editIndex] = item;
       st.editIndex = null;
     } else {
-      st.items.unshift(r.item);
+      st.items.unshift(item);
     }
-    buildForm();
+    if (cfg.hasImage) clearImageInput();
+    if (cfg.keep) rebuildKeeping(cfg.keep); else buildForm();
     render();
     $('output-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -628,10 +1052,18 @@
     loadData(current, true);
   });
   $('out').addEventListener('focus', function () { this.select(); });
+  $('img-file').addEventListener('change', processCurrentFile);
+  $('img-size').addEventListener('change', processCurrentFile);
+  $('img-wm').addEventListener('change', processCurrentFile);
+  $('img-wmtext').addEventListener('change', processCurrentFile);
+  $('btn-zip').addEventListener('click', downloadZip);
+  $('btn-clear-upl').addEventListener('click', function () {
+    if (confirm('アップロード待ちの一覧を空にします。\n（GitHubへのアップロードが済んでいる場合だけ押してください）')) { uploads = []; renderUploads(); }
+  });
 
   window.addEventListener('beforeunload', function (e) {
     var dirty = Object.keys(state).some(function (k) { return state[k].loaded && JSON.stringify(state[k].items) !== state[k].original; });
-    if (dirty) { e.preventDefault(); e.returnValue = ''; }
+    if (dirty || uploads.length) { e.preventDefault(); e.returnValue = ''; }
   });
 
   // ─── 開始 ───
@@ -640,7 +1072,7 @@
   render();
 
   // テスト用に公開（通常は使いません）
-  window.__WAFT_ADMIN__ = { state: state, switchTab: switchTab, submit: submit, startEdit: startEdit, removeItem: removeItem };
+  window.__WAFT_ADMIN__ = { state: state, switchTab: switchTab, submit: submit, startEdit: startEdit, removeItem: removeItem, processCurrentFile: processCurrentFile, makeZip: makeZip, crc32: crc32, getUploads: function () { return uploads; }, getPending: function () { return pending; } };
 })();
 </script>
 </body>
