@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>404 — WAFT</title>
+  <!-- 404ページは存在しない深いURLでも表示されるため、基準URLを固定して
+       css/js/リンクを常に正しい場所から読み込む。
+       ※ サイトの公開先URLを変えた場合は、この href を合わせて変更すること -->
+  <base href="/core-protocol/" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
     .lost-wrap {

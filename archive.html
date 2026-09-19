@@ -236,29 +236,7 @@
           <span>種別</span>
         </div>
 
-        <!-- ▼▼▼ 作品を追加する場合は以下の <a> ブロックをコピーしてください ▼▼▼ -->
-        <!--
-          href      : 作品のURL（外部リンク or 詳細ページ）
-          data-type : video / text / object / music / other のいずれか
-
-          担当の class:
-            aoya  → 青yaヽ跨
-            misjo → 三条瞳
-            both  → 共作
-        -->
-
-        <!-- サンプルエントリー（削除してください） -->
-        <a href="#" class="archive-entry" data-type="other">
-          <div class="entry-date">——</div>
-          <div class="entry-main">
-            <div class="entry-title">記録待機中</div>
-            <div class="entry-desc">干渉の痕跡はここに蓄積される。</div>
-          </div>
-          <div class="entry-author">——</div>
-          <div class="entry-tag">——</div>
-        </a>
-
-        <!-- ▲▲▲ ここまで ▲▲▲ -->
+        <!-- 制作物は data/archive.json から自動表示されます（追加・編集は admin.html の更新ツールから）-->
       </div>
 
       <div class="empty-state" id="empty-state">
@@ -284,29 +262,7 @@
   </footer>
 
   <script src="js/waft.js"></script>
-  <script>
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const entries = document.querySelectorAll('.archive-entry');
-    const emptyState = document.getElementById('empty-state');
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        const filter = btn.dataset.filter;
-        let visible = 0;
-
-        entries.forEach(entry => {
-          const type = entry.dataset.type;
-          const show = filter === 'all' || type === filter;
-          entry.style.display = show ? '' : 'none';
-          if (show) visible++;
-        });
-
-        emptyState.classList.toggle('visible', visible === 0);
-      });
-    });
-  </script>
+  <script src="js/data.js"></script>
+  <script>WAFTData.archive();</script>
 </body>
 </html>

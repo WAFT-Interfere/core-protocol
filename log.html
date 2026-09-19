@@ -217,47 +217,10 @@
       <!-- ─── LOG TIMELINE ─── -->
       <div class="log-timeline fade-up" id="log-timeline">
 
-        <!-- ▼▼▼ ログを追加する場合はこの <div class="log-entry"> ブロックをコピーしてください ▼▼▼ -->
-        <!--
-          ログ追加テンプレート:
+        <!-- 活動記録は data/log.json から自動表示されます（追加・編集は admin.html の更新ツールから）-->
 
-          <div class="log-entry">
-            <div class="log-date-col">
-              <span class="log-date">YYYY.MM.DD</span>
-              <span class="log-tag tag-aoya" style="margin-left:0.75rem;">青yaヽ跨</span>
-              ※ tag-aoya / tag-misjo / tag-system から選ぶ
-            </div>
-            <div class="log-body-col">
-              <div class="log-tags">
-                <span class="log-tag">定時報告</span>
-              </div>
-              <div class="log-title">タイトル</div>
-              <div class="log-text">本文</div>
-            </div>
-          </div>
-        -->
-
-        <!-- 機構施行 -->
-        <div class="log-entry">
-          <div class="log-date-col">
-            <span class="log-date">2026.01.22</span>
-            <span class="log-tag tag-system" style="margin-left:0.75rem;">SYSTEM</span>
-          </div>
-          <div class="log-body-col">
-            <div class="log-tags">
-              <span class="log-tag">施行</span>
-            </div>
-            <div class="log-title">本要綱の施行。観測者との接触を開始する。</div>
-            <div class="log-text">
-              対境界線広域干渉及び超領域的表現開発機構（WAFT）、2026年1月22日より正式稼働。
-              観測者との接点が発生する一切の時空を暫定的な活動拠点と定義し、
-              干渉を開始する。
-            </div>
-          </div>
-        </div>
-
-        <!-- サンプル：青yaヽ跨の定時報告 -->
-        <div class="log-entry">
+        <!-- 最下部の固定表示（隠しリンクを含むため残す）-->
+        <div class="log-entry" id="log-sentinel">
           <div class="log-date-col">
             <span class="log-date">——</span>
             <span class="log-tag tag-aoya" style="margin-left:0.75rem;">青yaヽ跨</span>
@@ -272,8 +235,6 @@
             </div>
           </div>
         </div>
-
-        <!-- ▲▲▲ ここまで ▲▲▲ -->
 
       </div><!-- /.log-timeline -->
 
@@ -294,6 +255,8 @@
   </footer>
 
   <script src="js/waft.js"></script>
+  <script src="js/data.js"></script>
+  <script>WAFTData.log();</script>
   <script>
     // 通信状態のランダム揺らぎ
     const commsEl = document.getElementById('comms-status');

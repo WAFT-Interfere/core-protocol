@@ -251,44 +251,8 @@
         <span id="events-status-text">次回拠点開放：確認中</span>
       </div>
 
-      <!-- ▼▼▼ イベントを追加する場合は .event-card ブロックをコピーしてください ▼▼▼ -->
-      <!--
-        .event-status-badge の class:
-          upcoming → 予告・今後のイベント
-          past     → 終了したイベント
-
-        .event-tag の class:
-          booth  → 三条瞳（赤）
-          online → 青yaヽ跨（青）
-          ※ classなし → 通常タグ（グレー）
-      -->
-
-      <div class="event-list fade-up" id="event-list">
-
-        <!-- サンプルエントリー（削除して実際のイベントに差し替えてください） -->
-        <div class="event-card">
-          <div class="event-date-col">
-            <div class="event-date">——</div>
-            <span class="event-status-badge upcoming">UPCOMING</span>
-          </div>
-          <div class="event-body-col">
-            <div class="event-name">次回イベント</div>
-            <div class="event-venue">場所・会場 未定</div>
-            <div class="event-desc">
-              詳細確定次第、このページおよび各SNSにて送出する。<br>
-              観測者の来場を、本機構は静かに待っている。
-            </div>
-            <div class="event-tags">
-              <span class="event-tag booth">三条瞳 出展</span>
-              <span class="event-tag">頒布あり</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <!-- ▲▲▲ ここまで ▲▲▲ -->
-
-
+      <!-- イベントは data/events.json から自動表示されます（追加・編集は admin.html の更新ツールから）-->
+      <div class="event-list fade-up" id="event-list"></div>
 
     </div>
   </div>
@@ -305,22 +269,7 @@
   </footer>
 
   <script src="js/waft.js"></script>
-  <script>
-    // 直近のUPCOMINGイベントがあればステータスを更新
-    const upcoming = document.querySelector('.event-status-badge.upcoming');
-    const statusText = document.getElementById('events-status-text');
-    if (upcoming) {
-      const card = upcoming.closest('.event-card');
-      const name = card ? card.querySelector('.event-name').textContent.trim() : null;
-      const date = card ? card.querySelector('.event-date').textContent.trim() : null;
-      if (name && date && date !== '——') {
-        statusText.textContent = '次回拠点開放：' + date + ' / ' + name;
-      } else if (name) {
-        statusText.textContent = '次回拠点開放：' + name + '（日程調整中）';
-      }
-    } else {
-      statusText.textContent = '現在、予定されている拠点開放はありません';
-    }
-  </script>
+  <script src="js/data.js"></script>
+  <script>WAFTData.events();</script>
 </body>
 </html>

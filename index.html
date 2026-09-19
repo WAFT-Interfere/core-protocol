@@ -675,20 +675,13 @@
       </div>
 
       <!-- TRANSMISSION LOG -->
-      <div class="transmission fade-up">
+      <div class="transmission fade-up" id="trans-box">
         <div class="transmission-header">
           <span>最終送出記録 / TRANSMISSION LOG</span>
           <span id="trans-status">STATUS : STANDBY</span>
         </div>
-        <!-- 実際の活動記録に差し替えてください -->
-        <a href="log.html" class="transmission-entry">
-          <div class="trans-date">2026.01.22<br>00:00:00</div>
-          <div>
-            <span class="trans-tag">施行</span>
-            <div class="trans-title">本要綱の施行。観測者との接触を開始する。</div>
-          </div>
-        </a>
-        <a href="log.html" class="transmission-entry">
+        <!-- 最新の活動記録は data/log.json から自動表示されます -->
+        <a href="log.html" class="transmission-entry" id="trans-sentinel">
           <div class="trans-date">——</div>
           <div>
             <span class="trans-tag">予定</span>
@@ -724,6 +717,8 @@
   </footer>
 
   <script src="js/waft.js"></script>
+  <script src="js/data.js"></script>
+  <script>WAFTData.latest();</script>
   <script>
     // ─── ACCESS OVERLAY ───
     const overlay = document.getElementById('access-overlay');
